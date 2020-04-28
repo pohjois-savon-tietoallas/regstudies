@@ -1,0 +1,18 @@
+Package: regstudies
+Type: Package
+Title: Various functions for data analysis and data wranging of register studies.
+Version: 0.1.0
+Author: Juho Kopra
+Maintainer: Juho Kopra <juho.kopra@uef.fi>
+Description: The data utilised in register studies, often called as register-based data or administrative data
+  typically consists of time stamp variables and codes describing events. This package has been designed specifically for handling of such data. 
+  The packages is based on tidyverse packages and examples utilise widely tidyverse programming style. 
+  The functions are designed with ICD codes in mind but can be used with any kind of string formatted codes and are thus not
+  necessarily limited to healthcare data. Users are allowed to make their own definitions of code classifiers, so the package
+  suits needs of different countries having their own code definitions of disease codes for example.
+License: GNU General Public License v3.0 https://www.gnu.org/licenses/gpl-3.0.html
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.0
+VignetteBuilder: knitr
+Suggests: knitr, rmarkdown

@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="Juho Kopra" />
+
+<meta name="date" content="2020-04-02" />
+
+<title>Use cases of regstudies R package</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Use cases of ‘regstudies’ R package</h1>
+<h4 class="author">Juho Kopra</h4>
+<h4 class="date">2020-04-02</h4>
+
+
+
+<div id="how-to-use" class="section level3">
+<h3>How to use</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
+<span class="co">#&gt; -- Attaching packages ------------------------------------------------------------------------ tidyverse 1.3.0 --</span>
+<span class="co">#&gt; v ggplot2 3.3.0     v purrr   0.3.3</span>
+<span class="co">#&gt; v tibble  2.1.3     v dplyr   0.8.5</span>
+<span class="co">#&gt; v tidyr   1.0.2     v stringr 1.4.0</span>
+<span class="co">#&gt; v readr   1.3.1     v forcats 0.5.0</span>
+<span class="co">#&gt; -- Conflicts --------------------------------------------------------------------------- tidyverse_conflicts() --</span>
+<span class="co">#&gt; x dplyr::filter() masks stats::filter()</span>
+<span class="co">#&gt; x dplyr::lag()    masks stats::lag()</span>
+<span class="kw">library</span>(regstudies)
+<span class="co"># read cohort data</span>
+<span class="kw">library</span>(vroom)
+cohort &lt;-<span class="st"> </span><span class="kw">vroom</span>(<span class="st">&quot;./datas/fake_cohort.csv&quot;</span>)
+<span class="co">#&gt; Rows: 14,200</span>
+<span class="co">#&gt; Columns: 3</span>
+<span class="co">#&gt; Delimiter: &quot;;&quot;</span>
+<span class="co">#&gt; dbl  [2]: personid, status</span>
+<span class="co">#&gt; date [1]: postingdate</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Use `spec()` to retrieve the guessed column specification</span>
+<span class="co">#&gt; Pass a specification to the `col_types` argument to quiet this message</span>
+cohort <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">head</span>()
+<span class="co">#&gt; # A tibble: 6 x 3</span>
+<span class="co">#&gt;   personid postingdate status</span>
+<span class="co">#&gt;      &lt;dbl&gt; &lt;date&gt;       &lt;dbl&gt;</span>
+<span class="co">#&gt; 1        1 2000-01-01       0</span>
+<span class="co">#&gt; 2        2 2000-01-01       0</span>
+<span class="co">#&gt; 3        3 2000-01-01       0</span>
+<span class="co">#&gt; 4        4 2000-01-01       1</span>
+<span class="co">#&gt; 5        5 2000-01-01       0</span>
+<span class="co">#&gt; 6        6 2000-01-01       1</span>
+<span class="co"># personid: id for each individual in the study</span>
+<span class="co"># postingdate: date of interest to find comorbidities</span>
+<span class="co"># status: some kind of additional data ???</span>
+
+<span class="co"># prepare some register data:</span>
+reg&lt;-<span class="kw">vroom</span>(<span class="dt">file=</span><span class="st">&quot;./datas/ostpre_hilmo_9616_dgt_eng.csv&quot;</span>)
+<span class="co">#&gt; Rows: 644,817</span>
+<span class="co">#&gt; Columns: 7</span>
+<span class="co">#&gt; Delimiter: &quot;,&quot;</span>
+<span class="co">#&gt; chr [5]: CODE1, CODE2, ISMAINDIAG, admissiondate, dischargedate</span>
+<span class="co">#&gt; dbl [2]: SIDEDIAGNUMBER, personid</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Use `spec()` to retrieve the guessed column specification</span>
+<span class="co">#&gt; Pass a specification to the `col_types` argument to quiet this message</span>
+<span class="kw">library</span>(lubridate)
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Attaching package: 'lubridate'</span>
+<span class="co">#&gt; The following object is masked from 'package:base':</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;     date</span>
+reg&lt;-reg <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">admissiondate=</span><span class="kw">dmy</span>(admissiondate),<span class="dt">dischargedate=</span><span class="kw">dmy</span>(dischargedate))
+reg <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">head</span>()
+<span class="co">#&gt; # A tibble: 6 x 7</span>
+<span class="co">#&gt;   CODE1 CODE2 ISMAINDIAG SIDEDIAGNUMBER personid admissiondate dischargedate</span>
+<span class="co">#&gt;   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;               &lt;dbl&gt;    &lt;dbl&gt; &lt;date&gt;        &lt;date&gt;       </span>
+<span class="co">#&gt; 1 R522  &lt;NA&gt;  K                       0     5211 2000-03-28    2000-03-30   </span>
+<span class="co">#&gt; 2 C5041 &lt;NA&gt;  K                       0     7163 2000-05-17    2000-05-24   </span>
+<span class="co">#&gt; 3 S822  &lt;NA&gt;  K                       0     7289 2000-02-14    2000-03-30   </span>
+<span class="co">#&gt; 4 N10   &lt;NA&gt;  E                       1     7289 2000-02-14    2000-03-30   </span>
+<span class="co">#&gt; 5 F259  &lt;NA&gt;  E                       2     7289 2000-02-14    2000-03-30   </span>
+<span class="co">#&gt; 6 Z755  &lt;NA&gt;  K                       0     7018 2000-10-09    2000-10-18</span>
+
+<span class="co"># lets calculate if the code is icd-8, icd-9 or icd-10</span>
+reg&lt;-reg <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">icd=</span><span class="kw">case_when</span>( <span class="kw">year</span>(dischargedate)<span class="op">&lt;</span><span class="dv">1987</span> <span class="op">~</span><span class="st"> &quot;icd8&quot;</span>,
+                        <span class="kw">year</span>(dischargedate)<span class="op">&lt;</span><span class="dv">1996</span> <span class="op">&amp;</span><span class="st"> </span><span class="kw">year</span>(dischargedate)<span class="op">&gt;=</span><span class="dv">1987</span> <span class="op">~</span><span class="st"> &quot;icd9&quot;</span>,
+                        <span class="kw">year</span>(dischargedate)<span class="op">&gt;=</span><span class="dv">1996</span> <span class="op">~</span><span class="st"> &quot;icd10&quot;</span>
+                      )
+        ) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">startletter=</span><span class="kw">regexpr</span>(<span class="dt">pattern=</span><span class="st">&quot;^[A-Z]&quot;</span>,CODE1)<span class="op">&gt;</span><span class="dv">0</span>)
+<span class="kw">table</span>(reg<span class="op">$</span>icd,reg<span class="op">$</span>startletter) <span class="co"># These data does not contain ICD-9 diagnostics codes. Only ICD-10.</span>
+<span class="co">#&gt;        </span>
+<span class="co">#&gt;          FALSE   TRUE</span>
+<span class="co">#&gt;   icd10   6708 638109</span></code></pre></div>
+</div>
+<div id="loading-a-code-classification-definition-from-excel-file" class="section level1">
+<h1>Loading a code classification definition from Excel file</h1>
+<p>Okay, so in this phase we load data from Excel file and modify it to suit the needs or regstudies package. It may be easier to ask your collaborate researchers to fill an Excel file with suitable diagnose codes (e.g. ICD-codes) with an asterix symbol of “%” in this case. The function ‘make_regex’ can be used to tranform these LIKE% codes to regural expression definitions automatically.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
+<span class="co"># We load classification here</span>
+excelfile &lt;-<span class="st"> </span>readxl<span class="op">::</span><span class="kw">read_excel</span>(<span class="st">&quot;./datas/disease_classification.xlsx&quot;</span>)
+<span class="co">#&gt; New names:</span>
+<span class="co">#&gt; * `` -&gt; ...5</span>
+cl9 &lt;-<span class="st"> </span>excelfile <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">make_regex</span>(<span class="dt">classname=</span>Lyhenne,<span class="dt">diagnosis=</span>sairdiag_icd9,<span class="dt">diagnosis.rm=</span>sairdiagpl_icd9) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">icd=</span><span class="st">&quot;icd9&quot;</span>)
+cl10 &lt;-<span class="st"> </span>excelfile <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">make_regex</span>(<span class="dt">classname=</span>Lyhenne,<span class="dt">diagnosis=</span>sairdiag,<span class="dt">diagnosis.rm=</span>sairdiagpl) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">icd=</span><span class="st">&quot;icd10&quot;</span>)
+
+sel_classes&lt;-<span class="kw">bind_rows</span>(cl9,cl10) <span class="op">%&gt;%</span>
+<span class="st">              </span><span class="kw">mutate</span>(<span class="dt">classification=</span><span class="st">&quot;own_definition&quot;</span>)
+<span class="kw">rm</span>(<span class="dt">list=</span><span class="kw">c</span>(<span class="st">&quot;cl9&quot;</span>,<span class="st">&quot;cl10&quot;</span>))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
+tbclasses&lt;-<span class="kw">vroom</span>(<span class="st">&quot;./datas/charlson_and_elixhauser_classifications.csv&quot;</span>)
+<span class="co">#&gt; Rows: 96</span>
+<span class="co">#&gt; Columns: 4</span>
+<span class="co">#&gt; Delimiter: &quot;;&quot;</span>
+<span class="co">#&gt; chr [4]: classification, icd, class, regex</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Use `spec()` to retrieve the guessed column specification</span>
+<span class="co">#&gt; Pass a specification to the `col_types` argument to quiet this message</span>
+tbclasses &lt;-<span class="st"> </span>tbclasses <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">rename</span>(<span class="dt">label=</span>class) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">regex.rm=</span><span class="ot">NA_character_</span>)<span class="co"># %&gt;%</span>
+
+<span class="co"># to understand the structure of tbclasses</span>
+tbclasses <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">str</span>()
+<span class="co">#&gt; Classes 'tbl_df', 'tbl' and 'data.frame':    96 obs. of  5 variables:</span>
+<span class="co">#&gt;  $ classification: chr  &quot;charlson&quot; &quot;charlson&quot; &quot;charlson&quot; &quot;charlson&quot; ...</span>
+<span class="co">#&gt;  $ icd           : chr  &quot;icd9&quot; &quot;icd9&quot; &quot;icd9&quot; &quot;icd9&quot; ...</span>
+<span class="co">#&gt;  $ label         : chr  &quot;ami&quot; &quot;chf&quot; &quot;pvd&quot; &quot;cevd&quot; ...</span>
+<span class="co">#&gt;  $ regex         : chr  &quot;^410|^412&quot; &quot;^39891|^40201|^40211|^40291|^40401|^40403|^40411|^40413|^40491|^40493|^4254|^4255|^4256|^4257|^4258|^4259|^428&quot; &quot;^0930|^4373|^440|^441|^4431|^4432|^4433|^4434|^4435|^4436|^4437|^4438|^4439|^4471|^5571|^5579|^V434&quot; &quot;^36234|^430|^431|^432|^433|^434|^435|^436|^437|^438&quot; ...</span>
+<span class="co">#&gt;  $ regex.rm      : chr  NA NA NA NA ...</span>
+tbclasses <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>()
+<span class="co">#&gt; # A tibble: 6 x 5</span>
+<span class="co">#&gt;   classification icd   label   regex                                    regex.rm</span>
+<span class="co">#&gt;   &lt;chr&gt;          &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;                                    &lt;chr&gt;   </span>
+<span class="co">#&gt; 1 charlson       icd9  ami     ^410|^412                                &lt;NA&gt;    </span>
+<span class="co">#&gt; 2 charlson       icd9  chf     ^39891|^40201|^40211|^40291|^40401|^404~ &lt;NA&gt;    </span>
+<span class="co">#&gt; 3 charlson       icd9  pvd     ^0930|^4373|^440|^441|^4431|^4432|^4433~ &lt;NA&gt;    </span>
+<span class="co">#&gt; 4 charlson       icd9  cevd    ^36234|^430|^431|^432|^433|^434|^435|^4~ &lt;NA&gt;    </span>
+<span class="co">#&gt; 5 charlson       icd9  dement~ ^290|^2941|^3312                         &lt;NA&gt;    </span>
+<span class="co">#&gt; 6 charlson       icd9  copd    ^4168|^4169|^490|^491|^492|^493|^494|^4~ &lt;NA&gt;</span>
+
+<span class="co"># following classifications are available:</span>
+tbclasses <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(classification) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">distinct</span>()
+<span class="co">#&gt; # A tibble: 2 x 1</span>
+<span class="co">#&gt;   classification</span>
+<span class="co">#&gt;   &lt;chr&gt;         </span>
+<span class="co">#&gt; 1 charlson      </span>
+<span class="co">#&gt; 2 elixhauser</span>
+<span class="co"># we select the classification to be &quot;elixhauser&quot;</span>
+sel_classes &lt;-<span class="st"> </span>tbclasses <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(classification<span class="op">==</span><span class="st">&quot;elixhauser&quot;</span>)</code></pre></div>
+<p>Next we will join the registerdata ‘reg’ to cohort data. Then we will search data within two years range from ‘indexdate’. It is enough that either ‘admissiondate’ or ‘dischargedate’ is within the interval.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># we want to find out the diseases within 2 years before and after the study date 'postingdate'</span>
+regintvl&lt;-cohort <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">left_join</span>(reg <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(personid,CODE1,admissiondate,dischargedate,icd),<span class="dt">by=</span><span class="st">&quot;personid&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># join the datas</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">indexdate=</span><span class="kw">ymd</span>(postingdate)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># 1. compute indexdate names 'indexdate'</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">timeinterval=</span> (indexdate<span class="op">-</span><span class="kw">years</span>(<span class="dv">2</span>)) <span class="op">%--%</span><span class="st"> </span>(indexdate<span class="op">+</span><span class="kw">years</span>(<span class="dv">2</span>)) ) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># 2. create an interval out of 'indexdate'</span>
+<span class="st">  </span><span class="kw">filter</span>(dischargedate <span class="op">%within%</span><span class="st"> </span>timeinterval <span class="op">|</span><span class="st"> </span>admissiondate <span class="op">%within%</span><span class="st"> </span>timeinterval) <span class="co"># 3. filtering</span></code></pre></div>
+<p>So that is one way of doing that. By using the function ‘datefilter’ from regstudies package the code becomes a bit cleaner. The function also allows arbitrary number of date variable to be entered in the filtering.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">regintvl&lt;-cohort <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">left_join</span>(reg <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(personid,CODE1,admissiondate,dischargedate,icd),<span class="dt">by=</span><span class="st">&quot;personid&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">postingdate=</span><span class="kw">ymd</span>(postingdate)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">datefilter</span>(<span class="dt">indexdate=</span>postingdate,<span class="dt">range=</span><span class="kw">years</span>(<span class="dv">2</span>),admissiondate,dischargedate) <span class="co"># filtering the diagnosis codes which are in the interval for each individual!</span></code></pre></div>
+<p>Alright, now we use function called ‘classify’ to make classification table out of diagnosis codes. The sel_classes is the object used for classification. This function will create as many new variables as there are class definitions. So the data will be wide! These data can be joined to register data using ‘left_join’!</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># remind me, what is in sel_classes?</span>
+sel_classes <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(classification) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">distinct</span>()
+<span class="co">#&gt; # A tibble: 1 x 1</span>
+<span class="co">#&gt;   classification</span>
+<span class="co">#&gt;   &lt;chr&gt;         </span>
+<span class="co">#&gt; 1 elixhauser</span>
+ltout &lt;-<span class="st"> </span><span class="kw">classify</span>(regintvl,<span class="dt">icdcodes=</span>CODE1,<span class="dt">diag_tbl=</span>sel_classes) <span class="co"># with exceptions</span>
+<span class="co">#&gt; [1] &quot;Element 'regex.rm' in use. Taking exceptions in use.&quot;</span>
+ltout <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>()
+<span class="co">#&gt; # A tibble: 6 x 34</span>
+<span class="co">#&gt;   CODE1 classification icd   elixh_aids elixh_ld elixh_pvd elixh_valv</span>
+<span class="co">#&gt;   &lt;chr&gt; &lt;chr&gt;          &lt;chr&gt;      &lt;int&gt;    &lt;int&gt;     &lt;int&gt;      &lt;int&gt;</span>
+<span class="co">#&gt; 1 -     elixhauser     icd9           0        0         0          0</span>
+<span class="co">#&gt; 2 -     elixhauser     icd10          0        0         0          0</span>
+<span class="co">#&gt; 3 2968A elixhauser     icd9           0        0         0          0</span>
+<span class="co">#&gt; 4 2968A elixhauser     icd10          0        0         0          0</span>
+<span class="co">#&gt; 5 A020  elixhauser     icd9           0        0         0          0</span>
+<span class="co">#&gt; 6 A020  elixhauser     icd10          0        0         0          0</span>
+<span class="co">#&gt; # ... with 27 more variables: elixh_solidtum &lt;int&gt;, elixh_metacanc &lt;int&gt;,</span>
+<span class="co">#&gt; #   elixh_lymph &lt;int&gt;, elixh_hypothy &lt;int&gt;, elixh_diabunc &lt;int&gt;,</span>
+<span class="co">#&gt; #   elixh_diabc &lt;int&gt;, elixh_fed &lt;int&gt;, elixh_wloss &lt;int&gt;, elixh_alcohol &lt;int&gt;,</span>
+<span class="co">#&gt; #   elixh_obes &lt;int&gt;, elixh_blane &lt;int&gt;, elixh_dane &lt;int&gt;, elixh_coag &lt;int&gt;,</span>
+<span class="co">#&gt; #   elixh_drug &lt;int&gt;, elixh_psycho &lt;int&gt;, elixh_depre &lt;int&gt;, elixh_ond &lt;int&gt;,</span>
+<span class="co">#&gt; #   elixh_para &lt;int&gt;, elixh_chf &lt;int&gt;, elixh_hypunc &lt;int&gt;, elixh_hypc &lt;int&gt;,</span>
+<span class="co">#&gt; #   elixh_rf &lt;int&gt;, elixh_pcd &lt;int&gt;, elixh_cpd &lt;int&gt;, elixh_carit &lt;int&gt;,</span>
+<span class="co">#&gt; #   elixh_rheumd &lt;int&gt;, elixh_pud &lt;int&gt;</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># next, we calculate the table which can be used for classification</span>
+ltout&lt;-cohort <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">left_join</span>(reg <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(personid,CODE1,admissiondate,dischargedate),<span class="dt">by=</span><span class="st">&quot;personid&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">postingdate=</span><span class="kw">ymd</span>(postingdate)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">datefilter</span>(<span class="dt">indexdate=</span>postingdate,<span class="dt">range=</span><span class="kw">years</span>(<span class="dv">2</span>),admissiondate,dischargedate) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># filterin the diagnosis codes which are in the interval for each individual!</span>
+<span class="st">  </span><span class="kw">classify_long</span>(<span class="dt">icdcodes=</span>CODE1,<span class="dt">diag_tbl=</span>sel_classes)
+<span class="co">#&gt; [1] &quot;Element 'regex.rm' in use. Taking exceptions in use.&quot;</span>
+ltout
+<span class="co">#&gt; # A tibble: 206,212 x 5</span>
+<span class="co">#&gt;    CODE1 classification icd   label          match</span>
+<span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt;          &lt;chr&gt; &lt;chr&gt;          &lt;int&gt;</span>
+<span class="co">#&gt;  1 -     elixhauser     icd9  elixh_aids         0</span>
+<span class="co">#&gt;  2 -     elixhauser     icd9  elixh_ld           0</span>
+<span class="co">#&gt;  3 -     elixhauser     icd9  elixh_pvd          0</span>
+<span class="co">#&gt;  4 -     elixhauser     icd9  elixh_valv         0</span>
+<span class="co">#&gt;  5 -     elixhauser     icd9  elixh_solidtum     0</span>
+<span class="co">#&gt;  6 -     elixhauser     icd9  elixh_metacanc     0</span>
+<span class="co">#&gt;  7 -     elixhauser     icd9  elixh_lymph        0</span>
+<span class="co">#&gt;  8 -     elixhauser     icd9  elixh_hypothy      0</span>
+<span class="co">#&gt;  9 -     elixhauser     icd9  elixh_diabunc      0</span>
+<span class="co">#&gt; 10 -     elixhauser     icd9  elixh_diabc        0</span>
+<span class="co">#&gt; # ... with 206,202 more rows</span>
+ltout <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">str</span>()
+<span class="co">#&gt; Classes 'tbl_df', 'tbl' and 'data.frame':    206212 obs. of  5 variables:</span>
+<span class="co">#&gt;  $ CODE1         : chr  &quot;-&quot; &quot;-&quot; &quot;-&quot; &quot;-&quot; ...</span>
+<span class="co">#&gt;  $ classification: chr  &quot;elixhauser&quot; &quot;elixhauser&quot; &quot;elixhauser&quot; &quot;elixhauser&quot; ...</span>
+<span class="co">#&gt;  $ icd           : chr  &quot;icd9&quot; &quot;icd9&quot; &quot;icd9&quot; &quot;icd9&quot; ...</span>
+<span class="co">#&gt;  $ label         : chr  &quot;elixh_aids&quot; &quot;elixh_ld&quot; &quot;elixh_pvd&quot; &quot;elixh_valv&quot; ...</span>
+<span class="co">#&gt;  $ match         : int  0 0 0 0 0 0 0 0 0 0 ...</span>
+<span class="co"># now we can utilise the table</span>
+<span class="co"># 'regintvl' is the data from registers to contain only the events withing +-2 year period interval</span>
+<span class="co"># it also contains only the events for individuals in 'cohort'</span>
+
+dat&lt;-cohort <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">left_join</span>(reg <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(personid,CODE1,admissiondate,dischargedate,icd),<span class="dt">by=</span><span class="st">&quot;personid&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">postingdate=</span><span class="kw">ymd</span>(postingdate)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">datefilter</span>(<span class="dt">indexdate=</span>postingdate,<span class="dt">range=</span><span class="kw">years</span>(<span class="dv">2</span>),admissiondate,dischargedate) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">classifydata_long</span>(<span class="dt">icdcodes=</span>CODE1,<span class="dt">diag_tbl=</span>sel_classes) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(match<span class="op">&gt;</span><span class="dv">0</span>)
+<span class="co">#&gt; [1] &quot;Element 'regex.rm' in use. Taking exceptions in use.&quot;</span>
+<span class="co">#&gt; [1] &quot;CODE1&quot;          &quot;classification&quot; &quot;icd&quot;            &quot;label&quot;         </span>
+<span class="co">#&gt; [5] &quot;match&quot;</span></code></pre></div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

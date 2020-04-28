@@ -1,0 +1,135 @@
+---
+title: "Use cases of 'regstudies' R package"
+author: "Juho Kopra"
+date: "`r Sys.Date()`"
+output: word_document#rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{regstudies R package use cases}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = ">"
+)
+
+```
+
+### How to use
+
+```{r echo=T, results='hide'}
+library(tidyverse)
+library(regstudies)
+# read cohort data
+library(vroom)
+cohort <- vroom("./datas/fake_cohort.csv")
+cohort %>%
+  head()
+# personid: id for each individual in the study
+# postingdate: date of interest to find comorbidities
+# status: some kind of additional data ???
+
+# prepare some register data:
+reg<-vroom(file="./datas/ostpre_hilmo_9616_dgt_eng.csv")
+library(lubridate)
+reg<-reg %>%
+  mutate(admissiondate=dmy(admissiondate),dischargedate=dmy(dischargedate))
+reg %>%
+  head()
+
+# lets calculate if the code is icd-8, icd-9 or icd-10
+reg<-reg %>%
+  mutate(icd=case_when( year(dischargedate)<1987 ~ "icd8",
+                        year(dischargedate)<1996 & year(dischargedate)>=1987 ~ "icd9",
+                        year(dischargedate)>=1996 ~ "icd10"
+                      )
+        ) %>%
+  mutate(startletter=regexpr(pattern="^[A-Z]",CODE1)>0)
+table(reg$icd,reg$startletter) # These data does not contain ICD-9 diagnostics codes. Only ICD-10.
+```
+
+# Loading a code classification definition from Excel file
+
+Okay, so in this phase we load data from Excel file and modify it to suit the needs or regstudies package. It may be easier to ask your collaborate researchers to fill an Excel file with suitable diagnose codes (e.g. ICD-codes) with an asterix symbol of "\%" in this case. The function 'make_regex' can be used to tranform these LIKE\% codes to regural expression definitions automatically.
+```{r echo=T, results='hide'}
+
+# We load classification here
+excelfile <- readxl::read_excel("./datas/disease_classification.xlsx")
+cl9 <- excelfile %>%
+  make_regex(classname=Lyhenne,diagnosis=sairdiag_icd9,diagnosis.rm=sairdiagpl_icd9) %>%
+  mutate(icd="icd9")
+cl10 <- excelfile %>%
+  make_regex(classname=Lyhenne,diagnosis=sairdiag,diagnosis.rm=sairdiagpl) %>%
+  mutate(icd="icd10")
+
+sel_classes<-bind_rows(cl9,cl10) %>%
+              mutate(classification="own_definition")
+rm(list=c("cl9","cl10"))
+```
+
+```{r echo=T, results='hide'}
+
+tbclasses<-vroom("./datas/pois/charlson_and_elixhauser_classifications.csv")
+tbclasses <- tbclasses %>%
+  rename(label=class) %>%
+  mutate(regex.rm=NA_character_)# %>%
+
+# to understand the structure of tbclasses
+tbclasses %>% str()
+tbclasses %>% head()
+
+# following classifications are available:
+tbclasses %>%
+  select(classification) %>% distinct()
+# we select the classification to be "elixhauser"
+sel_classes <- tbclasses %>% filter(classification=="elixhauser")
+```
+Next we will join the registerdata 'reg' to cohort data. Then we will search data within two years range from 'indexdate'. It is enough that either 'admissiondate' or 'dischargedate' is within the interval.
+```{r echo=T, results='hide'}
+# we want to find out the diseases within 2 years before and after the study date 'postingdate'
+regintvl<-cohort %>%
+  left_join(reg %>% select(personid,CODE1,admissiondate,dischargedate,icd),by="personid") %>% # join the datas
+  mutate(indexdate=ymd(postingdate)) %>% # 1. compute indexdate names 'indexdate'
+  mutate(timeinterval= (indexdate-years(2)) %--% (indexdate+years(2)) ) %>% # 2. create an interval out of 'indexdate'
+  filter(dischargedate %within% timeinterval | admissiondate %within% timeinterval) # 3. filtering
+```
+So that is one way of doing that. By using the function 'datefilter' from regstudies package the code becomes a bit cleaner. The function also allows arbitrary number of date variable to be entered in the filtering.
+```{r echo=T, results='hide'}
+regintvl<-cohort %>%
+  left_join(reg %>% select(personid,CODE1,admissiondate,dischargedate,icd),by="personid") %>%
+  mutate(postingdate=ymd(postingdate)) %>%
+  datefilter(indexdate=postingdate,range=years(2),admissiondate,dischargedate) # filtering the diagnosis codes which are in the interval for each individual!
+```
+Alright, now we use function called 'classify' to make classification table out of diagnosis codes. The sel_classes is the object used for classification. This function will create as many new variables as there are class definitions. So the data will be wide! These data can be joined to register data using 'left_join'! 
+```{r echo=T, results='hide'}
+# remind me, what is in sel_classes?
+sel_classes %>%
+  select(classification) %>% distinct()
+ltout <- classify(regintvl,icdcodes=CODE1,diag_tbl=sel_classes) # with exceptions
+ltout %>% head()
+```
+
+```{r echo=T, results='hide'}
+# next, we calculate the table which can be used for classification
+ltout<-cohort %>%
+  left_join(reg %>% select(personid,CODE1,admissiondate,dischargedate),by="personid") %>%
+  mutate(postingdate=ymd(postingdate)) %>%
+  datefilter(indexdate=postingdate,range=years(2),admissiondate,dischargedate) %>% # filterin the diagnosis codes which are in the interval for each individual!
+  classify_long(icdcodes=CODE1,diag_tbl=sel_classes)
+ltout
+ltout %>% str()
+# now we can utilise the table
+# 'regintvl' is the data from registers to contain only the events withing +-2 year period interval
+# it also contains only the events for individuals in 'cohort'
+
+dat<-cohort %>%
+  left_join(reg %>% select(personid,CODE1,admissiondate,dischargedate,icd),by="personid") %>%
+  mutate(postingdate=ymd(postingdate)) %>%
+  datefilter(indexdate=postingdate,range=years(2),admissiondate,dischargedate) %>%
+  classifydata_long(icdcodes=CODE1,diag_tbl=sel_classes) %>%
+  filter(match>0)
+
+
+```
