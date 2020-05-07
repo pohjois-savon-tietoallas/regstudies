@@ -8,7 +8,7 @@ library(tidyverse)
 library(regstudies) # requires dplyr, tidyr, stringr, purrr
 # read cohort data
 library(vroom)
-cohort <- vroom("./datas/fake_cohort.csv")
+cohort <- vroom("./data/fake_cohort.csv")
 cohort %>%
   head()
 # personid: id for each individual in the study
@@ -16,7 +16,7 @@ cohort %>%
 # status: some kind of additional data (random 0/1)
 
 # prepare some register data:
-reg<-vroom(file="./datas/ostpre_hilmo_9616_dgt_fake.csv")
+reg <- vroom(file="./data/ostpre_hilmo_9616_dgt_fake.csv")
 library(lubridate)
 reg<-reg %>%
   mutate(admissiondate=dmy(admissiondate),dischargedate=dmy(dischargedate)) %>%
@@ -36,22 +36,22 @@ reg <- reg %>%
 # complete code examples:
 filtereddata <- cohort %>%
   left_join(reg %>% select(personid,CODE1,admissiondate,dischargedate,icd),by="personid") %>%
-  datefilter(indexdate=postingdate,range=years(2),admissiondate,dischargedate)
+  filter_date(indexdate=postingdate,range=years(2),admissiondate,dischargedate)
 
 # Elixhauser scores:
-elixhauser_classes <- classes_to_wide(vroom(file = "datas/classification_codes/elixhauser_classes_wide.csv"))
+elixhauser_classes <- classes_to_wide(vroom(file = "data/classification_codes/elixhauser_classes_wide.csv"))
 elixscore <- filtereddata %>%
-  classifydata_long(icdcodes=CODE1,diag_tbl=elixhauser_classes) %>%
-  summaryscore(score_AHRQ,score_van_Walraven)
+  classify_data_long(icdcodes=CODE1,diag_tbl=elixhauser_classes) %>%
+  sum_score(score_AHRQ,score_van_Walraven)
 elixscore <- left_join(cohort %>% select(personid), elixscore)
 #View(elixscore)
 
 # Charlson score:
-charlson_classes <- classes_to_wide(vroom(file = "datas/classification_codes/charlson_classes_wide.csv"))
+charlson_classes <- classes_to_wide(vroom(file = "data/classification_codes/charlson_classes_wide.csv"))
 charlsonscore <- filtereddata %>%
-  classifydata_long(icdcodes=CODE1,diag_tbl=charlson_classes) %>%
+  classify_data_long(icdcodes=CODE1,diag_tbl=charlson_classes) %>%
   rename(score_charlson=score) %>%
-  summaryscore(score_charlson)
+  sum_score(score_charlson)
 charlsonscore <- left_join(cohort %>% select(personid), charlsonscore)
 #View(charlsonscore)
 

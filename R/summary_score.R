@@ -10,10 +10,10 @@
 #' # Lets calculate two different Elixhauser scores for a data set 'filtereddata'
 #' elixhauser_classes <- classes_to_wide(vroom(file = "datas/classification_codes/elixhauser_classes_wide.csv"))
 #' elixscore <- filtereddata %>%
-#'   classifydata_long(icdcodes=CODE1,diag_tbl=elixhauser_classes) %>%
-#'   summary_score(score_AHRQ,score_van_Walraven)
+#'   classify_data_long(icdcodes=CODE1,diag_tbl=elixhauser_classes) %>%
+#'   sum_score(score_AHRQ,score_van_Walraven)
 #'
-summary_score <- function(.data,...) {
+sum_score <- function(.data,...) {
   vars<-enquos(...)
   # A bad code to extract names given by "..." (I could not figure out the better way):
   nimet <- .data %>% head(0) %>% select(!!! vars) %>% names()

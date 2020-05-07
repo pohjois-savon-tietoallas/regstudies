@@ -10,9 +10,9 @@
 #' dat<-ostprekoh %>%
 #' left_join(dg %>% select(lomno1,KOODI1,tulopvm,lahtopvm,icd),by="lomno1") %>%
 #'   mutate(Postituspvm=ymd(Postituspvm)) %>%
-#'   date_filter(indexdate=Postituspvm,range=years(2),tulopvm,lahtopvm)
+#'   filter_date(indexdate=Postituspvm,range=years(2),tulopvm,lahtopvm)
 #'
-date_filter<-function(.data,indexdate,range=years(2),...) { #,datevars=c("tulopvm","lahtopvm")
+filter_date <- function(.data,indexdate,range=years(2),...) { #,datevars=c("tulopvm","lahtopvm")
   # .data: data to be used
   # indexdate: index date (which date variable is to be compared with register data)
   # range: the distance from index date (lubridate format, e.g years(1), weeks(10), days(20) etc.)

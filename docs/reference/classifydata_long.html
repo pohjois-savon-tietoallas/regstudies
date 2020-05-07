@@ -159,7 +159,7 @@
 <span class='no'>dat</span><span class='kw'>&lt;-</span><span class='no'>ostprekoh</span> <span class='kw'>%&gt;%</span>
 <span class='fu'>left_join</span>(<span class='no'>dg</span> <span class='kw'>%&gt;%</span> <span class='fu'>select</span>(<span class='no'>lomno1</span>,<span class='no'>KOODI1</span>,<span class='no'>tulopvm</span>,<span class='no'>lahtopvm</span>,<span class='no'>icd</span>),<span class='kw'>by</span><span class='kw'>=</span><span class='st'>"lomno1"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>mutate</span>(<span class='kw'>Postituspvm</span><span class='kw'>=</span><span class='fu'>ymd</span>(<span class='no'>Postituspvm</span>)) <span class='kw'>%&gt;%</span>
-  <span class='fu'>datefilter</span>(<span class='kw'>indexdate</span><span class='kw'>=</span><span class='no'>Postituspvm</span>,<span class='kw'>range</span><span class='kw'>=</span><span class='fu'>years</span>(<span class='fl'>2</span>),<span class='no'>tulopvm</span>,<span class='no'>lahtopvm</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='datefilter.html'>datefilter</a></span>(<span class='kw'>indexdate</span><span class='kw'>=</span><span class='no'>Postituspvm</span>,<span class='kw'>range</span><span class='kw'>=</span><span class='fu'>years</span>(<span class='fl'>2</span>),<span class='no'>tulopvm</span>,<span class='no'>lahtopvm</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>classifydata_long</span>(<span class='kw'>icdcodes</span><span class='kw'>=</span><span class='no'>KOODI1</span>,<span class='kw'>diag_tbl</span><span class='kw'>=</span><span class='no'>sel_classes</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span>(<span class='no'>match</span><span class='kw'>&gt;</span><span class='fl'>0</span>)</div><div class='output co'>#&gt; <span class='error'>Error in ostprekoh %&gt;% left_join(dg %&gt;% select(lomno1, KOODI1, tulopvm,     lahtopvm, icd), by = "lomno1") %&gt;% mutate(Postituspvm = ymd(Postituspvm)) %&gt;%     datefilter(indexdate = Postituspvm, range = years(2), tulopvm,         lahtopvm) %&gt;% classifydata_long(icdcodes = KOODI1, diag_tbl = sel_classes) %&gt;%     filter(match &gt; 0): could not find function "%&gt;%"</span></div></pre>
   </div>
@@ -173,7 +173,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Juho Kopra, Jani Miettinen.</p>
+  <p>Developed by .</p>
 </div>
 
 <div class="pkgdown">

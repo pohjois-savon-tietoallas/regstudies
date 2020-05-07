@@ -19,7 +19,7 @@
 #'   datefilter(indexdate=Postituspvm,range=years(2),tulopvm,lahtopvm) %>%
 #'   classify_data_long(icdcodes=KOODI1,diag_tbl=sel_classes) %>%
 #'   filter(match>0)
-classify_data_long<-function(.data,id,icdcodes,diag_tbl,fill=0) {
+classify_data_long<-function(.data, id, icdcodes, diag_tbl, fill=0) {
   icdcodes_quo <- enquo(icdcodes)
   id_quo <- enquo(id)
   ctobj<-classify_long(.data=.data,icdcodes=!!icdcodes_quo,diag_tbl=diag_tbl,return_binary=FALSE) #classification table object'

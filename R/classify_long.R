@@ -15,7 +15,7 @@
 #' ostprekoh %>%
 #'   left_join(dg %>% select(lomno1,KOODI1,tulopvm,lahtopvm),by="lomno1") %>%
 #'   mutate(Postituspvm=ymd(Postituspvm)) %>%
-#'   datefilter(indexdate=Postituspvm,range=years(2),tulopvm,lahtopvm) %>% # filtering the diagnosis codes which are in the interval for each individual!
+#'   filter_date(indexdate=Postituspvm,range=years(2),tulopvm,lahtopvm) %>% # filtering the diagnosis codes which are in the interval for each individual!
 #'   classify_long(icdcodes=KOODI1,diag_tbl=sel_classes)
 #'
 classify_long <- function(.data,icdcodes,diag_tbl,return_binary=TRUE) {

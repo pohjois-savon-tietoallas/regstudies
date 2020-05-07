@@ -12,6 +12,11 @@ Authors@R:
             family="Miettinen",
             role=c("aut"),
             email="jani.miettinen@uef.fi",
+            comment="")),
+      person(given="Reijo",
+            family="Sund",
+            role=c("aut"),
+            email="reijo.sund@uef.fi",
             comment=""))
 Maintainer: Juho Kopra <juho.kopra@uef.fi>
 Description: The data utilised in register studies, often called as register-based data or administrative data,

@@ -19,7 +19,7 @@
 #'   datefilter(indexdate=Postituspvm,range=years(2),tulopvm,lahtopvm) %>% # filtering the diagnosis codes which are in the interval for each individual!
 #'   classify_long(icdcodes=KOODI1,diag_tbl=sel_classes)
 #'
-classify <- function(.data,icdcodes,diag_tbl,return_binary=TRUE) {
+classify <- function(.data, icdcodes, diag_tbl, return_binary=TRUE) {
   # classify2: with 'regex.rm' -option
   # .data: tibble from which we want to study
   # icdcodes: name of the variable holding ICD-codes
