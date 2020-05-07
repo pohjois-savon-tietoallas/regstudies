@@ -12,7 +12,7 @@ Authors@R:
             family="Miettinen",
             role=c("aut"),
             email="jani.miettinen@uef.fi",
-            comment="")),
+            comment=""),
       person(given="Reijo",
             family="Sund",
             role=c("aut"),
