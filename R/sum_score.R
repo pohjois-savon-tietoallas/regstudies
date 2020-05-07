@@ -24,6 +24,6 @@ sum_score <- function(.data,...) {
     distinct() %>%
     group_by(personid,classification) %>%
     summarise_at(nimet,sum,na.rm=T)
-  names(output)[3:(3+length(nimet)-1)]<-paste("summary(",nimet,")",sep="")
+  names(output)[3:(3+length(nimet)-1)]<-paste("sum(",nimet,")",sep="")
   output
 }

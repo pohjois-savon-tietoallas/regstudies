@@ -9,7 +9,7 @@
 #' sel_classes2 <- classes_to_wide(sel_classes = sel_classes)
 #' head(sel_classes2)
 classes_to_wide <- function(sel_classes) {
-  require(tidyselect)
+  #require(tidyselect) # not needed anymore? Now uses tidyselect::contains
   main        <- sel_classes %>% select(classification, label, contains("score")) %>% distinct()
   dat_to_long <- sel_classes %>% select(-contains("score"), -classification)
   nimet       <- setdiff(names(dat_to_long), c("class","label"))
@@ -34,5 +34,5 @@ classes_to_wide <- function(sel_classes) {
     nimet2<-c(nimet2,"regex.rm")
   }
   sel_classes2 %>%
-    select(contains(c("classification","icd","class","label","regex","score")))
+    select(tidyselect::contains(c("classification","icd","class","label","regex","score")))
 }

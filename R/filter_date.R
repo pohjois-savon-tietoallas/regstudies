@@ -21,7 +21,7 @@ filter_date <- function(.data,indexdate,range=years(2),...) { #,datevars=c("tulo
   datevars<-enquos(...)
   ndatevars<-length(datevars)
   
-  require(purrr)
+  #require(purrr) # not needed?
   fwithin<-function(var,ival) {
     expr((!! var) %within% ival)
   }

@@ -8,16 +8,20 @@ library(tidyverse)
 library(regstudies) # requires dplyr, tidyr, stringr, purrr
 # read cohort data
 library(vroom)
-cohort <- vroom("./data/fake_cohort.csv")
+library(lubridate)
+cohort <- vroom("./data/fake_cohort.csv",col_types=c(personid='i',postingdate='D'))
+#write.csv2(cohort%>%select(-status),
+#           file="./data/fake_cohort2.csv",row.names=FALSE)
 cohort %>%
+#  mutate(postingdate=ymd(postingdate)) %>%
   head()
 # personid: id for each individual in the study
 # postingdate: date of interest to find comorbidities
 # status: some kind of additional data (random 0/1)
 
 # prepare some register data:
-reg <- vroom(file="./data/ostpre_hilmo_9616_dgt_fake.csv")
-library(lubridate)
+#C:/Users/jukop/Documents/UEFhommat/Tietoallasprojekti/rekkarityokalu
+reg <- vroom(file="../rekisteridatat/ostpre_hilmo_9616_dgt_eng.csv")
 reg<-reg %>%
   mutate(admissiondate=dmy(admissiondate),dischargedate=dmy(dischargedate)) %>%
   mutate(CODE1=ifelse(CODE1=="-",NA,CODE1),CODE2=ifelse(CODE2=="-",NA,CODE2))
@@ -39,15 +43,33 @@ filtereddata <- cohort %>%
   filter_date(indexdate=postingdate,range=years(2),admissiondate,dischargedate)
 
 # Elixhauser scores:
-elixhauser_classes <- classes_to_wide(vroom(file = "data/classification_codes/elixhauser_classes_wide.csv"))
+elixhauser_classes <- read_class(file = "data/classification_codes/elixhauser_classes_wide.csv")
+#View(elixhauser_classes)
 elixscore <- filtereddata %>%
   classify_data_long(icdcodes=CODE1,diag_tbl=elixhauser_classes) %>%
   sum_score(score_AHRQ,score_van_Walraven)
-elixscore <- left_join(cohort %>% select(personid), elixscore)
+elixscore %>%
+  get_var_types()
+
+elixscore
+elixscore <- left_join0(cohort %>% select(personid), elixscore)
 #View(elixscore)
 
+# [X] summary(score_AHRQ) muotoon sum(score_AHRQ)
+# [X] classify_data_long tulostaa liikaa
+# [X] classes_to_wide voisi olla read_classes, jolle annetaan tiedostopolku
+# [X] cohort datasta status pois, postingdate muotoon indexdate (ehkä)
+# [X] left_join0 lisätty
+# [X] get_var_types lisätty
+# TODO: 
+# - class, label ja score muotoon class_charlson, label_charlson ja score_charlson
+# - selvitä, mitkä funktiot on tarpeettomia ja mitkä tarpeellisia
+# - demoa Hospital Frailty Risk Score -indeksiä!
+
 # Charlson score:
-charlson_classes <- classes_to_wide(vroom(file = "data/classification_codes/charlson_classes_wide.csv"))
+#charlson_classes <- classes_to_wide(vroom(file = "data/classification_codes/charlson_classes_wide.csv"))
+charlson_classes <- read_class(file = "data/classification_codes/charlson_classes_wide.csv")
+#View(charlson_classes)
 charlsonscore <- filtereddata %>%
   classify_data_long(icdcodes=CODE1,diag_tbl=charlson_classes) %>%
   rename(score_charlson=score) %>%
@@ -68,7 +90,7 @@ cohortscores<-left_join(cohort %>% select(personid),bothscores) %>%
 cohortscores %>%
   head(10)
 cohortscores %>%
-  filter(`summary(score_AHRQ)`+`summary(score_van_Walraven)`+`summary(score_charlson)`>0) %>%
+  filter(`sum(score_AHRQ)`+`sum(score_van_Walraven)`+`sum(score_charlson)`>0) %>%
   head(10)
 plot(cohortscores)
-cor(cohortscores %>% select(-classification))
+cor(cohortscores)

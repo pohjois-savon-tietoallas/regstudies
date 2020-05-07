@@ -28,16 +28,10 @@ classify_data_long<-function(.data, id, icdcodes, diag_tbl, fill=0) {
     select(classification) %>%
     distinct() %>% as.vector()
   nimet<-names(ctobj)
-  nimet
-  print("ctobj:")
-  print(names(ctobj))
-  print(".data:")
-  print(names(.data))
-  
+
   # icdcodes = KOODI1
   # id = lomno1 # user needs to enter this currently!
   text<-c(as_label(icdcodes_quo),"icd")
-  print(text)
   outdat<-.data %>%
     #select(!!id_quo,!!icdcodes_quo) %>% # removed unnecessary variables
     left_join(ctobj%>%filter(match)%>%select(-match),by=text)
