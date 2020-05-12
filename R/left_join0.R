@@ -7,6 +7,6 @@
 #' @return resulting tibble after join and fill
 left_join0<-function(x,y,fill=0) {
   out<-left_join(x,y)
-  out[is.na(out)]<-fill
+  out[is.na(out) & is.numeric(out)]<-fill
   out
 }

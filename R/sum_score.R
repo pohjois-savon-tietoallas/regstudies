@@ -5,25 +5,36 @@
 #' @param ... the names of the variables to be summed over.
 #'
 #' @return returns scores summed over the given variables.
+#' 
+#' @importFrom rlang enquos
+#' @importFrom tidyselect select
+#' @importFrom dplyr filter %>%
+#' @importFrom dplyr distinct
+#' @importFrom dplyr group_by
+#' @importFrom dplyr summarise_at
+#' 
 #' @examples
-#'
+#' \dontrun{
 #' # Lets calculate two different Elixhauser scores for a data set 'filtereddata'
-#' elixhauser_classes <- classes_to_wide(vroom(file = "datas/classification_codes/elixhauser_classes_wide.csv"))
+#' elixhauser_classes <- classes_to_wide(vroom(file = "data/classification_codes/elixhauser_classes_wide.csv"))
 #' elixscore <- filtereddata %>%
 #'   classify_data_long(icdcodes=CODE1,diag_tbl=elixhauser_classes) %>%
 #'   sum_score(score_AHRQ,score_van_Walraven)
-#'
+#' }
+#' @rdname sum_score
+#' @export
+#' 
 sum_score <- function(.data,...) {
-  vars<-enquos(...)
+  vars<-rlang::enquos(...)
   # A bad code to extract names given by "..." (I could not figure out the better way):
-  nimet <- .data %>% head(0) %>% select(!!! vars) %>% names()
+  nimet <- .data %>% head(0) %>% tidyselect::select(!!! vars) %>% names()
   
   output <- .data %>%
-    select(c("personid","classification","class",nimet)) %>%
-    filter(!is.na(classification)) %>%
-    distinct() %>%
-    group_by(personid,classification) %>%
-    summarise_at(nimet,sum,na.rm=T)
+    tidyselect::select(c("personid","classification","class",nimet)) %>%
+    dplyr::filter(!is.na(classification)) %>%
+    dplyr::distinct() %>%
+    dplyr::group_by(personid,classification) %>%
+    dplyr::summarise_at(nimet,sum,na.rm=T)
   names(output)[3:(3+length(nimet)-1)]<-paste("sum(",nimet,")",sep="")
   output
 }

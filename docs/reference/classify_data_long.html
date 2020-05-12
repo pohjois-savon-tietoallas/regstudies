@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Articles • regstudies</title>
+<title>Extends the original data with the classification table and keeps data in long format. — classify_data_long • regstudies</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,8 @@
 
 
 
-<meta property="og:title" content="Articles" />
+<meta property="og:title" content="Extends the original data with the classification table and keeps data in long format. — classify_data_long" />
+<meta property="og:description" content="Computes classification table and attaches it to original data. Data stays in long format." />
 
 
 
@@ -58,7 +59,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-article-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -114,18 +115,58 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Articles</h1>
+    <h1>Extends the original data with the classification table and keeps data in long format.</h1>
+    
+    <div class="hidden name"><code>classify_data_long.Rd</code></div>
     </div>
 
-    <div class="section ">
-      <h3>All vignettes</h3>
-      <p class="section-desc"></p>
-
-      <dl>
-        <dt><a href="vignette_v2_old.html">Use cases of 'regstudies' R package</a></dt>
-        <dd></dt>
-      </dl>
+    <div class="ref-description">
+    <p>Computes classification table and attaches it to original data. Data stays in long format.</p>
     </div>
+
+    <pre class="usage"><span class='fu'>classify_data_long</span>(<span class='no'>.data</span>, <span class='no'>id</span>, <span class='no'>icdcodes</span>, <span class='no'>diag_tbl</span>, <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fl'>0</span>)</pre>
+
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>.data</th>
+      <td><p>tibble of register data which we want to study</p></td>
+    </tr>
+    <tr>
+      <th>icdcodes</th>
+      <td><p>name of the variable holding ICD-codes</p></td>
+    </tr>
+    <tr>
+      <th>diag_tbl</th>
+      <td><p>tibble which holds the classification details: needs to have variables 'regex' and 'label'
+'regex' must hold a string with a regular expression defining classes.
+'regex.rm' is optional, defines exceptions to 'regex' (these are not in the group they are named in)
+'label' defines the names of the variables of classes (e.g. comorbidity indicators)</p></td>
+    </tr>
+    </table>
+
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    
+
+
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># we calculate the table which can be used for classification.</span>
+<span class='co'># 'ostprekoh' is the register data containing 'lomno1' individual id number and data 'dg' contains the register data of disease diagnoses.</span>
+
+<span class='no'>dat</span><span class='kw'>&lt;-</span><span class='no'>ostprekoh</span> <span class='kw'>%&gt;%</span>
+<span class='fu'>left_join</span>(<span class='no'>dg</span> <span class='kw'>%&gt;%</span> <span class='fu'>select</span>(<span class='no'>lomno1</span>,<span class='no'>KOODI1</span>,<span class='no'>tulopvm</span>,<span class='no'>lahtopvm</span>,<span class='no'>icd</span>),<span class='kw'>by</span><span class='kw'>=</span><span class='st'>"lomno1"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'>mutate</span>(<span class='kw'>Postituspvm</span><span class='kw'>=</span><span class='fu'>ymd</span>(<span class='no'>Postituspvm</span>)) <span class='kw'>%&gt;%</span>
+  <span class='fu'>datefilter</span>(<span class='kw'>indexdate</span><span class='kw'>=</span><span class='no'>Postituspvm</span>,<span class='kw'>range</span><span class='kw'>=</span><span class='fu'>years</span>(<span class='fl'>2</span>),<span class='no'>tulopvm</span>,<span class='no'>lahtopvm</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'>classify_data_long</span>(<span class='kw'>icdcodes</span><span class='kw'>=</span><span class='no'>KOODI1</span>,<span class='kw'>diag_tbl</span><span class='kw'>=</span><span class='no'>sel_classes</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span>(<span class='no'>match</span><span class='kw'>&gt;</span><span class='fl'>0</span>)</div><div class='output co'>#&gt; <span class='error'>Error in ostprekoh %&gt;% left_join(dg %&gt;% select(lomno1, KOODI1, tulopvm,     lahtopvm, icd), by = "lomno1") %&gt;% mutate(Postituspvm = ymd(Postituspvm)) %&gt;%     datefilter(indexdate = Postituspvm, range = years(2), tulopvm,         lahtopvm) %&gt;% classify_data_long(icdcodes = KOODI1, diag_tbl = sel_classes) %&gt;%     filter(match &gt; 0): could not find function "%&gt;%"</span></div></pre>
+  </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 

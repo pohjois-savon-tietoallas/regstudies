@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Classify diagnosis codes (old one) — classify • regstudies</title>
+<title>Filtering datetime data within interval. — filter_date • regstudies</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Classify diagnosis codes (old one) — classify" />
-<meta property="og:description" content="Computes classification table which can be attached to original data using left_join(). Utilises exceptions to class definitions via 'regex.rm'" />
+<meta property="og:title" content="Filtering datetime data within interval. — filter_date" />
+<meta property="og:description" content="Filtering datetime data within interval." />
 
 
 
@@ -115,38 +115,31 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Classify diagnosis codes (old one)</h1>
+    <h1>Filtering datetime data within interval.</h1>
     
-    <div class="hidden name"><code>classify.Rd</code></div>
+    <div class="hidden name"><code>filter_date.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Computes classification table which can be attached to original data using left_join(). Utilises exceptions to class definitions via 'regex.rm'</p>
+    <p>Filtering datetime data within interval.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>classify</span>(<span class='no'>.data</span>, <span class='no'>icdcodes</span>, <span class='no'>diag_tbl</span>, <span class='kw'>return_binary</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>filter_date</span>(<span class='no'>.data</span>, <span class='no'>indexdate</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='fu'>years</span>(<span class='fl'>2</span>), <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>.data</th>
-      <td><p>tibble of register data which we want to study</p></td>
+      <th>indexdate</th>
+      <td><p>index date (which date variable is to be compared with register data)</p></td>
     </tr>
     <tr>
-      <th>icdcodes</th>
-      <td><p>name of the variable holding ICD-codes</p></td>
+      <th>range</th>
+      <td><p>the distance from index date (lubridate format, e.g years(1), weeks(10), days(20) etc.)</p></td>
     </tr>
     <tr>
-      <th>diag_tbl</th>
-      <td><p>tibble which holds the classification details: needs to have variables 'regex' and 'label'
-'regex' must hold a string with a regular expression defining classes.
-'regex.rm' is optional, defines exceptions to 'regex' (these are not in the group they are named in)
-'label' defines the names of the variables of classes (e.g. comorbidity indicators)</p></td>
-    </tr>
-    <tr>
-      <th>return_binary</th>
-      <td><p>returns 0 or 1 if set as TRUE, TRUE/FALSE if set up as FALSE</p></td>
+      <th>...</th>
+      <td><p>datetime variables which need to be within the range. May be any number (&gt;1) of variables.  If one variable is within interval, then that row is included in the data (Applies OR operator).</p></td>
     </tr>
     </table>
 
@@ -157,14 +150,7 @@
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># we calculate the table which can be used for classification.</span>
-<span class='co'># 'ostprekoh' is the register data containing 'lomno1' individual id number and data 'dg' contains the register data of disease diagnoses.</span>
-<span class='no'>ostprekoh</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>left_join</span>(<span class='no'>dg</span> <span class='kw'>%&gt;%</span> <span class='fu'>select</span>(<span class='no'>lomno1</span>,<span class='no'>KOODI1</span>,<span class='no'>tulopvm</span>,<span class='no'>lahtopvm</span>),<span class='kw'>by</span><span class='kw'>=</span><span class='st'>"lomno1"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>mutate</span>(<span class='kw'>Postituspvm</span><span class='kw'>=</span><span class='fu'>ymd</span>(<span class='no'>Postituspvm</span>)) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='datefilter.html'>datefilter</a></span>(<span class='kw'>indexdate</span><span class='kw'>=</span><span class='no'>Postituspvm</span>,<span class='kw'>range</span><span class='kw'>=</span><span class='fu'>years</span>(<span class='fl'>2</span>),<span class='no'>tulopvm</span>,<span class='no'>lahtopvm</span>) <span class='kw'>%&gt;%</span> <span class='co'># filtering the diagnosis codes which are in the interval for each individual!</span>
-  <span class='fu'><a href='classify_long.html'>classify_long</a></span>(<span class='kw'>icdcodes</span><span class='kw'>=</span><span class='no'>KOODI1</span>,<span class='kw'>diag_tbl</span><span class='kw'>=</span><span class='no'>sel_classes</span>)</div><div class='output co'>#&gt; <span class='error'>Error in ostprekoh %&gt;% left_join(dg %&gt;% select(lomno1, KOODI1, tulopvm,     lahtopvm), by = "lomno1") %&gt;% mutate(Postituspvm = ymd(Postituspvm)) %&gt;%     datefilter(indexdate = Postituspvm, range = years(2), tulopvm,         lahtopvm) %&gt;% classify_long(icdcodes = KOODI1, diag_tbl = sel_classes): could not find function "%&gt;%"</span></div><div class='input'>
-</div></pre>
+    <pre class="examples"></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -176,7 +162,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by .</p>
+  <p>Developed by Juho Kopra, Jani Miettinen, Reijo Sund.</p>
 </div>
 
 <div class="pkgdown">

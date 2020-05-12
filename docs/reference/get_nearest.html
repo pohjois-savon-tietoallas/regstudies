@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get first value based on datetime variable — getfirst • regstudies</title>
+<title>Get nearest value based on datetime variable — get_nearest • regstudies</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Get first value based on datetime variable — getfirst" />
-<meta property="og:description" content="Get first value based on datetime variable" />
+<meta property="og:title" content="Get nearest value based on datetime variable — get_nearest" />
+<meta property="og:description" content="Get nearest value based on datetime variable" />
 
 
 
@@ -115,16 +115,16 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get first value based on datetime variable</h1>
+    <h1>Get nearest value based on datetime variable</h1>
     
-    <div class="hidden name"><code>getfirst.Rd</code></div>
+    <div class="hidden name"><code>get_nearest.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Get first value based on datetime variable</p>
+    <p>Get nearest value based on datetime variable</p>
     </div>
 
-    <pre class="usage"><span class='fu'>getfirst</span>(<span class='no'>.date</span>, <span class='no'>var</span>)</pre>
+    <pre class="usage"><span class='fu'>get_nearest</span>(<span class='no'>.date</span>, <span class='no'>var</span>, <span class='no'>centroid</span>, <span class='kw'>only_previous</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -137,18 +137,24 @@
       <th>var</th>
       <td><p>datetime or other comparable variable</p></td>
     </tr>
+    <tr>
+      <th>centroid</th>
+      <td><p>datetime or other comparable variable as reference point around which to search</p></td>
+    </tr>
+    <tr>
+      <th>only_previous</th>
+      <td><p>optional parameter (default=FALSE): should we search only previously observed data prior centroid?</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>The row which is the first (by which.min) in the .date</p>
+    <p>The row which is the nearest .date</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># searching for the first event of the each class (for each individual):</span>
 <span class='no'>dat</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span>(!<span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span>(<span class='no'>label</span>)) <span class='kw'>%&gt;%</span>
-  <span class='fu'>group_by</span>(<span class='no'>lomno1</span>,<span class='no'>label</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>getfirst</span>(<span class='no'>tulopvm</span>)</div><div class='output co'>#&gt; <span class='error'>Error in dat %&gt;% filter(!is.na(label)) %&gt;% group_by(lomno1, label) %&gt;%     getfirst(tulopvm): could not find function "%&gt;%"</span></div><div class='input'>
+  <span class='fu'>get_nearest</span>(<span class='no'>tulopvm</span>,<span class='kw'>centroid</span><span class='kw'>=</span><span class='no'>Postituspvm</span>)</div><div class='output co'>#&gt; <span class='error'>Error in dat %&gt;% get_nearest(tulopvm, centroid = Postituspvm): could not find function "%&gt;%"</span></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -161,7 +167,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by .</p>
+  <p>Developed by Juho Kopra, Jani Miettinen, Reijo Sund.</p>
 </div>
 
 <div class="pkgdown">

@@ -55,27 +55,64 @@ elixscore
 elixscore <- left_join0(cohort %>% select(personid), elixscore)
 #View(elixscore)
 
-# [X] summary(score_AHRQ) muotoon sum(score_AHRQ)
-# [X] classify_data_long tulostaa liikaa
-# [X] classes_to_wide voisi olla read_classes, jolle annetaan tiedostopolku
-# [X] cohort datasta status pois, postingdate muotoon indexdate (ehkä)
-# [X] left_join0 lisätty
-# [X] get_var_types lisätty
+# [X] demoa Hospital Frailty Risk Score -indeksiä!
 # TODO: 
-# - class, label ja score muotoon class_charlson, label_charlson ja score_charlson
 # - selvitä, mitkä funktiot on tarpeettomia ja mitkä tarpeellisia
-# - demoa Hospital Frailty Risk Score -indeksiä!
+# - class, label ja score muotoon class_charlson, label_charlson ja score_charlson
+#   -> classify_data_long -funktiossa!
+# - korjaa classify_data_long -funktio sellaiseksi että se palauttaa koko datan!
+# - tarvitaan left_join, joka tekee muuttujan tyypin mukaan käyttäjän haluaman täytön: esim. c("numeric"=0,"character"="Elixhauser")
+#   -> tulee ehkä tarpeettomaksi, jos muutetaan class, label ja score uusille nimille
 
 # Charlson score:
 #charlson_classes <- classes_to_wide(vroom(file = "data/classification_codes/charlson_classes_wide.csv"))
 charlson_classes <- read_class(file = "data/classification_codes/charlson_classes_wide.csv")
 #View(charlson_classes)
+
+# dev:
+dev1<-filtereddata %>%
+  classify_data_long(icdcodes=CODE1,diag_tbl=charlson_classes)
+dev2<-filtereddata %>%
+  classify_long(icdcodes=CODE1,diag_tbl=charlson_classes)
+dim(filtereddata)
+dim(dev1)
+dim(dev2)
+# TODO: Jotain kummaa tässä on!
+
 charlsonscore <- filtereddata %>%
   classify_data_long(icdcodes=CODE1,diag_tbl=charlson_classes) %>%
   rename(score_charlson=score) %>%
   sum_score(score_charlson)
 charlsonscore <- left_join(cohort %>% select(personid), charlsonscore)
 #View(charlsonscore)
+
+# Hospital Frailty Risk Score:
+hfrs_dat<-vroom(file = "data/classification_codes/hospital_frailty_risk_score_wide.csv")
+hfrs_dat<-hfrs_dat %>%
+  mutate(label="Frail group") %>%
+  select(classification,class,label,score,icd10)
+names(hfrs_dat)
+write.table(hfrs_dat,file="data/classification_codes/hospital_frailty_risk_score_wide_v2.csv",sep=";",dec=".",row.names = FALSE)
+View(hfrs_dat)
+hfrs_classes <- read_class(file = "data/classification_codes/hospital_frailty_risk_score_wide_v2.csv")
+#View(charlson_classes)
+hfrsscore <- filtereddata %>%
+  classify_data_long(icdcodes=CODE1,diag_tbl=hfrs_classes) %>%
+  rename(score_charlson=score) %>%
+  sum_score(score_charlson)
+
+mode <- function(x) { # by Ken Williams at stackoverflow
+  ux <- unique(x)
+  ux <- ux[!is.na(ux)]
+  ux[which.max(tabulate(match(x, ux)))]
+}
+mode(hfrsscore$classification)
+
+
+hfrsscore <- left_join(cohort %>% select(personid), hfrsscore) %>%
+  mutate(classification=mode(classification))
+#  mutate(classification=ifelse(is.na(classification),mode(classification),classification))
+View(hfrsscore)
 
 dim(filtereddata %>% select(personid) %>% distinct())
 dim(cohort)

@@ -117,7 +117,7 @@ ltout %>% head()
 ltout<-cohort %>%
   left_join(reg %>% select(personid,CODE1,admissiondate,dischargedate),by="personid") %>%
   mutate(postingdate=ymd(postingdate)) %>%
-  datefilter(indexdate=postingdate,range=years(2),admissiondate,dischargedate) %>% # filterin the diagnosis codes which are in the interval for each individual!
+  filter_date(indexdate=postingdate,range=years(2),admissiondate,dischargedate) %>% # filterin the diagnosis codes which are in the interval for each individual!
   classify_long(icdcodes=CODE1,diag_tbl=sel_classes)
 ltout
 ltout %>% str()
@@ -128,8 +128,8 @@ ltout %>% str()
 dat<-cohort %>%
   left_join(reg %>% select(personid,CODE1,admissiondate,dischargedate,icd),by="personid") %>%
   mutate(postingdate=ymd(postingdate)) %>%
-  datefilter(indexdate=postingdate,range=years(2),admissiondate,dischargedate) %>%
-  classifydata_long(icdcodes=CODE1,diag_tbl=sel_classes) %>%
+  filter_date(indexdate=postingdate,range=years(2),admissiondate,dischargedate) %>%
+  classify_data_long(icdcodes=CODE1,diag_tbl=sel_classes) %>%
   filter(match>0)
 
 
