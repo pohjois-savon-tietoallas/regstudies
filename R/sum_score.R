@@ -7,7 +7,7 @@
 #' @return returns scores summed over the given variables.
 #' 
 #' @importFrom rlang enquos
-#' @importFrom tidyselect select
+#' @importFrom dplyr select
 #' @importFrom dplyr filter %>%
 #' @importFrom dplyr distinct
 #' @importFrom dplyr group_by
@@ -27,10 +27,10 @@
 sum_score <- function(.data,...) {
   vars<-rlang::enquos(...)
   # A bad code to extract names given by "..." (I could not figure out the better way):
-  nimet <- .data %>% head(0) %>% tidyselect::select(!!! vars) %>% names()
+  nimet <- .data %>% head(0) %>% dplyr::select(!!! vars) %>% names()
   
   output <- .data %>%
-    tidyselect::select(c("personid","classification","class",nimet)) %>%
+    dplyr::select(c("personid","classification","class",nimet)) %>%
     dplyr::filter(!is.na(classification)) %>%
     dplyr::distinct() %>%
     dplyr::group_by(personid,classification) %>%

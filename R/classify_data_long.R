@@ -15,7 +15,7 @@
 #' @importFrom dplyr left_join
 #' @importFrom rlang as_label
 #' @importFrom rlang enquo
-#' @importFrom tidyselect select
+#' @importFrom dplyr select
 #' 
 #' 
 #' @examples
@@ -40,8 +40,8 @@ classify_data_long<-function(.data, id, icdcodes, diag_tbl, fill=0) {
   ctobj <- classify_long(.data=.data,icdcodes=!!icdcodes_quo,diag_tbl=diag_tbl,return_binary=FALSE) #classification table object'
   
   classification_name <- ctobj %>%
-    tidyselect::select(classification) %>%
-    dplyer::distinct() %>% as.vector()
+    dplyr::select(classification) %>%
+    dplyr::distinct() %>% as.vector()
   nimet <- names(ctobj)
 
   # icdcodes = KOODI1
@@ -49,7 +49,7 @@ classify_data_long<-function(.data, id, icdcodes, diag_tbl, fill=0) {
   text <- c(rlang::as_label(icdcodes_quo),"icd")
   outdat <- .data %>%
     #select(!!id_quo,!!icdcodes_quo) %>% # removed unnecessary variables
-    dplyr::left_join(ctobj %>% dplyr::filter(match) %>% tidyselect::select(-match),by=text)
+    dplyr::left_join(ctobj %>% dplyr::filter(match) %>% dplyr::select(-match),by=text)
   outdat
 }
 

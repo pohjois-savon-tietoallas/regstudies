@@ -19,7 +19,7 @@
 #' @importFrom stringr str_detect
 #' @importFrom tidyr crossing
 #' @importFrom tidyselect contains
-#' @importFrom tidyselect select 
+#' @importFrom dplyr select 
 #' 
 #' @examples
 #' \dontrun{
@@ -49,10 +49,10 @@ classify_long <- function(.data,icdcodes,diag_tbl,return_binary=TRUE) {
   } else {
     #diag_tbl<-diag_tbl %>% select(regex,regex.rm,label) # regex.rm ei ole implementoitu! (viel?)
     codes <- .data %>% 
-      tidyselect::select(!! icdcodes) %>% 
+      dplyr::select(!! icdcodes) %>% 
       dplyr::distinct()
     cr <- tidyr::crossing(codes,diag_tbl %>% 
-                            tidyselect::select(regex)
+                            dplyr::select(regex)
                           )
     cr <- cr %>%
       dplyr::left_join(diag_tbl,by="regex") %>%
@@ -70,18 +70,18 @@ classify_long <- function(.data,icdcodes,diag_tbl,return_binary=TRUE) {
     }
     cr <- cr %>%
       dplyr::mutate(match = match.yes & !match.rm) %>%
-      tidyselect::select(-match.yes,-match.rm)
+      dplyr::select(-match.yes,-match.rm)
     #print(cr)# %>% filter(!is.na(match.rm) & match.rm))
     if(return_binary) {
       cr <- cr %>%
         dplyr::mutate(match=as.integer(match))
     }
     classification_name <- diag_tbl %>%
-      tidyselect::select(classification) %>%
+      dplyr::select(classification) %>%
       dplyr::distinct() %>% as.vector()
     #    print(paste0("Using classification '",classification_name,"'")) # TODO: Ei ole tarkastettu, ett? on annettu vain yksi luokittelu
     lt <- cr %>%
-      tidyselect::select(-tidyselect::contains("regex")) #%>%
+      dplyr::select(-tidyselect::contains("regex")) #%>%
     #mutate(label=paste0(substr(classification_name,1,5),"_",label))
     #    lt <- pivot_wider(lt,
     #                      names_from=label,

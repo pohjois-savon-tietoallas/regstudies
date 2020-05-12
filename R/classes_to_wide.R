@@ -10,7 +10,7 @@
 #' @importFrom dplyr right_join
 #' @importFrom dplyr distinct
 #' @importFrom tidyselect all_of
-#' @importFrom tidyselect select
+#' @importFrom dplyr select
 #' @importFrom tidyselect contains
 #' @importFrom tidyr pivot_longer
 #'
@@ -25,8 +25,8 @@
 #' 
 classes_to_wide <- function(sel_classes) {
   #require(tidyselect) # not needed anymore? Now uses tidyselect::contains
-  main        <- sel_classes %>% select(classification, label, tidyselect::contains("score")) %>% dplyr::distinct()
-  dat_to_long <- sel_classes %>% select(-contains("score"), -classification)
+  main        <- sel_classes %>% dplyr::select(classification, label, tidyselect::contains("score")) %>% dplyr::distinct()
+  dat_to_long <- sel_classes %>% dplyr::select(-contains("score"), -classification)
   nimet       <- setdiff(names(dat_to_long), c("class","label"))
   sel         <- grep(".rm", x=nimet) # names of exceptions!
   nexcep      <- length(sel) # how many exceptions
@@ -37,9 +37,9 @@ classes_to_wide <- function(sel_classes) {
     pnim        <- nimet[sel]  # poikkeusnimet
   }
   
-  sel_classes2 <- tidyr::pivot_longer(dat_to_long %>% tidyselect::select(-tidyselect::all_of(pnim)), -c("class","label"), names_to="icd", values_to="regex")
+  sel_classes2 <- tidyr::pivot_longer(dat_to_long %>% dplyr::select(-tidyselect::all_of(pnim)), -c("class","label"), names_to="icd", values_to="regex")
   if (nexcep>0) {
-    sel_classes2rm <- tidyr::pivot_longer(dat_to_long %>% tidyselect::select(-all_of(vnim)), -c("class","label"), names_to="icd", values_to="regex.rm") %>%
+    sel_classes2rm <- tidyr::pivot_longer(dat_to_long %>% dplyr::select(-all_of(vnim)), -c("class","label"), names_to="icd", values_to="regex.rm") %>%
       dplyr::mutate(icd=sub(pattern=".rm", "", x=icd))
     sel_classes2 <- dplyr::left_join(sel_classes2, sel_classes2rm)
   }

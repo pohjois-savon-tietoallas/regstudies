@@ -56,8 +56,8 @@ elixscore <- left_join0(cohort %>% select(personid), elixscore)
 #View(elixscore)
 
 # [X] demoa Hospital Frailty Risk Score -indeksiä!
+# [X] selvitä, mitkä funktiot on tarpeettomia ja mitkä tarpeellisia
 # TODO: 
-# - selvitä, mitkä funktiot on tarpeettomia ja mitkä tarpeellisia
 # - class, label ja score muotoon class_charlson, label_charlson ja score_charlson
 #   -> classify_data_long -funktiossa!
 # - korjaa classify_data_long -funktio sellaiseksi että se palauttaa koko datan!

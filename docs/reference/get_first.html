@@ -40,6 +40,7 @@
 
 
 <meta property="og:title" content="Get first value based on datetime variable — get_first" />
+<meta property="og:description" content="Get first value based on datetime variable" />
 
 
 
@@ -120,11 +121,10 @@
     </div>
 
     <div class="ref-description">
+    <p>Get first value based on datetime variable</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_first</span>(<span class='no'>.date</span>, <span class='no'>var</span>)
-
-<span class='fu'><a href='make_regex.html'>make_regex</a></span>(<span class='no'>.data</span>, <span class='no'>classname</span>, <span class='no'>diagnosis</span>, <span class='no'>diagnosis.rm</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>", "</span>)</pre>
+    <pre class="usage"><span class='fu'>get_first</span>(<span class='no'>.date</span>, <span class='no'>var</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -137,23 +137,20 @@
       <th>var</th>
       <td><p>datetime or other comparable variable</p></td>
     </tr>
-    <tr>
-      <th>.data</th>
-      <td><p>holds the data which has variable names given as 'classname' and 'diagnosis'. Must be convertible to a tibble.</p></td>
-    </tr>
-    <tr>
-      <th>classname</th>
-      <td><p>name of the variable containing names/labels for the classes</p></td>
-    </tr>
-    <tr>
-      <th>diagnosis</th>
-      <td><p>name of the variable containing strings in LIKE\<!-- % -format} --></p>
-<p>diagnosis.rmname of the variable defining exceptions of ICD-codes not to be included in the class</p>
-<p>sepseparator of different diagnoses in 'diagnosis'. String.</p></td>
-    </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
+    <p>The row which is the first (by which.min) in the .date</p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='co'># searching for the first event of the each class (for each individual):</span>
+<span class='no'>dat</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span>(!<span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span>(<span class='no'>label</span>)) <span class='kw'>%&gt;%</span>
+  <span class='fu'>group_by</span>(<span class='no'>lomno1</span>,<span class='no'>label</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'>get_first</span>(<span class='no'>tulopvm</span>)
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
