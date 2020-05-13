@@ -43,7 +43,7 @@ filtereddata <- cohort %>%
   filter_date(indexdate=postingdate,range=years(2),admissiondate,dischargedate)
 
 # Elixhauser scores:
-elixhauser_classes <- read_class(file = "data/classification_codes/elixhauser_classes_wide.csv")
+elixhauser_classes <- read_classes_csv(file = "data/classification_codes/elixhauser_classes_wide.csv")
 #View(elixhauser_classes)
 elixscore <- filtereddata %>%
   classify_data_long(icdcodes=CODE1,diag_tbl=elixhauser_classes) %>%
@@ -66,7 +66,7 @@ elixscore <- left_join0(cohort %>% select(personid), elixscore)
 
 # Charlson score:
 #charlson_classes <- classes_to_wide(vroom(file = "data/classification_codes/charlson_classes_wide.csv"))
-charlson_classes <- read_class(file = "data/classification_codes/charlson_classes_wide.csv")
+charlson_classes <- read_classes_csv(file = "data/classification_codes/charlson_classes_wide.csv")
 #View(charlson_classes)
 
 # dev:
@@ -94,7 +94,7 @@ hfrs_dat<-hfrs_dat %>%
 names(hfrs_dat)
 write.table(hfrs_dat,file="data/classification_codes/hospital_frailty_risk_score_wide_v2.csv",sep=";",dec=".",row.names = FALSE)
 View(hfrs_dat)
-hfrs_classes <- read_class(file = "data/classification_codes/hospital_frailty_risk_score_wide_v2.csv")
+hfrs_classes <- read_classes_csv(file = "data/classification_codes/hospital_frailty_risk_score_wide_v2.csv")
 #View(charlson_classes)
 hfrsscore <- filtereddata %>%
   classify_data_long(icdcodes=CODE1,diag_tbl=hfrs_classes) %>%
