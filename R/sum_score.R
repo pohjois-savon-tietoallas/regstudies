@@ -6,12 +6,13 @@
 #'
 #' @return returns scores summed over the given variables.
 #' 
-#' @importFrom rlang enquos
 #' @importFrom dplyr select
-#' @importFrom dplyr filter %>%
+#' @importFrom dplyr filter
 #' @importFrom dplyr distinct
 #' @importFrom dplyr group_by
 #' @importFrom dplyr summarise_at
+#' @importFrom tidyselect all_of
+#' @importFrom rlang enquos
 #' 
 #' @examples
 #' \dontrun{
@@ -31,7 +32,7 @@ sum_score <- function(.data,...) {
   
   left_variables <- c("personid","classification","class")
   output <- .data %>%
-    dplyr::select(c(left_variables,nimet)) %>%
+    dplyr::select(c(tidyselect::all_of(left_variables),nimet)) %>%
     dplyr::filter(!is.na(classification)) %>%
     dplyr::distinct() %>%
     dplyr::group_by(personid,classification) %>%

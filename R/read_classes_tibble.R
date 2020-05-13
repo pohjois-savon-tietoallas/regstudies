@@ -17,25 +17,24 @@
 #' @examples
 #'  \dontrun{
 #'  sel_classes <- vroom(file = "data/classification_codes/elixhauser_classes_wide.csv")
-#'  sel_classes2 <- classes_to_wide(sel_classes = sel_classes)
+#'  sel_classes2 <- read_classes_tibble(sel_classes = sel_classes)
 #'  head(sel_classes2)
 #'  }
 #'  
-#' @rdname classes_to_wide
+#' @rdname read_classes_tibble
 #' @export
 #' 
-classes_to_wide <- function(sel_classes) {
-  #require(tidyselect) # not needed anymore? Now uses tidyselect::contains
+read_classes_tibble <- function(sel_classes) {
   main        <- sel_classes %>% dplyr::select(classification, label, tidyselect::contains("score")) %>% dplyr::distinct()
   dat_to_long <- sel_classes %>% dplyr::select(-contains("score"), -classification)
   nimet       <- setdiff(names(dat_to_long), c("class","label"))
   sel         <- grep(".rm", x=nimet) # names of exceptions!
   nexcep      <- length(sel) # how many exceptions
-  vnim<-nimet
-  pnim<-c()
+  vnim <- nimet
+  pnim <- c()
   if(nexcep>0) {
-    vnim        <- nimet[-sel] # varsinaiset nimet
-    pnim        <- nimet[sel]  # poikkeusnimet
+    vnim <- nimet[-sel] # varsinaiset nimet
+    pnim <- nimet[sel]  # poikkeusnimet
   }
   
   sel_classes2 <- tidyr::pivot_longer(dat_to_long %>% dplyr::select(-tidyselect::all_of(pnim)), -c("class","label"), names_to="icd", values_to="regex")

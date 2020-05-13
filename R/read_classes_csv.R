@@ -9,10 +9,10 @@
 #' @importFrom vroom vroom
 #' 
 #' @examples
-#' elixhauser_cl <- read_class(file = "data/classification_codes/elixhauser_classes_wide.csv")
-#' @rdname read_class
+#' elixhauser_cl <- read_classes_csv(file = "data/classification_codes/elixhauser_classes_wide.csv")
+#' @rdname read_classes_csv
 #' @export
 #' 
-read_class <- function(file) {
-  classes_to_wide(sel_classes = vroom::vroom(file = file))
+read_classes_csv <- function(file) {
+  read_classes_tibble(sel_classes = vroom::vroom(file = file))
 }
