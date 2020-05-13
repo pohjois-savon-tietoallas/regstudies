@@ -12,12 +12,12 @@ Authors@R:
             family="Miettinen",
             role=c("aut"),
             email="jani.miettinen@uef.fi",
-            comment=""),
+            comment=c(ORCID = "0000-0003-2239-5376")),
       person(given="Reijo",
             family="Sund",
             role=c("aut"),
             email="reijo.sund@uef.fi",
-            comment=""))
+            comment=c(ORCID = "0000-0002-6268-8117")))
 Maintainer: Juho Kopra <juho.kopra@uef.fi>
 Description: The data utilised in register studies, often called as register-based data or administrative data,
   typically consists of time stamp variables and codes describing events. This package has been designed specifically for handling of such data. 

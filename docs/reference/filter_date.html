@@ -148,7 +148,14 @@
     <p>returns a tibble object with filtered rows</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"></pre>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='co'>#'ostprekoh' is the register data containing 'lomno1' individual id number and data 'dg' contains the register data of disease diagnoses.</span>
+
+<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='no'>ostprekoh</span> <span class='kw'>%&gt;%</span>
+<span class='fu'>left_join</span>(<span class='no'>dg</span> <span class='kw'>%&gt;%</span> <span class='fu'>select</span>(<span class='no'>lomno1</span>,<span class='no'>KOODI1</span>,<span class='no'>tulopvm</span>,<span class='no'>lahtopvm</span>,<span class='no'>icd</span>),<span class='kw'>by</span><span class='kw'>=</span><span class='st'>"lomno1"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'>mutate</span>(<span class='kw'>Postituspvm</span><span class='kw'>=</span><span class='fu'>ymd</span>(<span class='no'>Postituspvm</span>)) <span class='kw'>%&gt;%</span>
+  <span class='fu'>filter_date</span>(<span class='kw'>indexdate</span><span class='kw'>=</span><span class='no'>Postituspvm</span>,<span class='kw'>range</span><span class='kw'>=</span><span class='fu'>years</span>(<span class='fl'>2</span>),<span class='no'>tulopvm</span>,<span class='no'>lahtopvm</span>)
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

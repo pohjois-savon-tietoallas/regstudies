@@ -140,7 +140,11 @@
     <p>returns classification definintion in long format (tidy data) as that is what the package needs in operation.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"></pre>
+    <pre class="examples"><div class='input'> <span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+ <span class='no'>sel_classes</span> <span class='kw'>&lt;-</span> <span class='fu'>vroom</span>(<span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>"data/classification_codes/elixhauser_classes_wide.csv"</span>)
+ <span class='no'>sel_classes2</span> <span class='kw'>&lt;-</span> <span class='fu'>classes_to_wide</span>(<span class='kw'>sel_classes</span> <span class='kw'>=</span> <span class='no'>sel_classes</span>)
+ <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>sel_classes2</span>)
+ }</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

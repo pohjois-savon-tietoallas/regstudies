@@ -146,9 +146,9 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># Lets calculate two different Elixhauser scores for a data set 'filtereddata'</span>
-<span class='no'>elixhauser_classes</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='classes_to_wide.html'>classes_to_wide</a></span>(<span class='fu'>vroom</span>(<span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>"data/classification_codes/elixhauser_classes_wide.csv"</span>))
+<span class='no'>elixhauser_classes</span> <span class='kw'>&lt;-</span> <span class='fu'>classes_to_wide</span>(<span class='fu'>vroom</span>(<span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>"data/classification_codes/elixhauser_classes_wide.csv"</span>))
 <span class='no'>elixscore</span> <span class='kw'>&lt;-</span> <span class='no'>filtereddata</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='classify_data_long.html'>classify_data_long</a></span>(<span class='kw'>icdcodes</span><span class='kw'>=</span><span class='no'>CODE1</span>,<span class='kw'>diag_tbl</span><span class='kw'>=</span><span class='no'>elixhauser_classes</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'>classify_data_long</span>(<span class='kw'>icdcodes</span><span class='kw'>=</span><span class='no'>CODE1</span>,<span class='kw'>diag_tbl</span><span class='kw'>=</span><span class='no'>elixhauser_classes</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>sum_score</span>(<span class='no'>score_AHRQ</span>,<span class='no'>score_van_Walraven</span>)
 }</div></pre>
   </div>
