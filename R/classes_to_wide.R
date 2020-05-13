@@ -20,6 +20,7 @@
 #'  sel_classes2 <- classes_to_wide(sel_classes = sel_classes)
 #'  head(sel_classes2)
 #'  }
+#'  
 #' @rdname classes_to_wide
 #' @export
 #' 
