@@ -2,7 +2,7 @@
 % Please edit documentation in R/make_regex.R
 \name{make_regex}
 \alias{make_regex}
-\title{Make regural expression classifications from LIKE\\% classifications}
+\title{Make regural expression classifications from LIKE\% classifications}
 \usage{
 make_regex(.data, classname, diagnosis, diagnosis.rm, sep = ", ")
 }
@@ -11,7 +11,7 @@ make_regex(.data, classname, diagnosis, diagnosis.rm, sep = ", ")
 
 \item{classname}{name of the variable containing names/labels for the classes}
 
-\item{diagnosis}{name of the variable containing strings in LIKE\\% -format}
+\item{diagnosis}{name of the variable containing strings in LIKE\% -format}
 
 \item{diagnosis.rm}{name of the variable defining exceptions of ICD-codes not to be included in the class}
 
@@ -21,11 +21,20 @@ make_regex(.data, classname, diagnosis, diagnosis.rm, sep = ", ")
 returns a tibble with regular expression definitions
 }
 \description{
-Make regural expression classifications from LIKE\\% classifications
+Make regural expression classifications from LIKE\% classifications
 }
 \examples{
 \dontrun{
-# TODO: Example
-}
+# We load classification here
+excelfile <- readxl::read_excel("./datas/disease_classification.xlsx")
+cl9 <- excelfile \%>\%
+  make_regex(classname=Lyhenne,diagnosis=sairdiag_icd9,diagnosis.rm=sairdiagpl_icd9) \%>\%
+  mutate(icd="icd9")
+cl10 <- excelfile \%>\%
+  make_regex(classname=Lyhenne,diagnosis=sairdiag,diagnosis.rm=sairdiagpl) \%>\%
+  mutate(icd="icd10")
 
+sel_classes<-bind_rows(cl9,cl10) \%>\%
+  mutate(classification="own_definition")
+}
 }

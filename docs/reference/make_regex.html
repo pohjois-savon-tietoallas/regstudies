@@ -6,26 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Make regural expression classifications from LIKE\<!-- % classifications} -->
-
-make_regex(.data, classname, diagnosis, diagnosis.rm, sep = ", ")
-
-
-.dataholds the data which has variable names given as 'classname' and 'diagnosis'. Must be convertible to a tibble.
-
-classnamename of the variable containing names/labels for the classes
-
-diagnosisname of the variable containing strings in LIKE\<!-- % -format} -->
-
-diagnosis.rmname of the variable defining exceptions of ICD-codes not to be included in the class
-
-sepseparator of different diagnoses in 'diagnosis'. String.
-
-
-returns a tibble with regular expression definitions
-
-
-Make regural expression classifications from LIKE\<!-- % classifications --> — make_regex • regstudies</title>
+<title>Make regural expression classifications from LIKE% classifications — make_regex • regstudies</title>
 
 
 <!-- jquery -->
@@ -58,26 +39,8 @@ Make regural expression classifications from LIKE\<!-- % classifications --> —
 
 
 
-<meta property="og:title" content="Make regural expression classifications from LIKE\<!-- % classifications} -->
-
-make_regex(.data, classname, diagnosis, diagnosis.rm, sep = ", ")
-
-
-.dataholds the data which has variable names given as 'classname' and 'diagnosis'. Must be convertible to a tibble.
-
-classnamename of the variable containing names/labels for the classes
-
-diagnosisname of the variable containing strings in LIKE\<!-- % -format} -->
-
-diagnosis.rmname of the variable defining exceptions of ICD-codes not to be included in the class
-
-sepseparator of different diagnoses in 'diagnosis'. String.
-
-
-returns a tibble with regular expression definitions
-
-
-Make regural expression classifications from LIKE\<!-- % classifications --> — make_regex" />
+<meta property="og:title" content="Make regural expression classifications from LIKE% classifications — make_regex" />
+<meta property="og:description" content="Make regural expression classifications from LIKE% classifications" />
 
 
 
@@ -152,36 +115,60 @@ Make regural expression classifications from LIKE\<!-- % classifications --> —
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Make regural expression classifications from LIKE\<!-- % classifications} -->
-
-make_regex(.data, classname, diagnosis, diagnosis.rm, sep = ", ")
-
-
-.dataholds the data which has variable names given as 'classname' and 'diagnosis'. Must be convertible to a tibble.
-
-classnamename of the variable containing names/labels for the classes
-
-diagnosisname of the variable containing strings in LIKE\<!-- % -format} -->
-
-diagnosis.rmname of the variable defining exceptions of ICD-codes not to be included in the class
-
-sepseparator of different diagnoses in 'diagnosis'. String.
-
-
-returns a tibble with regular expression definitions
-
-
-Make regural expression classifications from LIKE\<!-- % classifications --></h1>
+    <h1>Make regural expression classifications from LIKE% classifications</h1>
     
     <div class="hidden name"><code>make_regex.Rd</code></div>
     </div>
 
     <div class="ref-description">
+    <p>Make regural expression classifications from LIKE% classifications</p>
     </div>
 
+    <pre class="usage"><span class='fu'>make_regex</span>(<span class='no'>.data</span>, <span class='no'>classname</span>, <span class='no'>diagnosis</span>, <span class='no'>diagnosis.rm</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>", "</span>)</pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>.data</th>
+      <td><p>holds the data which has variable names given as 'classname' and 'diagnosis'. Must be convertible to a tibble.</p></td>
+    </tr>
+    <tr>
+      <th>classname</th>
+      <td><p>name of the variable containing names/labels for the classes</p></td>
+    </tr>
+    <tr>
+      <th>diagnosis</th>
+      <td><p>name of the variable containing strings in LIKE% -format</p></td>
+    </tr>
+    <tr>
+      <th>diagnosis.rm</th>
+      <td><p>name of the variable defining exceptions of ICD-codes not to be included in the class</p></td>
+    </tr>
+    <tr>
+      <th>sep</th>
+      <td><p>separator of different diagnoses in 'diagnosis'. String.</p></td>
+    </tr>
+    </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
+    <p>returns a tibble with regular expression definitions</p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='co'># We load classification here</span>
+<span class='no'>excelfile</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>readxl</span><span class='kw ns'>::</span><span class='fu'><a href='https://readxl.tidyverse.org/reference/read_excel.html'>read_excel</a></span>(<span class='st'>"./datas/disease_classification.xlsx"</span>)
+<span class='no'>cl9</span> <span class='kw'>&lt;-</span> <span class='no'>excelfile</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>make_regex</span>(<span class='kw'>classname</span><span class='kw'>=</span><span class='no'>Lyhenne</span>,<span class='kw'>diagnosis</span><span class='kw'>=</span><span class='no'>sairdiag_icd9</span>,<span class='kw'>diagnosis.rm</span><span class='kw'>=</span><span class='no'>sairdiagpl_icd9</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'>mutate</span>(<span class='kw'>icd</span><span class='kw'>=</span><span class='st'>"icd9"</span>)
+<span class='no'>cl10</span> <span class='kw'>&lt;-</span> <span class='no'>excelfile</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>make_regex</span>(<span class='kw'>classname</span><span class='kw'>=</span><span class='no'>Lyhenne</span>,<span class='kw'>diagnosis</span><span class='kw'>=</span><span class='no'>sairdiag</span>,<span class='kw'>diagnosis.rm</span><span class='kw'>=</span><span class='no'>sairdiagpl</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'>mutate</span>(<span class='kw'>icd</span><span class='kw'>=</span><span class='st'>"icd10"</span>)
+
+<span class='no'>sel_classes</span><span class='kw'>&lt;-</span><span class='fu'>bind_rows</span>(<span class='no'>cl9</span>,<span class='no'>cl10</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'>mutate</span>(<span class='kw'>classification</span><span class='kw'>=</span><span class='st'>"own_definition"</span>)
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
