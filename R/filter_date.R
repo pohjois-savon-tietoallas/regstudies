@@ -15,7 +15,7 @@
 #' 
 #' @examples
 #' \dontrun{
-#' 'ostprekoh' is the register data containing 'lomno1' individual id number and data 'dg' contains the register data of disease diagnoses.
+#' #'ostprekoh' is the register data containing 'lomno1' individual id number and data 'dg' contains the register data of disease diagnoses.
 #'
 #' dat <- ostprekoh %>%
 #' left_join(dg %>% select(lomno1,KOODI1,tulopvm,lahtopvm,icd),by="lomno1") %>%

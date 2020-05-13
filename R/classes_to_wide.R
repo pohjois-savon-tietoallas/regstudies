@@ -15,11 +15,11 @@
 #' @importFrom tidyr pivot_longer
 #'
 #' @examples
-#' dontrun{
-#' sel_classes <- vroom(file = "data/classification_codes/elixhauser_classes_wide.csv")
-#' sel_classes2 <- classes_to_wide(sel_classes = sel_classes)
-#' head(sel_classes2)
-#' }
+#'  \dontrun{
+#'  sel_classes <- vroom(file = "data/classification_codes/elixhauser_classes_wide.csv")
+#'  sel_classes2 <- classes_to_wide(sel_classes = sel_classes)
+#'  head(sel_classes2)
+#'  }
 #' @rdname classes_to_wide
 #' @export
 #' 

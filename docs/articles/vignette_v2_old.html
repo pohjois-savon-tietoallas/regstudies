@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">regstudies</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
       </span>
     </div>
 
@@ -75,7 +75,7 @@
       <h1 data-toc-skip>Use cases of ‘regstudies’ R package</h1>
                         <h4 class="author">Juho Kopra</h4>
             
-            <h4 class="date">2020-05-12</h4>
+            <h4 class="date">2020-05-13</h4>
       
       
       <div class="hidden name"><code>vignette_v2_old.Rmd</code></div>
@@ -87,7 +87,7 @@
 <div id="how-to-use" class="section level3">
 <h3 class="hasAnchor">
 <a href="#how-to-use" class="anchor"></a>How to use</h3>
-<div class="sourceCode"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">tidyverse</span>)
+<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">tidyverse</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">regstudies</span>)
 <span class="co"># read cohort data</span>
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">vroom</span>)
@@ -120,20 +120,20 @@
 <h1 class="hasAnchor">
 <a href="#loading-a-code-classification-definition-from-excel-file" class="anchor"></a>Loading a code classification definition from Excel file</h1>
 <p>Okay, so in this phase we load data from Excel file and modify it to suit the needs or regstudies package. It may be easier to ask your collaborate researchers to fill an Excel file with suitable diagnose codes (e.g. ICD-codes) with an asterix symbol of “%” in this case. The function ‘make_regex’ can be used to tranform these LIKE% codes to regural expression definitions automatically.</p>
-<div class="sourceCode"><html><body><pre class="r">
+<div class="sourceCode" id="cb2"><html><body><pre class="r">
 <span class="co"># We load classification here</span>
 <span class="no">excelfile</span> <span class="kw">&lt;-</span> <span class="kw pkg">readxl</span><span class="kw ns">::</span><span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span>(<span class="st">"./datas/disease_classification.xlsx"</span>)
 <span class="no">cl9</span> <span class="kw">&lt;-</span> <span class="no">excelfile</span> <span class="kw">%&gt;%</span>
-  <span class="fu">make_regex</span>(<span class="kw">classname</span><span class="kw">=</span><span class="no">Lyhenne</span>,<span class="kw">diagnosis</span><span class="kw">=</span><span class="no">sairdiag_icd9</span>,<span class="kw">diagnosis.rm</span><span class="kw">=</span><span class="no">sairdiagpl_icd9</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="../reference/make_regex.html">make_regex</a></span>(<span class="kw">classname</span><span class="kw">=</span><span class="no">Lyhenne</span>,<span class="kw">diagnosis</span><span class="kw">=</span><span class="no">sairdiag_icd9</span>,<span class="kw">diagnosis.rm</span><span class="kw">=</span><span class="no">sairdiagpl_icd9</span>) <span class="kw">%&gt;%</span>
   <span class="fu">mutate</span>(<span class="kw">icd</span><span class="kw">=</span><span class="st">"icd9"</span>)
 <span class="no">cl10</span> <span class="kw">&lt;-</span> <span class="no">excelfile</span> <span class="kw">%&gt;%</span>
-  <span class="fu">make_regex</span>(<span class="kw">classname</span><span class="kw">=</span><span class="no">Lyhenne</span>,<span class="kw">diagnosis</span><span class="kw">=</span><span class="no">sairdiag</span>,<span class="kw">diagnosis.rm</span><span class="kw">=</span><span class="no">sairdiagpl</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="../reference/make_regex.html">make_regex</a></span>(<span class="kw">classname</span><span class="kw">=</span><span class="no">Lyhenne</span>,<span class="kw">diagnosis</span><span class="kw">=</span><span class="no">sairdiag</span>,<span class="kw">diagnosis.rm</span><span class="kw">=</span><span class="no">sairdiagpl</span>) <span class="kw">%&gt;%</span>
   <span class="fu">mutate</span>(<span class="kw">icd</span><span class="kw">=</span><span class="st">"icd10"</span>)
 
 <span class="no">sel_classes</span><span class="kw">&lt;-</span><span class="fu">bind_rows</span>(<span class="no">cl9</span>,<span class="no">cl10</span>) <span class="kw">%&gt;%</span>
               <span class="fu">mutate</span>(<span class="kw">classification</span><span class="kw">=</span><span class="st">"own_definition"</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/rm.html">rm</a></span>(<span class="kw">list</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"cl9"</span>,<span class="st">"cl10"</span>))</pre></body></html></div>
-<div class="sourceCode"><html><body><pre class="r">
+<div class="sourceCode" id="cb3"><html><body><pre class="r">
 <span class="no">tbclasses</span><span class="kw">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/vroom/man/vroom.html">vroom</a></span>(<span class="st">"./datas/pois/charlson_and_elixhauser_classifications.csv"</span>)
 <span class="no">tbclasses</span> <span class="kw">&lt;-</span> <span class="no">tbclasses</span> <span class="kw">%&gt;%</span>
   <span class="fu">rename</span>(<span class="kw">label</span><span class="kw">=</span><span class="no">class</span>) <span class="kw">%&gt;%</span>
@@ -149,29 +149,29 @@
 <span class="co"># we select the classification to be "elixhauser"</span>
 <span class="no">sel_classes</span> <span class="kw">&lt;-</span> <span class="no">tbclasses</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="no">classification</span><span class="kw">==</span><span class="st">"elixhauser"</span>)</pre></body></html></div>
 <p>Next we will join the registerdata ‘reg’ to cohort data. Then we will search data within two years range from ‘indexdate’. It is enough that either ‘admissiondate’ or ‘dischargedate’ is within the interval.</p>
-<div class="sourceCode"><html><body><pre class="r"><span class="co"># we want to find out the diseases within 2 years before and after the study date 'postingdate'</span>
+<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="co"># we want to find out the diseases within 2 years before and after the study date 'postingdate'</span>
 <span class="no">regintvl</span><span class="kw">&lt;-</span><span class="no">cohort</span> <span class="kw">%&gt;%</span>
   <span class="fu">left_join</span>(<span class="no">reg</span> <span class="kw">%&gt;%</span> <span class="fu">select</span>(<span class="no">personid</span>,<span class="no">CODE1</span>,<span class="no">admissiondate</span>,<span class="no">dischargedate</span>,<span class="no">icd</span>),<span class="kw">by</span><span class="kw">=</span><span class="st">"personid"</span>) <span class="kw">%&gt;%</span> <span class="co"># join the datas</span>
   <span class="fu">mutate</span>(<span class="kw">indexdate</span><span class="kw">=</span><span class="fu"><a href="http://lubridate.tidyverse.org/reference/ymd.html">ymd</a></span>(<span class="no">postingdate</span>)) <span class="kw">%&gt;%</span> <span class="co"># 1. compute indexdate names 'indexdate'</span>
   <span class="fu">mutate</span>(<span class="kw">timeinterval</span><span class="kw">=</span> (<span class="no">indexdate</span>-<span class="fu"><a href="http://lubridate.tidyverse.org/reference/period.html">years</a></span>(<span class="fl">2</span>)) <span class="kw">%--%</span> (<span class="no">indexdate</span>+<span class="fu"><a href="http://lubridate.tidyverse.org/reference/period.html">years</a></span>(<span class="fl">2</span>)) ) <span class="kw">%&gt;%</span> <span class="co"># 2. create an interval out of 'indexdate'</span>
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="no">dischargedate</span> <span class="kw">%within%</span> <span class="no">timeinterval</span> <span class="kw">|</span> <span class="no">admissiondate</span> <span class="kw">%within%</span> <span class="no">timeinterval</span>) <span class="co"># 3. filtering</span></pre></body></html></div>
 <p>So that is one way of doing that. By using the function ‘datefilter’ from regstudies package the code becomes a bit cleaner. The function also allows arbitrary number of date variable to be entered in the filtering.</p>
-<div class="sourceCode"><html><body><pre class="r"><span class="no">regintvl</span><span class="kw">&lt;-</span><span class="no">cohort</span> <span class="kw">%&gt;%</span>
+<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="no">regintvl</span><span class="kw">&lt;-</span><span class="no">cohort</span> <span class="kw">%&gt;%</span>
   <span class="fu">left_join</span>(<span class="no">reg</span> <span class="kw">%&gt;%</span> <span class="fu">select</span>(<span class="no">personid</span>,<span class="no">CODE1</span>,<span class="no">admissiondate</span>,<span class="no">dischargedate</span>,<span class="no">icd</span>),<span class="kw">by</span><span class="kw">=</span><span class="st">"personid"</span>) <span class="kw">%&gt;%</span>
   <span class="fu">mutate</span>(<span class="kw">postingdate</span><span class="kw">=</span><span class="fu"><a href="http://lubridate.tidyverse.org/reference/ymd.html">ymd</a></span>(<span class="no">postingdate</span>)) <span class="kw">%&gt;%</span>
-  <span class="fu">datefilter</span>(<span class="kw">indexdate</span><span class="kw">=</span><span class="no">postingdate</span>,<span class="kw">range</span><span class="kw">=</span><span class="fu"><a href="http://lubridate.tidyverse.org/reference/period.html">years</a></span>(<span class="fl">2</span>),<span class="no">admissiondate</span>,<span class="no">dischargedate</span>) <span class="co"># filtering the diagnosis codes which are in the interval for each individual!</span></pre></body></html></div>
+  <span class="fu"><a href="https://rdrr.io/pkg/regstudies/man/datefilter.html">datefilter</a></span>(<span class="kw">indexdate</span><span class="kw">=</span><span class="no">postingdate</span>,<span class="kw">range</span><span class="kw">=</span><span class="fu"><a href="http://lubridate.tidyverse.org/reference/period.html">years</a></span>(<span class="fl">2</span>),<span class="no">admissiondate</span>,<span class="no">dischargedate</span>) <span class="co"># filtering the diagnosis codes which are in the interval for each individual!</span></pre></body></html></div>
 <p>Alright, now we use function called ‘classify’ to make classification table out of diagnosis codes. The sel_classes is the object used for classification. This function will create as many new variables as there are class definitions. So the data will be wide! These data can be joined to register data using ‘left_join’!</p>
-<div class="sourceCode"><html><body><pre class="r"><span class="co"># remind me, what is in sel_classes?</span>
+<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="co"># remind me, what is in sel_classes?</span>
 <span class="no">sel_classes</span> <span class="kw">%&gt;%</span>
   <span class="fu">select</span>(<span class="no">classification</span>) <span class="kw">%&gt;%</span> <span class="fu">distinct</span>()
-<span class="no">ltout</span> <span class="kw">&lt;-</span> <span class="fu">classify</span>(<span class="no">regintvl</span>,<span class="kw">icdcodes</span><span class="kw">=</span><span class="no">CODE1</span>,<span class="kw">diag_tbl</span><span class="kw">=</span><span class="no">sel_classes</span>) <span class="co"># with exceptions</span>
+<span class="no">ltout</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/regstudies/man/classify.html">classify</a></span>(<span class="no">regintvl</span>,<span class="kw">icdcodes</span><span class="kw">=</span><span class="no">CODE1</span>,<span class="kw">diag_tbl</span><span class="kw">=</span><span class="no">sel_classes</span>) <span class="co"># with exceptions</span>
 <span class="no">ltout</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>()</pre></body></html></div>
-<div class="sourceCode"><html><body><pre class="r"><span class="co"># next, we calculate the table which can be used for classification</span>
+<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="co"># next, we calculate the table which can be used for classification</span>
 <span class="no">ltout</span><span class="kw">&lt;-</span><span class="no">cohort</span> <span class="kw">%&gt;%</span>
   <span class="fu">left_join</span>(<span class="no">reg</span> <span class="kw">%&gt;%</span> <span class="fu">select</span>(<span class="no">personid</span>,<span class="no">CODE1</span>,<span class="no">admissiondate</span>,<span class="no">dischargedate</span>),<span class="kw">by</span><span class="kw">=</span><span class="st">"personid"</span>) <span class="kw">%&gt;%</span>
   <span class="fu">mutate</span>(<span class="kw">postingdate</span><span class="kw">=</span><span class="fu"><a href="http://lubridate.tidyverse.org/reference/ymd.html">ymd</a></span>(<span class="no">postingdate</span>)) <span class="kw">%&gt;%</span>
-  <span class="fu">filter_date</span>(<span class="kw">indexdate</span><span class="kw">=</span><span class="no">postingdate</span>,<span class="kw">range</span><span class="kw">=</span><span class="fu"><a href="http://lubridate.tidyverse.org/reference/period.html">years</a></span>(<span class="fl">2</span>),<span class="no">admissiondate</span>,<span class="no">dischargedate</span>) <span class="kw">%&gt;%</span> <span class="co"># filterin the diagnosis codes which are in the interval for each individual!</span>
-  <span class="fu">classify_long</span>(<span class="kw">icdcodes</span><span class="kw">=</span><span class="no">CODE1</span>,<span class="kw">diag_tbl</span><span class="kw">=</span><span class="no">sel_classes</span>)
+  <span class="fu"><a href="../reference/filter_date.html">filter_date</a></span>(<span class="kw">indexdate</span><span class="kw">=</span><span class="no">postingdate</span>,<span class="kw">range</span><span class="kw">=</span><span class="fu"><a href="http://lubridate.tidyverse.org/reference/period.html">years</a></span>(<span class="fl">2</span>),<span class="no">admissiondate</span>,<span class="no">dischargedate</span>) <span class="kw">%&gt;%</span> <span class="co"># filterin the diagnosis codes which are in the interval for each individual!</span>
+  <span class="fu"><a href="../reference/classify_long.html">classify_long</a></span>(<span class="kw">icdcodes</span><span class="kw">=</span><span class="no">CODE1</span>,<span class="kw">diag_tbl</span><span class="kw">=</span><span class="no">sel_classes</span>)
 <span class="no">ltout</span>
 <span class="no">ltout</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span>()
 <span class="co"># now we can utilise the table</span>
@@ -181,8 +181,8 @@
 <span class="no">dat</span><span class="kw">&lt;-</span><span class="no">cohort</span> <span class="kw">%&gt;%</span>
   <span class="fu">left_join</span>(<span class="no">reg</span> <span class="kw">%&gt;%</span> <span class="fu">select</span>(<span class="no">personid</span>,<span class="no">CODE1</span>,<span class="no">admissiondate</span>,<span class="no">dischargedate</span>,<span class="no">icd</span>),<span class="kw">by</span><span class="kw">=</span><span class="st">"personid"</span>) <span class="kw">%&gt;%</span>
   <span class="fu">mutate</span>(<span class="kw">postingdate</span><span class="kw">=</span><span class="fu"><a href="http://lubridate.tidyverse.org/reference/ymd.html">ymd</a></span>(<span class="no">postingdate</span>)) <span class="kw">%&gt;%</span>
-  <span class="fu">filter_date</span>(<span class="kw">indexdate</span><span class="kw">=</span><span class="no">postingdate</span>,<span class="kw">range</span><span class="kw">=</span><span class="fu"><a href="http://lubridate.tidyverse.org/reference/period.html">years</a></span>(<span class="fl">2</span>),<span class="no">admissiondate</span>,<span class="no">dischargedate</span>) <span class="kw">%&gt;%</span>
-  <span class="fu">classify_data_long</span>(<span class="kw">icdcodes</span><span class="kw">=</span><span class="no">CODE1</span>,<span class="kw">diag_tbl</span><span class="kw">=</span><span class="no">sel_classes</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="../reference/filter_date.html">filter_date</a></span>(<span class="kw">indexdate</span><span class="kw">=</span><span class="no">postingdate</span>,<span class="kw">range</span><span class="kw">=</span><span class="fu"><a href="http://lubridate.tidyverse.org/reference/period.html">years</a></span>(<span class="fl">2</span>),<span class="no">admissiondate</span>,<span class="no">dischargedate</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="../reference/classify_data_long.html">classify_data_long</a></span>(<span class="kw">icdcodes</span><span class="kw">=</span><span class="no">CODE1</span>,<span class="kw">diag_tbl</span><span class="kw">=</span><span class="no">sel_classes</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="no">match</span><span class="kw">&gt;</span><span class="fl">0</span>)</pre></body></html></div>
 </div>
   </div>
