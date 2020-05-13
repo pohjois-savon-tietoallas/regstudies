@@ -29,12 +29,14 @@ sum_score <- function(.data,...) {
   # A bad code to extract names given by "..." (I could not figure out the better way):
   nimet <- .data %>% head(0) %>% dplyr::select(!!! vars) %>% names()
   
+  left_variables <- c("personid","classification","class")
   output <- .data %>%
-    dplyr::select(c("personid","classification","class",nimet)) %>%
+    dplyr::select(c(left_variables,nimet)) %>%
     dplyr::filter(!is.na(classification)) %>%
     dplyr::distinct() %>%
     dplyr::group_by(personid,classification) %>%
     dplyr::summarise_at(nimet,sum,na.rm=T)
-  names(output)[3:(3+length(nimet)-1)]<-paste("sum(",nimet,")",sep="")
+  n <- length(left_variables)
+  names(output)[n:(n+length(nimet)-1)]<-paste("sum(",nimet,")",sep="")
   output
 }
