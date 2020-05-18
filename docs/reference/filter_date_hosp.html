@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • regstudies</title>
+<title>Filtering of hospitalisation interval data within study interval. — filter_date_hosp • regstudies</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,8 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Filtering of hospitalisation interval data within study interval. — filter_date_hosp" />
+<meta property="og:description" content="Filtering of hospitalisation interval data within study interval." />
 
 
 
@@ -58,7 +59,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -112,114 +113,64 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Filtering of hospitalisation interval data within study interval.</h1>
+    
+    <div class="hidden name"><code>filter_date_hosp.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    <p>Filtering of hospitalisation interval data within study interval.</p>
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
+    <pre class="usage"><span class='fu'>filter_date_hosp</span>(
+  <span class='no'>.data</span>,
+  <span class='no'>indexdate</span>,
+  <span class='kw'>time_before</span> <span class='kw'>=</span> <span class='fu'>years</span>(<span class='fl'>2</span>),
+  <span class='kw'>time_after</span> <span class='kw'>=</span> <span class='fu'>days</span>(<span class='fl'>0</span>),
+  <span class='no'>admission_date</span>,
+  <span class='no'>discharge_date</span>
+)</pre>
 
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      
-      
-    </tbody><tbody>
-      
-      
-      <tr>
-        
-        <td>
-          <p><code><a href="classify_data_long.html">classify_data_long()</a></code> </p>
-        </td>
-        <td><p>Extends the original data with the classification table and keeps data in long format.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="classify_long.html">classify_long()</a></code> </p>
-        </td>
-        <td><p>Classify diagnosis codes to long format with exemptions</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="filter_date.html">filter_date()</a></code> </p>
-        </td>
-        <td><p>Filtering of datetime data within interval.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="filter_date_hosp.html">filter_date_hosp()</a></code> </p>
-        </td>
-        <td><p>Filtering of hospitalisation interval data within study interval.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="get_first.html">get_first()</a></code> </p>
-        </td>
-        <td><p>Get first value based on datetime variable</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="get_last.html">get_last()</a></code> </p>
-        </td>
-        <td><p>Get last value based on datetime variable</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="get_nearest.html">get_nearest()</a></code> </p>
-        </td>
-        <td><p>Get nearest value based on datetime variable</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="get_var_types.html">get_var_types()</a></code> </p>
-        </td>
-        <td><p>Get variable types</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="left_join0.html">left_join0()</a></code> </p>
-        </td>
-        <td><p>left_join with fill option</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="make_regex.html">make_regex()</a></code> </p>
-        </td>
-        <td><p>Make regural expression classifications from LIKE% classifications</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="read_classes_csv.html">read_classes_csv()</a></code> </p>
-        </td>
-        <td><p>Read classes definitions from csv file</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="read_classes_tibble.html">read_classes_tibble()</a></code> </p>
-        </td>
-        <td><p>Internal function for providing long classification definitions.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="sum_score.html">sum_score()</a></code> </p>
-        </td>
-        <td><p>Sum scores for each individual. Allows arbitrary number of scores to be calculated using single function call.</p></td>
-      </tr>
-    </tbody>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>indexdate</th>
+      <td><p>index date (which date variable is to be compared with register data)</p></td>
+    </tr>
+    <tr>
+      <th>time_before</th>
+      <td><p>the time before the index date what defines the start of filtering interval (lubridate format, e.g years(1), weeks(10), days(20) etc.)</p></td>
+    </tr>
+    <tr>
+      <th>time_after</th>
+      <td><p>the time before the index date (default is 0 days) what defines the start of filtering interval (lubridate format, e.g years(1), weeks(10), days(20) etc.)</p></td>
+    </tr>
+    <tr>
+      <th>admission_date</th>
+      <td><p>date of admission as lubridate format</p></td>
+    </tr>
+    <tr>
+      <th>discharge_date</th>
+      <td><p>date of discharge as lubridate format</p></td>
+    </tr>
     </table>
-  </div>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>returns a tibble object with filtered rows</p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='co'>#'ostprekoh' is the register data containing 'lomno1' individual id number and data 'dg' contains the register data of disease diagnoses.</span>
+
+<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='no'>ostprekoh</span> <span class='kw'>%&gt;%</span>
+<span class='fu'>left_join</span>(<span class='no'>dg</span> <span class='kw'>%&gt;%</span> <span class='fu'>select</span>(<span class='no'>lomno1</span>,<span class='no'>KOODI1</span>,<span class='no'>tulopvm</span>,<span class='no'>lahtopvm</span>,<span class='no'>icd</span>),<span class='kw'>by</span><span class='kw'>=</span><span class='st'>"lomno1"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'>filter_date_hosp</span>(<span class='kw'>indexdate</span><span class='kw'>=</span><span class='no'>Postituspvm</span>,<span class='kw'>time_before</span><span class='kw'>=</span><span class='fu'>years</span>(<span class='fl'>2</span>),<span class='no'>tulopvm</span>,<span class='no'>lahtopvm</span>)
+}</div></pre>
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>

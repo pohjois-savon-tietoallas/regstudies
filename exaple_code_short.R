@@ -38,10 +38,27 @@ reg <- reg %>%
 
 
 # complete code examples:
+tmpdata<-cohort %>%
+  left_join(reg %>% select(personid,CODE1,admissiondate,dischargedate,icd),by="personid")
+tmpdata
 filtereddata <- cohort %>%
   left_join(reg %>% select(personid,CODE1,admissiondate,dischargedate,icd),by="personid") %>%
-  filter_date(indexdate=postingdate,range=years(2),admissiondate,dischargedate)
+  filter_date(indexdate=postingdate,range=years(2),admissiondate,dischargedate) #%>%
+#  mutate(data=1)
 
+filtereddata2 <- cohort %>%
+  left_join(reg %>% select(personid,CODE1,admissiondate,dischargedate,icd),by="personid") %>%
+  filter_date_hosp(indexdate=postingdate,
+                   time_before=years(2),time_after=years(2),
+                   admission_date=admissiondate,
+                   discharge_date=dischargedate) %>%
+  select(-study_interval,-hosp_interval)
+#  mutate(data=2)
+dim(filtereddata)
+dim(filtereddata2)
+setdiff(filtereddata2,filtereddata) %>% View()
+fdata<-left_join(filtereddata,filtereddata2)
+View(fdata)
 # Elixhauser scores:
 elixhauser_classes <- read_classes_csv(file = "data/classification_codes/elixhauser_classes_wide.csv")
 #View(elixhauser_classes)

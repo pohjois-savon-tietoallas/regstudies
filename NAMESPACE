@@ -3,6 +3,7 @@
 export(classify_data_long)
 export(classify_long)
 export(filter_date)
+export(filter_date_hosp)
 export(get_first)
 export(get_last)
 export(get_nearest)
