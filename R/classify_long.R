@@ -87,8 +87,13 @@ classify_long <- function(.data,icdcodes,diag_tbl,return_binary=TRUE) {
     #                      names_from=label,
     #                      values_from=match)
   }
-  lt
-  # TODO: Kehit? s.e. muuttujien nimen_eteen saadaan teksti 'elixhauser', jos se on luokittelun nimi!
+
+  findnames<-function(name) {is.element(name,c("label","class"));}
+  newnames<-function(name) { paste0(name,"_elixhauser"); }
+  
+  lt %>%
+    rename_at(vars(class,label),funs(newnames))# %>% 
+#    select(-classification)
 }
 
 
