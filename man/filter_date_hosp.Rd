@@ -34,8 +34,13 @@ Filtering of hospitalisation interval data within study interval.
 \dontrun{
 #'ostprekoh' is the register data containing 'lomno1' individual id number and data 'dg' contains the register data of disease diagnoses.
 
-dat <- ostprekoh \%>\%
-left_join(dg \%>\% select(lomno1,KOODI1,tulopvm,lahtopvm,icd),by="lomno1") \%>\%
-  filter_date_hosp(indexdate=Postituspvm,time_before=years(2),tulopvm,lahtopvm)
+dat <- cohort \%>\%
+left_join(reg \%>\% select(personid,CODE1,admissiondate,dischargedate,icd),by="personid") \%>\%
+  filter_date_hosp(indexdate=postingdate,
+                   time_before=years(2),time_after=years(2),
+                   admission_date=admissiondate,
+                   discharge_date=dischargedate) \%>\%
+  select(-study_interval,-hosp_interval)
+head(dat)
 }
 }
