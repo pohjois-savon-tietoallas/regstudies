@@ -25,9 +25,10 @@
 #' @export
 #' 
 read_classes_tibble <- function(sel_classes) {
-  main        <- sel_classes %>% dplyr::select(classification, label, tidyselect::contains("score")) %>% dplyr::distinct()
-  dat_to_long <- sel_classes %>% dplyr::select(-contains("score"), -classification)
-  nimet       <- setdiff(names(dat_to_long), c("class","label"))
+  main        <- sel_classes %>% dplyr::select(tidyselect::contains("label"), tidyselect::contains("score")) %>% dplyr::distinct()
+  dat_to_long <- sel_classes %>% dplyr::select(-contains("score"))
+  names_class_and_label <- names(dat_to_long)[grep("class|label", names(dat_to_long))]
+  nimet       <- setdiff(names(dat_to_long), names_class_and_label)
   sel         <- grep(".rm", x=nimet) # names of exceptions!
   nexcep      <- length(sel) # how many exceptions
   vnim <- nimet
@@ -37,17 +38,17 @@ read_classes_tibble <- function(sel_classes) {
     pnim <- nimet[sel]  # poikkeusnimet
   }
   
-  sel_classes2 <- tidyr::pivot_longer(dat_to_long %>% dplyr::select(-tidyselect::all_of(pnim)), -c("class","label"), names_to="icd", values_to="regex")
+  sel_classes2 <- tidyr::pivot_longer(dat_to_long %>% dplyr::select(-tidyselect::all_of(pnim)), -all_of(names_class_and_label), names_to="icd", values_to="regex")
   if (nexcep>0) {
-    sel_classes2rm <- tidyr::pivot_longer(dat_to_long %>% dplyr::select(-all_of(vnim)), -c("class","label"), names_to="icd", values_to="regex.rm") %>%
+    sel_classes2rm <- tidyr::pivot_longer(dat_to_long %>% dplyr::select(-all_of(vnim)), -all_of(names_class_and_label), names_to="icd", values_to="regex.rm") %>%
       dplyr::mutate(icd=sub(pattern=".rm", "", x=icd))
     sel_classes2 <- dplyr::left_join(sel_classes2, sel_classes2rm)
   }
   sel_classes2 <- dplyr::right_join(main, sel_classes2)
-  nimet2       <- c("classification","icd","class","label","regex")
+  nimet2       <- c("icd",names_class_and_label,"regex")
   if(nexcep>0) {
     nimet2<-c(nimet2,"regex.rm")
   }
   sel_classes2 %>%
-    select(tidyselect::contains(c("classification","icd","class","label","regex","score")))
+    select(tidyselect::contains(c("icd",names_class_and_label,"regex","score")))
 }

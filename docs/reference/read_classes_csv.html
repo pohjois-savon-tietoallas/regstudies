@@ -87,18 +87,6 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="../articles/vignette_v2_old.html">Use cases of 'regstudies' R package</a>
-    </li>
-  </ul>
-</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         
@@ -140,7 +128,7 @@
     <p>returns classification definintion in long format (tidy data) as that is what the package needs in operation.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>elixhauser_cl</span> <span class='kw'>&lt;-</span> <span class='fu'>read_classes_csv</span>(<span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>"data/classification_codes/elixhauser_classes_wide.csv"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in sel_classes %&gt;% dplyr::select(classification, label, tidyselect::contains("score")) %&gt;%     dplyr::distinct(): could not find function "%&gt;%"</span></div></pre>
+    <pre class="examples"><div class='input'><span class='no'>elixhauser_cl</span> <span class='kw'>&lt;-</span> <span class='fu'>read_classes_csv</span>(<span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>"data/classification_codes/elixhauser_classes_wide.csv"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in sel_classes %&gt;% dplyr::select(tidyselect::contains("label"),     tidyselect::contains("score")) %&gt;% dplyr::distinct(): could not find function "%&gt;%"</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

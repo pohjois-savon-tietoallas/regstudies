@@ -31,10 +31,10 @@
 #'   filter_date(indexdate=Postituspvm,range=years(2),tulopvm,lahtopvm) %>% # filtering the diagnosis codes which are in the interval for each individual!
 #'   classify_long(icdcodes=KOODI1,diag_tbl=sel_classes)
 #' }
-#' @rdname classify_long
+#' @rdname classify_long2
 #' @export
 #' 
-classify_long <- function(.data,icdcodes,diag_tbl,return_binary=TRUE) {
+classify_long2 <- function(.data,icdcodes,diag_tbl,return_binary=TRUE) {
   # .data: tibble from which we want to study
   # icdcodes: name of the variable holding ICD-codes (you can use any type of string codes but change your classification definitions according to that)
   # diag_tbl: tibble which holds the classification details: needs to have variables 'regex' and 'label'
@@ -44,7 +44,7 @@ classify_long <- function(.data,icdcodes,diag_tbl,return_binary=TRUE) {
   
   icdcodes <- rlang::enquo(icdcodes)
   classification_name <- .data %>% get_classification_name()
-  if (!dplyr::setequal(intersect(c("regex","label"),names(diag_tbl)),c("regex","label"))) {
+  if (!dplyr::setequal(intersect(c("regex","label"),str_sub(names(diag_tbl),1,5)),c("regex","label"))) {
     print("Names of the diag_tbl are wrong. Need to have 'regex' and 'label'.")
     lt <- diag_tbl # TODO: Throw an error or return some sensible object!
   } else {
@@ -96,7 +96,7 @@ classify_long <- function(.data,icdcodes,diag_tbl,return_binary=TRUE) {
            newnames(.names,clname),
            .names)
   }
-  names(lt) <- make_new_names(names(lt),classification_name)
+  names(lt) <- names(lt) %>% make_new_names(classification_name)
   lt #%>%
     #rename_at(vars(class,label),funs(newnames,classification_name)) # %>% 
 #    select(-classification)

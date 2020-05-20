@@ -36,35 +36,52 @@ reg <- reg %>%
                       )
         ) #%>% mutate(startletter=regexpr(pattern="^[A-Z]",CODE1)>0)
 
-
 # complete code examples:
 tmpdata<-cohort %>%
   left_join(reg %>% select(personid,CODE1,admissiondate,dischargedate,icd),by="personid")
 tmpdata
 filtereddata <- cohort %>%
   left_join(reg %>% select(personid,CODE1,admissiondate,dischargedate,icd),by="personid") %>%
-  filter_date(indexdate=postingdate,range=years(2),admissiondate,dischargedate) #%>%
-#  mutate(data=1)
+  filter_date(indexdate=postingdate,range=years(2),admissiondate,dischargedate)
 
-filtereddata2 <- cohort %>%
+filtereddata <- cohort %>%
   left_join(reg %>% select(personid,CODE1,admissiondate,dischargedate,icd),by="personid") %>%
   filter_date_hosp(indexdate=postingdate,
                    time_before=years(2),time_after=years(2),
                    admission_date=admissiondate,
                    discharge_date=dischargedate) %>%
   select(-study_interval,-hosp_interval)
-#  mutate(data=2)
-dim(filtereddata)
-dim(filtereddata2)
-setdiff(filtereddata2,filtereddata) %>% View()
-fdata<-left_join(filtereddata,filtereddata2)
-View(fdata)
+
+#dim(filtereddata)
+#dim(filtereddata2)
+#setdiff(filtereddata2,filtereddata) %>% View()
+#fdata <- left_join(filtereddata,filtereddata2)
+#View(fdata)
+
 # Elixhauser scores:
 elixhauser_classes <- read_classes_csv(file = "data/classification_codes/elixhauser_classes_wide.csv")
 #View(elixhauser_classes)
+elixhauser_classes2 <- read_classes_csv(file = "data/classification_codes/elixhauser_classes.csv")
+elixhauser_classes2 %>% get_classification_name()
+
+#View(elixhauser_classes)
+#View(elixhauser_classes2)
+tempdata <- filtereddata %>%
+  classify_long2(icdcodes=CODE1,diag_tbl=elixhauser_classes2)
+#tempdata %>%
+#  View()
+
+charlson_classes2 <- read_classes_csv(file = "data/classification_codes/charlson_classes.csv")
+
+filtereddata %>%
+  classify_data_long2(icdcodes=CODE1,diag_tbl=elixhauser_classes2) %>%
+  classify_data_long2(icdcodes=CODE1,diag_tbl=charlson_classes2) %>%
+  View()
+
 elixscore <- filtereddata %>%
   classify_data_long(icdcodes=CODE1,diag_tbl=elixhauser_classes) %>%
   sum_score(score_AHRQ,score_van_Walraven)
+#elixscore %>% View()
 elixscore %>%
   get_var_types()
 
@@ -83,6 +100,7 @@ elixscore <- left_join0(cohort %>% select(personid), elixscore)
 
 # Charlson score:
 #charlson_classes <- classes_to_wide(vroom(file = "data/classification_codes/charlson_classes_wide.csv"))
+sel_classes <- vroom(file = "data/classification_codes/charlson_classes_wide.csv")
 charlson_classes <- read_classes_csv(file = "data/classification_codes/charlson_classes_wide.csv")
 #View(charlson_classes)
 
