@@ -31,10 +31,10 @@
 #'   filter_date(indexdate=Postituspvm,range=years(2),tulopvm,lahtopvm) %>% # filtering the diagnosis codes which are in the interval for each individual!
 #'   classify_long(icdcodes=KOODI1,diag_tbl=sel_classes)
 #' }
-#' @rdname classify_long2
+#' @rdname make_classify_table
 #' @export
 #' 
-classify_long2 <- function(.data,icdcodes,diag_tbl,return_binary=TRUE) {
+make_classify_table <- function(.data,icdcodes,diag_tbl,return_binary=TRUE) {
   # .data: tibble from which we want to study
   # icdcodes: name of the variable holding ICD-codes (you can use any type of string codes but change your classification definitions according to that)
   # diag_tbl: tibble which holds the classification details: needs to have variables 'regex' and 'label'

@@ -31,13 +31,13 @@
 #'   filter(match>0)
 #' }
 #' 
-#' @rdname classify_data_long2
+#' @rdname classify_codes
 #' @export
 #'
-classify_data_long2 <- function(.data, id, icdcodes, diag_tbl, fill=0) {
+classify_codes <- function(.data, id, icdcodes, diag_tbl, fill=0) {
   icdcodes_quo <- rlang::enquo(icdcodes)
   id_quo <- rlang::enquo(id)
-  ctobj <- classify_long2(.data=.data,icdcodes=!!icdcodes_quo,diag_tbl=diag_tbl,return_binary=FALSE) #classification table object'
+  ctobj <- make_classify_table(.data=.data,icdcodes=!!icdcodes_quo,diag_tbl=diag_tbl,return_binary=FALSE) #classification table object'
   
 #  classification_name <- ctobj %>%
 #    dplyr::select(classification) %>% # TODO

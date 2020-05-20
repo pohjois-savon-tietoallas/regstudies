@@ -67,15 +67,15 @@ elixhauser_classes2 %>% get_classification_name()
 #View(elixhauser_classes)
 #View(elixhauser_classes2)
 tempdata <- filtereddata %>%
-  classify_long2(icdcodes=CODE1,diag_tbl=elixhauser_classes2)
+  make_classify_table(icdcodes=CODE1,diag_tbl=elixhauser_classes2)
 #tempdata %>%
 #  View()
 
 charlson_classes2 <- read_classes_csv(file = "data/classification_codes/charlson_classes.csv")
 
 filtereddata %>%
-  classify_data_long2(icdcodes=CODE1,diag_tbl=elixhauser_classes2) %>%
-  classify_data_long2(icdcodes=CODE1,diag_tbl=charlson_classes2) %>%
+  classify_codes(icdcodes=CODE1,diag_tbl=elixhauser_classes2) %>%
+  classify_codes(icdcodes=CODE1,diag_tbl=charlson_classes2) %>%
   View()
 
 elixscore <- filtereddata %>%

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Extends the original data with the classification table and keeps data in long format. — classify_data_long2 • regstudies</title>
+<title>Classify diagnosis codes to long format with exemptions — make_classify_table • regstudies</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Extends the original data with the classification table and keeps data in long format. — classify_data_long2" />
-<meta property="og:description" content="Computes classification table and attaches it to original data. Data stays in long format." />
+<meta property="og:title" content="Classify diagnosis codes to long format with exemptions — make_classify_table" />
+<meta property="og:description" content="Computes classification table which can be attached to original data using left_join()." />
 
 
 
@@ -87,6 +87,18 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/vignette_v2_old.html">Use cases of 'regstudies' R package</a>
+    </li>
+  </ul>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         
@@ -103,16 +115,16 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Extends the original data with the classification table and keeps data in long format.</h1>
+    <h1>Classify diagnosis codes to long format with exemptions</h1>
     
-    <div class="hidden name"><code>classify_data_long2.Rd</code></div>
+    <div class="hidden name"><code>make_classify_table.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Computes classification table and attaches it to original data. Data stays in long format.</p>
+    <p>Computes classification table which can be attached to original data using left_join().</p>
     </div>
 
-    <pre class="usage"><span class='fu'>classify_data_long2</span>(<span class='no'>.data</span>, <span class='no'>id</span>, <span class='no'>icdcodes</span>, <span class='no'>diag_tbl</span>, <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fl'>0</span>)</pre>
+    <pre class="usage"><span class='fu'>make_classify_table</span>(<span class='no'>.data</span>, <span class='no'>icdcodes</span>, <span class='no'>diag_tbl</span>, <span class='kw'>return_binary</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -136,21 +148,17 @@
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    
-
-
+    <p>Returns a tibble containing classification table which can be joined to initial data</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># we calculate the table which can be used for classification.</span>
 <span class='co'># 'ostprekoh' is the register data containing 'lomno1' individual id number and data 'dg' contains the register data of disease diagnoses.</span>
-
-<span class='no'>dat</span><span class='kw'>&lt;-</span><span class='no'>ostprekoh</span> <span class='kw'>%&gt;%</span>
-<span class='fu'>left_join</span>(<span class='no'>dg</span> <span class='kw'>%&gt;%</span> <span class='fu'>select</span>(<span class='no'>lomno1</span>,<span class='no'>KOODI1</span>,<span class='no'>tulopvm</span>,<span class='no'>lahtopvm</span>,<span class='no'>icd</span>),<span class='kw'>by</span><span class='kw'>=</span><span class='st'>"lomno1"</span>) <span class='kw'>%&gt;%</span>
+<span class='no'>ostprekoh</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>left_join</span>(<span class='no'>dg</span> <span class='kw'>%&gt;%</span> <span class='fu'>select</span>(<span class='no'>lomno1</span>,<span class='no'>KOODI1</span>,<span class='no'>tulopvm</span>,<span class='no'>lahtopvm</span>),<span class='kw'>by</span><span class='kw'>=</span><span class='st'>"lomno1"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>mutate</span>(<span class='kw'>Postituspvm</span><span class='kw'>=</span><span class='fu'>ymd</span>(<span class='no'>Postituspvm</span>)) <span class='kw'>%&gt;%</span>
-  <span class='fu'>datefilter</span>(<span class='kw'>indexdate</span><span class='kw'>=</span><span class='no'>Postituspvm</span>,<span class='kw'>range</span><span class='kw'>=</span><span class='fu'>years</span>(<span class='fl'>2</span>),<span class='no'>tulopvm</span>,<span class='no'>lahtopvm</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='classify_data_long.html'>classify_data_long</a></span>(<span class='kw'>icdcodes</span><span class='kw'>=</span><span class='no'>KOODI1</span>,<span class='kw'>diag_tbl</span><span class='kw'>=</span><span class='no'>sel_classes</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span>(<span class='no'>match</span><span class='kw'>&gt;</span><span class='fl'>0</span>)
+  <span class='fu'><a href='filter_date.html'>filter_date</a></span>(<span class='kw'>indexdate</span><span class='kw'>=</span><span class='no'>Postituspvm</span>,<span class='kw'>range</span><span class='kw'>=</span><span class='fu'>years</span>(<span class='fl'>2</span>),<span class='no'>tulopvm</span>,<span class='no'>lahtopvm</span>) <span class='kw'>%&gt;%</span> <span class='co'># filtering the diagnosis codes which are in the interval for each individual!</span>
+  <span class='fu'><a href='classify_long.html'>classify_long</a></span>(<span class='kw'>icdcodes</span><span class='kw'>=</span><span class='no'>KOODI1</span>,<span class='kw'>diag_tbl</span><span class='kw'>=</span><span class='no'>sel_classes</span>)
 }</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
