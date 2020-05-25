@@ -20,7 +20,7 @@
 #' dat <- cohort %>%
 #' left_join(reg %>% select(personid,CODE1,admissiondate,dischargedate,icd),by="personid") %>%
 #'   filter_date_hosp(indexdate=postingdate,
-#'                    time_before=years(2),time_after=years(2),
+#'                    time_before=years(2),time_after=days(0),
 #'                    admission_date=admissiondate,
 #'                    discharge_date=dischargedate) %>%
 #'   select(-study_interval,-hosp_interval)
@@ -29,7 +29,9 @@
 #' @rdname filter_date_hosp
 #' @export
 #' 
-filter_date_hosp <- function(.data,indexdate,time_before=years(2),time_after=days(0),admission_date,discharge_date) {
+filter_date_hosp <- function(.data,indexdate,
+                             time_before=years(2),time_after=days(0),
+                             admission_date,discharge_date) {
   indexdate <- dplyr::enquo(indexdate)
   admission_date <- dplyr::enquo(admission_date)
   discharge_date <- dplyr::enquo(discharge_date)

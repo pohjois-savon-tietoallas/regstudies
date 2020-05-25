@@ -78,25 +78,37 @@ filtereddata %>%
   classify_codes(icdcodes=CODE1,diag_tbl=charlson_classes2) %>%
   View()
 
-elixscore <- filtereddata %>%
-  classify_data_long(icdcodes=CODE1,diag_tbl=elixhauser_classes) %>%
+# old way:
+temp <- filtereddata %>%
+  classify_data_long(icdcodes=CODE1,diag_tbl=elixhauser_classes)
+# new way:
+temp <- filtereddata %>%
+  classify_codes(icdcodes=CODE1,diag_tbl=elixhauser_classes2)
+
+names(temp)
+head(temp,2)
+elixscore <- temp %>%
   sum_score(score_AHRQ,score_van_Walraven)
 #elixscore %>% View()
-elixscore %>%
-  get_var_types()
+#elixscore %>%
+#  get_var_types()
 
 elixscore
-elixscore <- left_join0(cohort %>% select(personid), elixscore)
-#View(elixscore)
+na_fill0<-function(x) {
+  ifelse(is.na(x),0,x)
+}
+elixscore <- left_join(cohort %>% select(personid), elixscore) %>%
+  mutate_all(na_fill0)
+View(elixscore)
 
 # [X] demoa Hospital Frailty Risk Score -indeksiä!
 # [X] selvitä, mitkä funktiot on tarpeettomia ja mitkä tarpeellisia
+# [X] class, label ja score muotoon class_charlson, label_charlson ja score_charlson
+# [X]  -> classify_data_long -funktiossa!
+# [X] tarvitaan left_join, joka tekee muuttujan tyypin mukaan käyttäjän haluaman täytön: esim. c("numeric"=0,"character"="Elixhauser")
+# [X]  -> tulee ehkä tarpeettomaksi, jos muutetaan class, label ja score uusille nimille
 # TODO: 
-# - class, label ja score muotoon class_charlson, label_charlson ja score_charlson
-#   -> classify_data_long -funktiossa!
 # - korjaa classify_data_long -funktio sellaiseksi että se palauttaa koko datan!
-# - tarvitaan left_join, joka tekee muuttujan tyypin mukaan käyttäjän haluaman täytön: esim. c("numeric"=0,"character"="Elixhauser")
-#   -> tulee ehkä tarpeettomaksi, jos muutetaan class, label ja score uusille nimille
 
 # Charlson score:
 #charlson_classes <- classes_to_wide(vroom(file = "data/classification_codes/charlson_classes_wide.csv"))
