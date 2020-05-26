@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Filtering of hospitalisation interval data within study interval. — filter_date_hosp • regstudies</title>
+<title>Filtering of date interval data within study interval. — filter_date_interval • regstudies</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Filtering of hospitalisation interval data within study interval. — filter_date_hosp" />
-<meta property="og:description" content="Filtering of hospitalisation interval data within study interval." />
+<meta property="og:title" content="Filtering of date interval data within study interval. — filter_date_interval" />
+<meta property="og:description" content="Can be used for filtering e.g. for hospital visits, which are date intervals (time periods)." />
 
 
 
@@ -115,16 +115,16 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Filtering of hospitalisation interval data within study interval.</h1>
+    <h1>Filtering of date interval data within study interval.</h1>
     
-    <div class="hidden name"><code>filter_date_hosp.Rd</code></div>
+    <div class="hidden name"><code>filter_date_interval.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Filtering of hospitalisation interval data within study interval.</p>
+    <p>Can be used for filtering e.g. for hospital visits, which are date intervals (time periods).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>filter_date_hosp</span>(
+    <pre class="usage"><span class='fu'>filter_date_interval</span>(
   <span class='no'>.data</span>,
   <span class='no'>indexdate</span>,
   <span class='kw'>time_before</span> <span class='kw'>=</span> <span class='fu'>years</span>(<span class='fl'>2</span>),
@@ -168,11 +168,10 @@
 
 <span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='no'>cohort</span> <span class='kw'>%&gt;%</span>
 <span class='fu'>left_join</span>(<span class='no'>reg</span> <span class='kw'>%&gt;%</span> <span class='fu'>select</span>(<span class='no'>personid</span>,<span class='no'>CODE1</span>,<span class='no'>admissiondate</span>,<span class='no'>dischargedate</span>,<span class='no'>icd</span>),<span class='kw'>by</span><span class='kw'>=</span><span class='st'>"personid"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>filter_date_hosp</span>(<span class='kw'>indexdate</span><span class='kw'>=</span><span class='no'>postingdate</span>,
-                   <span class='kw'>time_before</span><span class='kw'>=</span><span class='fu'>years</span>(<span class='fl'>2</span>),<span class='kw'>time_after</span><span class='kw'>=</span><span class='fu'>years</span>(<span class='fl'>2</span>),
+  <span class='fu'>filter_date_interval</span>(<span class='kw'>indexdate</span><span class='kw'>=</span><span class='no'>postingdate</span>,
+                   <span class='kw'>time_before</span><span class='kw'>=</span><span class='fu'>years</span>(<span class='fl'>2</span>),
                    <span class='kw'>admission_date</span><span class='kw'>=</span><span class='no'>admissiondate</span>,
-                   <span class='kw'>discharge_date</span><span class='kw'>=</span><span class='no'>dischargedate</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>select</span>(-<span class='no'>study_interval</span>,-<span class='no'>hosp_interval</span>)
+                   <span class='kw'>discharge_date</span><span class='kw'>=</span><span class='no'>dischargedate</span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>dat</span>)
 }</div></pre>
   </div>

@@ -1,4 +1,6 @@
-#' Filtering of hospitalisation interval data within study interval.
+#' Filtering of date interval data within study interval.
+#' 
+#' Can be used for filtering e.g. for hospital visits, which are date intervals (time periods).
 #' 
 #' @param indexdate index date (which date variable is to be compared with register data)
 #' @param time_before the time before the index date what defines the start of filtering interval (lubridate format, e.g years(1), weeks(10), days(20) etc.)
@@ -19,17 +21,16 @@
 #'
 #' dat <- cohort %>%
 #' left_join(reg %>% select(personid,CODE1,admissiondate,dischargedate,icd),by="personid") %>%
-#'   filter_date_hosp(indexdate=postingdate,
-#'                    time_before=years(2),time_after=days(0),
+#'   filter_date_interval(indexdate=postingdate,
+#'                    time_before=years(2),
 #'                    admission_date=admissiondate,
-#'                    discharge_date=dischargedate) %>%
-#'   select(-study_interval,-hosp_interval)
+#'                    discharge_date=dischargedate)
 #' head(dat)
 #' }
-#' @rdname filter_date_hosp
+#' @rdname filter_date_interval
 #' @export
 #' 
-filter_date_hosp <- function(.data,indexdate,
+filter_date_interval <- function(.data,indexdate,
                              time_before=years(2),time_after=days(0),
                              admission_date,discharge_date) {
   indexdate <- dplyr::enquo(indexdate)
@@ -39,5 +40,6 @@ filter_date_hosp <- function(.data,indexdate,
   .data %>% # join the datas
     dplyr::mutate(study_interval= ((!!indexdate)-time_before) %--% ((!!indexdate)+time_after)) %>% # 1. create an interval out of 'indexdate'
     dplyr::mutate(hosp_interval= (!!admission_date) %--% (!!discharge_date)) %>% # 2. create an interval out of hospitalisation period
-    dplyr::filter(int_overlaps(study_interval,hosp_interval))
+    dplyr::filter(int_overlaps(study_interval,hosp_interval)) %>%
+    select(-study_interval,-hosp_interval)
 }

@@ -10,19 +10,14 @@ library(regstudies) # requires dplyr, tidyr, stringr, purrr
 library(vroom)
 library(lubridate)
 cohort <- vroom("./data/fake_cohort.csv",col_types=c(personid='i',postingdate='D'))
-#write.csv2(cohort%>%select(-status),
-#           file="./data/fake_cohort2.csv",row.names=FALSE)
 cohort %>%
-#  mutate(postingdate=ymd(postingdate)) %>%
   head()
 # personid: id for each individual in the study
 # postingdate: date of interest to find comorbidities
-# status: some kind of additional data (random 0/1)
 
 # prepare some register data:
-#C:/Users/jukop/Documents/UEFhommat/Tietoallasprojekti/rekkarityokalu
 reg <- vroom(file="../rekisteridatat/ostpre_hilmo_9616_dgt_eng.csv")
-reg<-reg %>%
+reg <- reg %>%
   mutate(admissiondate=dmy(admissiondate),dischargedate=dmy(dischargedate)) %>%
   mutate(CODE1=ifelse(CODE1=="-",NA,CODE1),CODE2=ifelse(CODE2=="-",NA,CODE2))
 reg %>%
@@ -34,72 +29,66 @@ reg <- reg %>%
                         year(dischargedate)<1996 & year(dischargedate)>=1987 ~ "icd9",
                         year(dischargedate)>=1996 ~ "icd10"
                       )
-        ) #%>% mutate(startletter=regexpr(pattern="^[A-Z]",CODE1)>0)
+        )
 
 # complete code examples:
-tmpdata<-cohort %>%
-  left_join(reg %>% select(personid,CODE1,admissiondate,dischargedate,icd),by="personid")
-tmpdata
-filtereddata <- cohort %>%
-  left_join(reg %>% select(personid,CODE1,admissiondate,dischargedate,icd),by="personid") %>%
-  filter_date(indexdate=postingdate,range=years(2),admissiondate,dischargedate)
-
 filtereddata <- cohort %>%
   left_join(reg %>% select(personid,CODE1,admissiondate,dischargedate,icd),by="personid") %>%
   filter_date_hosp(indexdate=postingdate,
-                   time_before=years(2),time_after=years(2),
+                   time_before=years(2),
                    admission_date=admissiondate,
-                   discharge_date=dischargedate) %>%
-  select(-study_interval,-hosp_interval)
-
-#dim(filtereddata)
-#dim(filtereddata2)
-#setdiff(filtereddata2,filtereddata) %>% View()
-#fdata <- left_join(filtereddata,filtereddata2)
-#View(fdata)
+                   discharge_date=dischargedate)
 
 # Elixhauser scores:
-elixhauser_classes <- read_classes_csv(file = "data/classification_codes/elixhauser_classes_wide.csv")
-#View(elixhauser_classes)
 elixhauser_classes2 <- read_classes_csv(file = "data/classification_codes/elixhauser_classes.csv")
 elixhauser_classes2 %>% get_classification_name()
 
-#View(elixhauser_classes)
-#View(elixhauser_classes2)
-tempdata <- filtereddata %>%
+# classification table:
+elixhauser_icdtable <- filtereddata %>%
   make_classify_table(icdcodes=CODE1,diag_tbl=elixhauser_classes2)
-#tempdata %>%
-#  View()
+
+elixhauser_classified <- filtereddata %>%
+  classify_codes(icdcodes=CODE1,diag_tbl=elixhauser_classes2)
+elixhauser_classified <- left_join(cohort %>% select(personid), elixhauser_classified)
+elixhauser_classified_score <- elixhauser_classified %>%
+  sum_score(score_AHRQ,score_van_Walraven)
+#View(elixhauser_classified_score)
 
 charlson_classes2 <- read_classes_csv(file = "data/classification_codes/charlson_classes.csv")
+charlson_classes2 %>% get_classification_name()
 
-filtereddata %>%
+# Multiple classifications on the same data
+two_classifications <- filtereddata %>%
   classify_codes(icdcodes=CODE1,diag_tbl=elixhauser_classes2) %>%
-  classify_codes(icdcodes=CODE1,diag_tbl=charlson_classes2) %>%
-  View()
+  classify_codes(icdcodes=CODE1,diag_tbl=charlson_classes2)
+#View(two_classifications)
+two_cohort_founds <- left_join(cohort %>% select(personid), two_classifications)
+elix_charlson_score <- two_cohort_founds %>%
+  rename(score_charlson=score) %>%
+  sum_score(score_AHRQ,score_van_Walraven,score_charlson)
+#View(elix_charlson_score)
 
-# old way:
-temp <- filtereddata %>%
-  classify_data_long(icdcodes=CODE1,diag_tbl=elixhauser_classes)
-# new way:
-temp <- filtereddata %>%
+
+register_founds <- filtereddata %>%
   classify_codes(icdcodes=CODE1,diag_tbl=elixhauser_classes2)
+cohort_founds <- left_join(cohort %>% select(personid), register_founds)
 
-names(temp)
-head(temp,2)
-elixscore <- temp %>%
+elixscore <- cohort_founds %>%
   sum_score(score_AHRQ,score_van_Walraven)
-#elixscore %>% View()
-#elixscore %>%
-#  get_var_types()
+#View(elixscore)
 
-elixscore
-na_fill0<-function(x) {
-  ifelse(is.na(x),0,x)
-}
-elixscore <- left_join(cohort %>% select(personid), elixscore) %>%
-  mutate_all(na_fill0)
-View(elixscore)
+
+
+
+
+
+#------------------------ POIKKI ------------------
+
+#na_fill0<-function(x) {
+#  ifelse(is.na(x),0,x)
+#}
+#elixscore <- left_join(cohort %>% select(personid), elixscore) %>%
+#  mutate_all(na_fill0)
 
 # [X] demoa Hospital Frailty Risk Score -indeksiä!
 # [X] selvitä, mitkä funktiot on tarpeettomia ja mitkä tarpeellisia

@@ -75,7 +75,7 @@
       <h1 data-toc-skip>Use cases of ‘regstudies’ R package</h1>
                         <h4 class="author">Juho Kopra</h4>
             
-            <h4 class="date">2020-05-20</h4>
+            <h4 class="date">2020-05-26</h4>
       
       
       <div class="hidden name"><code>vignette_v2_old.Rmd</code></div>
@@ -171,7 +171,7 @@
   <span class="fu">left_join</span>(<span class="no">reg</span> <span class="kw">%&gt;%</span> <span class="fu">select</span>(<span class="no">personid</span>,<span class="no">CODE1</span>,<span class="no">admissiondate</span>,<span class="no">dischargedate</span>),<span class="kw">by</span><span class="kw">=</span><span class="st">"personid"</span>) <span class="kw">%&gt;%</span>
   <span class="fu">mutate</span>(<span class="kw">postingdate</span><span class="kw">=</span><span class="fu"><a href="http://lubridate.tidyverse.org/reference/ymd.html">ymd</a></span>(<span class="no">postingdate</span>)) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/filter_date.html">filter_date</a></span>(<span class="kw">indexdate</span><span class="kw">=</span><span class="no">postingdate</span>,<span class="kw">range</span><span class="kw">=</span><span class="fu"><a href="http://lubridate.tidyverse.org/reference/period.html">years</a></span>(<span class="fl">2</span>),<span class="no">admissiondate</span>,<span class="no">dischargedate</span>) <span class="kw">%&gt;%</span> <span class="co"># filterin the diagnosis codes which are in the interval for each individual!</span>
-  <span class="fu"><a href="../reference/classify_long.html">classify_long</a></span>(<span class="kw">icdcodes</span><span class="kw">=</span><span class="no">CODE1</span>,<span class="kw">diag_tbl</span><span class="kw">=</span><span class="no">sel_classes</span>)
+  <span class="fu">classify_long</span>(<span class="kw">icdcodes</span><span class="kw">=</span><span class="no">CODE1</span>,<span class="kw">diag_tbl</span><span class="kw">=</span><span class="no">sel_classes</span>)
 <span class="no">ltout</span>
 <span class="no">ltout</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span>()
 <span class="co"># now we can utilise the table</span>
@@ -182,7 +182,7 @@
   <span class="fu">left_join</span>(<span class="no">reg</span> <span class="kw">%&gt;%</span> <span class="fu">select</span>(<span class="no">personid</span>,<span class="no">CODE1</span>,<span class="no">admissiondate</span>,<span class="no">dischargedate</span>,<span class="no">icd</span>),<span class="kw">by</span><span class="kw">=</span><span class="st">"personid"</span>) <span class="kw">%&gt;%</span>
   <span class="fu">mutate</span>(<span class="kw">postingdate</span><span class="kw">=</span><span class="fu"><a href="http://lubridate.tidyverse.org/reference/ymd.html">ymd</a></span>(<span class="no">postingdate</span>)) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/filter_date.html">filter_date</a></span>(<span class="kw">indexdate</span><span class="kw">=</span><span class="no">postingdate</span>,<span class="kw">range</span><span class="kw">=</span><span class="fu"><a href="http://lubridate.tidyverse.org/reference/period.html">years</a></span>(<span class="fl">2</span>),<span class="no">admissiondate</span>,<span class="no">dischargedate</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/classify_data_long.html">classify_data_long</a></span>(<span class="kw">icdcodes</span><span class="kw">=</span><span class="no">CODE1</span>,<span class="kw">diag_tbl</span><span class="kw">=</span><span class="no">sel_classes</span>) <span class="kw">%&gt;%</span>
+  <span class="fu">classify_data_long</span>(<span class="kw">icdcodes</span><span class="kw">=</span><span class="no">CODE1</span>,<span class="kw">diag_tbl</span><span class="kw">=</span><span class="no">sel_classes</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="no">match</span><span class="kw">&gt;</span><span class="fl">0</span>)</pre></body></html></div>
 </div>
   </div>
