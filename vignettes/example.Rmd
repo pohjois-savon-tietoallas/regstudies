@@ -112,34 +112,22 @@ head(filtered_d)
 ```{r}
 # Filter dataset with occurences within ???????????
 filtered_d <- d %>% 
-  filter_date_hosp(indexdate = postingdate,
+  filter_date_interval(indexdate = postingdate,
                    time_before=years(2),
-                   time_after=years(2),
                    admission_date=adm_date,
-                   discharge_date=disc_date) # %>% select(-study_interval,-hosp_interval)
+                   discharge_date=disc_date)
 head(filtered_d)
 ```
-
-
-```{r}
-# # Whats thiss????
-# dim(filtereddata)
-# dim(filtereddata2)
-# setdiff(filtereddata2,filtereddata) %>% View()
-# fdata<-left_join(filtereddata,filtereddata2)
-# # View(fdata)
-```
-
 
 
 ## Elixhauser classification and scores
 
 ```{r}
 # Classify by Elixhauser:
-elixhauser_classes <- read_classes_csv(file = "../data/classification_codes/elixhauser_classes_wide.csv")
+elixhauser_classes <- read_classes_csv(file = "../data/classification_codes/elixhauser_classes.csv")
 
 elixscore <- filtered_d %>%
-  classify_data_long(icdcodes = CODE1,
+  classify_codes(icdcodes = CODE1,
                      diag_tbl = elixhauser_classes) 
 head(elixscore)
 ```
