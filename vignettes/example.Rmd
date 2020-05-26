@@ -1,0 +1,265 @@
+---
+title: "Example of regstudies workflow"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{Example of regstudies workflow}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Load necessary libraries
+
+```{r}
+library(regstudies) 
+library(tidyverse)
+library(vroom)
+library(lubridate)
+```
+
+
+
+## Data preparation
+
+For demonstration purpose we are going to create random cohort and registry datasets
+
+```{r}
+## Generate random cohort id data
+cohort_data <- tibble::tibble(
+  personid = seq(1201, 1500),
+  gender = sample(c(1,2), 300, replace = T),
+  postingdate = rep(as.Date("2000-01-31"), 300)
+)
+
+## Generate random icd data -----
+random_icd_codes <- c(
+  paste0("F0", seq(1,9)),
+  paste0("F", seq(10,48)),
+  paste0("F", seq(50,98)),
+  paste0("I0", seq(0,2)),
+  paste0("I0", seq(05,09)),
+  paste0("I", seq(10,16)),
+  paste0("I", seq(20,25)),
+  paste0("I", seq(30,52)),
+  paste0("I", seq(60,99)),
+  paste0("E0", seq(0,7)),
+  paste0("E0", seq(08,13)),
+  paste0("E", seq(15,16)),
+  paste0("E", seq(20,35)),
+  paste0("E", seq(40,46)),
+  paste0("E", seq(70,89))
+)
+reg_data <- tibble::tibble(
+  personid = sample(cohort_data$personid, 10000, replace = TRUE),
+  CODE1 = sample(random_icd_codes, 10000, replace = TRUE),
+  adm_date = sample(seq(as.Date("1990-01-01"), as.Date("2005-12-31"), by = 1), 10000, replace = T)
+  # disc_date = ,
+)
+reg_data$disc_date <- (reg_data$adm_date + sample(seq(0,180), 10000, replace = T))
+
+
+# Determine if codes are ICD-8, ICD-9 or ICD-10 -----
+reg_data <- reg_data %>%
+  mutate(icd = case_when(
+    year(disc_date) < 1987 ~ "icd8",
+    year(disc_date) < 1996 & year(disc_date)>=1987 ~ "icd9",
+    year(disc_date) >= 1996 ~ "icd10"
+    ))
+```
+
+
+Dataset `cohort_data` is base dataset including basic variables of population and variable `posting_date` **explain var**
+
+```{r}
+summary(cohort_data)
+```
+
+Dataset `reg_data` is dataset which has events for the population with ICD codes and date-variables:
+
+```{r}
+summary(reg_data)
+```
+
+
+Joining these two datasets we got dataset ready for analyzes:
+
+```{r}
+# Join register data with population cohort data
+d <- reg_data %>%
+  left_join(cohort_data)
+
+head(d)
+```
+
+
+## Filtering dataset
+
+```{r}
+# Filter dataset with occurences within two years around 'postingdate'
+filtered_d <- d %>% 
+  regstudies::filter_date(indexdate=postingdate, 
+                          range=years(2),
+                          adm_date,
+                          disc_date) 
+head(filtered_d)
+```
+
+
+
+```{r}
+# Filter dataset with occurences within ???????????
+filtered_d <- d %>% 
+  filter_date_hosp(indexdate = postingdate,
+                   time_before=years(2),
+                   time_after=years(2),
+                   admission_date=adm_date,
+                   discharge_date=disc_date) # %>% select(-study_interval,-hosp_interval)
+head(filtered_d)
+```
+
+
+```{r}
+# # Whats thiss????
+# dim(filtereddata)
+# dim(filtereddata2)
+# setdiff(filtereddata2,filtereddata) %>% View()
+# fdata<-left_join(filtereddata,filtereddata2)
+# # View(fdata)
+```
+
+
+
+## Elixhauser classification and scores
+
+```{r}
+# Classify by Elixhauser:
+elixhauser_classes <- read_classes_csv(file = "../data/classification_codes/elixhauser_classes_wide.csv")
+
+elixscore <- filtered_d %>%
+  classify_data_long(icdcodes = CODE1,
+                     diag_tbl = elixhauser_classes) 
+head(elixscore)
+```
+
+
+### Vaihtoehto, uusi funktio
+
+```{r}
+temp <- filtered_d %>% 
+  classify_elixhauser(icd_codes = CODE1)
+
+```
+
+### Calculate Elixhauser scores
+
+```{r}
+# Calculate scores
+filtered_d %>% 
+  classify_elixhauser(icd_codes = CODE1) %>% 
+  sum_score(score_AHRQ, score_van_Walraven)
+```
+
+
+
+
+# TODO
+
+## Elixhauser continues
+
+```{r,eval=FALSE}
+elixscore %>%
+  get_var_types()
+
+elixscore
+elixscore <- left_join0(cohort %>% select(personid), elixscore)
+#View(elixscore)
+
+# [X] demoa Hospital Frailty Risk Score -indeksiä!
+# [X] selvitä, mitkä funktiot on tarpeettomia ja mitkä tarpeellisia
+# TODO: 
+# - class, label ja score muotoon class_charlson, label_charlson ja score_charlson
+#   -> classify_data_long -funktiossa!
+# - korjaa classify_data_long -funktio sellaiseksi että se palauttaa koko datan!
+# - tarvitaan left_join, joka tekee muuttujan tyypin mukaan käyttäjän haluaman täytön: esim. c("numeric"=0,"character"="Elixhauser")
+#   -> tulee ehkä tarpeettomaksi, jos muutetaan class, label ja score uusille nimille
+
+```
+
+
+
+## Charlson classification
+
+```{r, eval=FALSE}
+
+# Charlson score:
+#charlson_classes <- classes_to_wide(vroom(file = "data/classification_codes/charlson_classes_wide.csv"))
+charlson_classes <- read_classes_csv(file = "data/classification_codes/charlson_classes_wide.csv")
+#View(charlson_classes)
+
+# dev:
+dev1<-filtereddata %>%
+  classify_data_long(icdcodes=CODE1,diag_tbl=charlson_classes)
+dev2<-filtereddata %>%
+  classify_long(icdcodes=CODE1,diag_tbl=charlson_classes)
+dim(filtereddata)
+dim(dev1)
+dim(dev2)
+# TODO: Jotain kummaa tässä on!
+
+charlsonscore <- filtereddata %>%
+  classify_data_long(icdcodes=CODE1,diag_tbl=charlson_classes) %>%
+  rename(score_charlson=score) %>%
+  sum_score(score_charlson)
+charlsonscore <- left_join(cohort %>% select(personid), charlsonscore)
+#View(charlsonscore)
+
+# Hospital Frailty Risk Score:
+hfrs_dat<-vroom(file = "data/classification_codes/hospital_frailty_risk_score_wide.csv")
+hfrs_dat<-hfrs_dat %>%
+  mutate(label="Frail group") %>%
+  select(classification,class,label,score,icd10)
+names(hfrs_dat)
+write.table(hfrs_dat,file="data/classification_codes/hospital_frailty_risk_score_wide_v2.csv",sep=";",dec=".",row.names = FALSE)
+View(hfrs_dat)
+hfrs_classes <- read_classes_csv(file = "data/classification_codes/hospital_frailty_risk_score_wide_v2.csv")
+#View(charlson_classes)
+hfrsscore <- filtereddata %>%
+  classify_data_long(icdcodes=CODE1,diag_tbl=hfrs_classes) %>%
+  rename(score_charlson=score) %>%
+  sum_score(score_charlson)
+
+mode <- function(x) { # by Ken Williams at stackoverflow
+  ux <- unique(x)
+  ux <- ux[!is.na(ux)]
+  ux[which.max(tabulate(match(x, ux)))]
+}
+mode(hfrsscore$classification)
+
+
+hfrsscore <- left_join(cohort %>% select(personid), hfrsscore) %>%
+  mutate(classification=mode(classification))
+#  mutate(classification=ifelse(is.na(classification),mode(classification),classification))
+View(hfrsscore)
+
+dim(filtereddata %>% select(personid) %>% distinct())
+dim(cohort)
+dim(elixscore)
+dim(charlsonscore)
+
+bothscores<-left_join(elixscore %>% select(-classification),
+                      charlsonscore %>% select(-classification),by="personid")
+fill_na<-function(x,fill=0) ifelse(is.na(x),fill,x)
+cohortscores<-left_join(cohort %>% select(personid),bothscores) %>%
+  mutate_all(fill_na)
+cohortscores %>%
+  head(10)
+cohortscores %>%
+  filter(`sum(score_AHRQ)`+`sum(score_van_Walraven)`+`sum(score_charlson)`>0) %>%
+  head(10)
+plot(cohortscores)
+cor(cohortscores)
+```
+
