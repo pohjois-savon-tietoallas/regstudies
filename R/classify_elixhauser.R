@@ -26,18 +26,14 @@ classify_elixhauser <- function(.data, icd_codes) {
   icdcodes_quo <- rlang::enquo(icd_codes)
   id_quo <- rlang::enquo(id)
   
-  ctobj <- classify_long(.data = .data, 
+  ctobj <- make_classify_table(.data = .data, 
                          icdcodes = !!icdcodes_quo,
                          diag_tbl = diag_tbl,
                          return_binary = FALSE) #classification table object'
   
-  classification_name <- ctobj %>%
-    dplyr::select(classification) %>%
-    dplyr::distinct() %>% as.vector()
+  classification_name <- "elixhauser" #get_classification_name(diag_tbl)
   nimet <- names(ctobj)
   
-  # icdcodes = KOODI1
-  # id = lomno1 # user needs to enter this currently!
   text <- c(rlang::as_label(icdcodes_quo),"icd")
   outdat <- .data %>%
     #select(!!id_quo,!!icdcodes_quo) %>% # removed unnecessary variables
