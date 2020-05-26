@@ -42,7 +42,8 @@ filtereddata <- cohort %>%
 # Elixhauser scores:
 elixhauser_classes2 <- read_classes_csv(file = "data/classification_codes/elixhauser_classes.csv")
 elixhauser_classes2 %>% get_classification_name()
-
+View(elixhauser_classes2)
+file.show("data/classification_codes/elixhauser_classes.csv")
 # classification table:
 elixhauser_icdtable <- filtereddata %>%
   make_classify_table(icdcodes=CODE1,diag_tbl=elixhauser_classes2)

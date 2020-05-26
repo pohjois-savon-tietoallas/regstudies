@@ -98,7 +98,7 @@ head(d)
 ## Filtering dataset
 
 ```{r}
-# Filter dataset with occurences within two years around 'postingdate'
+# Filter dataset with either adm_date or disc_date within two years around 'postingdate'
 filtered_d <- d %>% 
   regstudies::filter_date(indexdate=postingdate, 
                           range=years(2),
@@ -110,7 +110,7 @@ head(filtered_d)
 
 
 ```{r}
-# Filter dataset with occurences within ???????????
+# Filter dataset with occurences of hospital visits. If person has been in hospital during the time period two years prior 'postingdate' then those events are included in the filtering.
 filtered_d <- d %>% 
   filter_date_interval(indexdate = postingdate,
                    time_before=years(2),
