@@ -4,18 +4,34 @@
 \alias{left_join0}
 \title{left_join with fill option}
 \usage{
-left_join0(x, y, fill = 0)
+left_join0(x, y, na_replace_list, ...)
 }
 \arguments{
 \item{x}{tibble data to used as left in a join}
 
 \item{y}{tibble data to used as right in a join}
 
-\item{fill}{value to be filled into NA values}
+\item{na_replace_list}{a list definitions of na replacement values for each type of variable (based on 'class' or 'get_var_types' functions)}
 }
 \value{
-resulting tibble after join and fill
+
 }
 \description{
 Allows user to do left_join and fill missing NA values with 0 or other optional value
+}
+\examples{
+\dontrun{
+
+na_replace_list <- list(
+  "logical"=FALSE,
+  "character"="",
+  "integer"=0L,
+  "double"=0.0,
+  "numeric"=0,
+  "Date"=lubridate::dmy("01-01-1900")
+)
+testdata \%>\%
+  mutate_all(replace_na_by_type,na_replace_list)
+}
+
 }

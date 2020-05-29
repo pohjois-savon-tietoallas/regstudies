@@ -5,6 +5,10 @@
 #' @param .data tibble data to be used
 #' @return returns a tibble with two character columns: variable and class.
 #' variable tells the variable name and class tells the type of that variable.
+#' 
+#' @rdname get_var_types
+#' @export
+#' 
 get_var_types <- function(.data) {
   .data %>%
     ungroup() %>%
