@@ -96,12 +96,12 @@
 ##   print.date_names vroom
 ##   print.locale     vroom
 ##   str.col_spec     vroom</code></pre>
-<pre><code>## -- Attaching packages -------------------</code></pre>
+<pre><code>## -- Attaching packages -- tidyverse 1.3.0 --</code></pre>
 <pre><code>## v ggplot2 3.3.0     v purrr   0.3.3
 ## v tibble  2.1.3     v dplyr   0.8.5
 ## v tidyr   1.0.2     v stringr 1.4.0
 ## v readr   1.3.1     v forcats 0.5.0</code></pre>
-<pre><code>## -- Conflicts --- tidyverse_conflicts() --
+<pre><code>## -- Conflicts ----- tidyverse_conflicts() --
 ## x dplyr::filter() masks stats::filter()
 ## x dplyr::lag()    masks stats::lag()</code></pre>
 <div class="sourceCode"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">vroom</span>)
@@ -119,7 +119,7 @@
 <span class="no">cohort_data</span> <span class="kw">&lt;-</span> <span class="kw pkg">tibble</span><span class="kw ns">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span>(
   <span class="kw">personid</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">1201</span>, <span class="fl">1500</span>),
   <span class="kw">gender</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>,<span class="fl">2</span>), <span class="fl">300</span>, <span class="kw">replace</span> <span class="kw">=</span> <span class="no">T</span>),
-  <span class="kw">postingdate</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span>(<span class="st">"2000-01-31"</span>), <span class="fl">300</span>)
+  <span class="kw">postingdate</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span>(<span class="st">"2000-01-01"</span>), <span class="fl">300</span>)
 )
 
 <span class="co">## Generate random icd data -----</span>
@@ -158,22 +158,22 @@
     ))</pre></body></html></div>
 <p>Dataset <code>cohort_data</code> is base dataset including basic variables of population and variable <code>posting_date</code> <strong>explain var</strong></p>
 <div class="sourceCode"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">cohort_data</span>)</pre></body></html></div>
-<pre><code>##     personid        gender      postingdate        
-##  Min.   :1201   Min.   :1.00   Min.   :2000-01-31  
-##  1st Qu.:1276   1st Qu.:1.00   1st Qu.:2000-01-31  
-##  Median :1350   Median :2.00   Median :2000-01-31  
-##  Mean   :1350   Mean   :1.53   Mean   :2000-01-31  
-##  3rd Qu.:1425   3rd Qu.:2.00   3rd Qu.:2000-01-31  
-##  Max.   :1500   Max.   :2.00   Max.   :2000-01-31</code></pre>
+<pre><code>##     personid        gender       postingdate        
+##  Min.   :1201   Min.   :1.000   Min.   :2000-01-01  
+##  1st Qu.:1276   1st Qu.:1.000   1st Qu.:2000-01-01  
+##  Median :1350   Median :1.000   Median :2000-01-01  
+##  Mean   :1350   Mean   :1.497   Mean   :2000-01-01  
+##  3rd Qu.:1425   3rd Qu.:2.000   3rd Qu.:2000-01-01  
+##  Max.   :1500   Max.   :2.000   Max.   :2000-01-01</code></pre>
 <p>Dataset <code>reg_data</code> is dataset which has events for the population with ICD codes and date-variables:</p>
 <div class="sourceCode"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">reg_data</span>)</pre></body></html></div>
 <pre><code>##     personid       CODE1              adm_date            disc_date         
-##  Min.   :1201   Length:10000       Min.   :1990-01-01   Min.   :1990-01-08  
-##  1st Qu.:1277   Class :character   1st Qu.:1994-02-12   1st Qu.:1994-05-09  
-##  Median :1352   Mode  :character   Median :1998-02-08   Median :1998-05-09  
-##  Mean   :1352                      Mean   :1998-01-28   Mean   :1998-04-29  
-##  3rd Qu.:1426                      3rd Qu.:2002-02-07   3rd Qu.:2002-05-08  
-##  Max.   :1500                      Max.   :2005-12-31   Max.   :2006-06-12  
+##  Min.   :1201   Length:10000       Min.   :1990-01-02   Min.   :1990-01-06  
+##  1st Qu.:1277   Class :character   1st Qu.:1993-12-20   1st Qu.:1994-03-24  
+##  Median :1354   Mode  :character   Median :1997-12-25   Median :1998-03-26  
+##  Mean   :1353                      Mean   :1997-12-19   Mean   :1998-03-19  
+##  3rd Qu.:1429                      3rd Qu.:2002-01-04   3rd Qu.:2002-04-11  
+##  Max.   :1500                      Max.   :2005-12-31   Max.   :2006-06-18  
 ##      icd           
 ##  Length:10000      
 ##  Class :character  
@@ -190,33 +190,17 @@
 <pre><code>## # A tibble: 6 x 7
 ##   personid CODE1 adm_date   disc_date  icd   gender postingdate
 ##      &lt;int&gt; &lt;chr&gt; &lt;date&gt;     &lt;date&gt;     &lt;chr&gt;  &lt;dbl&gt; &lt;date&gt;     
-## 1     1463 F71   1991-09-04 1991-09-08 icd9       2 2000-01-31 
-## 2     1473 F81   1993-04-04 1993-05-05 icd9       1 2000-01-31 
-## 3     1335 I84   1994-02-11 1994-07-24 icd9       2 2000-01-31 
-## 4     1431 I10   2003-10-01 2003-11-06 icd10      2 2000-01-31 
-## 5     1383 F33   2005-06-18 2005-06-30 icd10      1 2000-01-31 
-## 6     1370 E46   2002-08-05 2002-08-26 icd10      2 2000-01-31</code></pre>
+## 1     1339 E16   1998-09-19 1998-10-03 icd10      1 2000-01-01 
+## 2     1280 I71   2000-01-09 2000-02-14 icd10      1 2000-01-01 
+## 3     1453 I62   1998-04-26 1998-07-24 icd10      2 2000-01-01 
+## 4     1321 I01   1997-10-21 1998-04-05 icd10      1 2000-01-01 
+## 5     1255 I07   2003-07-28 2003-10-21 icd10      2 2000-01-01 
+## 6     1226 I24   2001-11-16 2002-03-03 icd10      2 2000-01-01</code></pre>
 </div>
 <div id="filtering-dataset" class="section level2">
 <h2 class="hasAnchor">
 <a href="#filtering-dataset" class="anchor"></a>Filtering dataset</h2>
-<div class="sourceCode"><html><body><pre class="r"><span class="co"># Filter dataset with occurences within two years around 'postingdate'</span>
-<span class="no">filtered_d</span> <span class="kw">&lt;-</span> <span class="no">d</span> <span class="kw">%&gt;%</span>
-  <span class="kw pkg">regstudies</span><span class="kw ns">::</span><span class="fu"><a href="../reference/filter_date.html">filter_date</a></span>(<span class="kw">indexdate</span><span class="kw">=</span><span class="no">postingdate</span>,
-                          <span class="kw">range</span><span class="kw">=</span><span class="fu"><a href="http://lubridate.tidyverse.org/reference/period.html">years</a></span>(<span class="fl">2</span>),
-                          <span class="no">adm_date</span>,
-                          <span class="no">disc_date</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">filtered_d</span>)</pre></body></html></div>
-<pre><code>## # A tibble: 6 x 7
-##   personid CODE1 adm_date   disc_date  icd   gender postingdate
-##      &lt;int&gt; &lt;chr&gt; &lt;date&gt;     &lt;date&gt;     &lt;chr&gt;  &lt;dbl&gt; &lt;date&gt;     
-## 1     1292 I98   2001-02-24 2001-03-15 icd10      1 2000-01-31 
-## 2     1230 F64   1999-01-23 1999-02-05 icd10      2 2000-01-31 
-## 3     1427 F68   2001-05-02 2001-08-10 icd10      1 2000-01-31 
-## 4     1486 E07   1998-09-17 1998-10-09 icd10      1 2000-01-31 
-## 5     1309 F90   1999-06-22 1999-06-22 icd10      1 2000-01-31 
-## 6     1459 F79   2000-07-11 2000-10-28 icd10      2 2000-01-31</code></pre>
-<div class="sourceCode"><html><body><pre class="r"><span class="co"># Filter dataset with occurences within ???????????</span>
+<div class="sourceCode"><html><body><pre class="r"><span class="co"># Filter dataset with occurences of hospital visits. If person has been in hospital during the time period two years prior 'postingdate' then those events are included in the filtering.</span>
 <span class="no">filtered_d</span> <span class="kw">&lt;-</span> <span class="no">d</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/filter_date_interval.html">filter_date_interval</a></span>(<span class="kw">indexdate</span> <span class="kw">=</span> <span class="no">postingdate</span>,
                    <span class="kw">time_before</span><span class="kw">=</span><span class="fu"><a href="http://lubridate.tidyverse.org/reference/period.html">years</a></span>(<span class="fl">2</span>),
@@ -226,12 +210,28 @@
 <pre><code>## # A tibble: 6 x 7
 ##   personid CODE1 adm_date   disc_date  icd   gender postingdate
 ##      &lt;int&gt; &lt;chr&gt; &lt;date&gt;     &lt;date&gt;     &lt;chr&gt;  &lt;dbl&gt; &lt;date&gt;     
-## 1     1411 I75   1997-12-05 1998-05-17 icd10      1 2000-01-31 
-## 2     1219 F42   1998-01-06 1998-03-11 icd10      1 2000-01-31 
-## 3     1230 F64   1999-01-23 1999-02-05 icd10      2 2000-01-31 
-## 4     1486 E07   1998-09-17 1998-10-09 icd10      1 2000-01-31 
-## 5     1309 F90   1999-06-22 1999-06-22 icd10      1 2000-01-31 
-## 6     1469 F02   1999-07-24 1999-09-22 icd10      2 2000-01-31</code></pre>
+## 1     1339 E16   1998-09-19 1998-10-03 icd10      1 2000-01-01 
+## 2     1453 I62   1998-04-26 1998-07-24 icd10      2 2000-01-01 
+## 3     1321 I01   1997-10-21 1998-04-05 icd10      1 2000-01-01 
+## 4     1212 I74   1999-03-31 1999-05-31 icd10      1 2000-01-01 
+## 5     1416 I39   1999-06-22 1999-11-08 icd10      1 2000-01-01 
+## 6     1299 I78   1998-02-15 1998-03-17 icd10      1 2000-01-01</code></pre>
+<div class="sourceCode"><html><body><pre class="r"><span class="co"># Filter dataset with either adm_date or disc_date within two years around 'postingdate'</span>
+<span class="no">filtered_d</span> <span class="kw">&lt;-</span> <span class="no">d</span> <span class="kw">%&gt;%</span>
+  <span class="kw pkg">regstudies</span><span class="kw ns">::</span><span class="fu"><a href="../reference/filter_date.html">filter_date</a></span>(<span class="kw">indexdate</span><span class="kw">=</span><span class="no">postingdate</span>,
+                          <span class="kw">range</span><span class="kw">=</span><span class="fu"><a href="http://lubridate.tidyverse.org/reference/period.html">years</a></span>(<span class="fl">2</span>),
+                          <span class="no">adm_date</span>,
+                          <span class="no">disc_date</span>)
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">filtered_d</span>)</pre></body></html></div>
+<pre><code>## # A tibble: 6 x 7
+##   personid CODE1 adm_date   disc_date  icd   gender postingdate
+##      &lt;int&gt; &lt;chr&gt; &lt;date&gt;     &lt;date&gt;     &lt;chr&gt;  &lt;dbl&gt; &lt;date&gt;     
+## 1     1339 E16   1998-09-19 1998-10-03 icd10      1 2000-01-01 
+## 2     1280 I71   2000-01-09 2000-02-14 icd10      1 2000-01-01 
+## 3     1453 I62   1998-04-26 1998-07-24 icd10      2 2000-01-01 
+## 4     1212 I74   1999-03-31 1999-05-31 icd10      1 2000-01-01 
+## 5     1366 E42   2001-07-09 2001-11-10 icd10      2 2000-01-01 
+## 6     1416 I39   1999-06-22 1999-11-08 icd10      1 2000-01-01</code></pre>
 </div>
 <div id="elixhauser-classification-and-scores" class="section level2">
 <h2 class="hasAnchor">
@@ -255,17 +255,17 @@
 <pre><code>## # A tibble: 6 x 11
 ##   personid CODE1 adm_date   disc_date  icd   gender postingdate class_elixhauser
 ##      &lt;int&gt; &lt;chr&gt; &lt;date&gt;     &lt;date&gt;     &lt;chr&gt;  &lt;dbl&gt; &lt;date&gt;      &lt;chr&gt;           
-## 1     1411 I75   1997-12-05 1998-05-17 icd10      1 2000-01-31  &lt;NA&gt;            
-## 2     1219 F42   1998-01-06 1998-03-11 icd10      1 2000-01-31  &lt;NA&gt;            
-## 3     1230 F64   1999-01-23 1999-02-05 icd10      2 2000-01-31  &lt;NA&gt;            
-## 4     1486 E07   1998-09-17 1998-10-09 icd10      1 2000-01-31  &lt;NA&gt;            
-## 5     1309 F90   1999-06-22 1999-06-22 icd10      1 2000-01-31  &lt;NA&gt;            
-## 6     1469 F02   1999-07-24 1999-09-22 icd10      2 2000-01-31  &lt;NA&gt;            
+## 1     1339 E16   1998-09-19 1998-10-03 icd10      1 2000-01-01  &lt;NA&gt;            
+## 2     1280 I71   2000-01-09 2000-02-14 icd10      1 2000-01-01  pvd             
+## 3     1453 I62   1998-04-26 1998-07-24 icd10      2 2000-01-01  &lt;NA&gt;            
+## 4     1212 I74   1999-03-31 1999-05-31 icd10      1 2000-01-01  &lt;NA&gt;            
+## 5     1366 E42   2001-07-09 2001-11-10 icd10      2 2000-01-01  wloss           
+## 6     1416 I39   1999-06-22 1999-11-08 icd10      1 2000-01-01  valv            
 ## # ... with 3 more variables: label_elixhauser &lt;chr&gt;, score_AHRQ &lt;dbl&gt;,
 ## #   score_van_Walraven &lt;dbl&gt;</code></pre>
-<div id="vaihtoehto-uusi-funktio" class="section level3">
+<div id="shortcut-function-for-elixhauser-classification" class="section level3">
 <h3 class="hasAnchor">
-<a href="#vaihtoehto-uusi-funktio" class="anchor"></a>Vaihtoehto, uusi funktio</h3>
+<a href="#shortcut-function-for-elixhauser-classification" class="anchor"></a>Shortcut function for elixhauser classification</h3>
 <div class="sourceCode"><html><body><pre class="r"><span class="no">temp</span> <span class="kw">&lt;-</span> <span class="no">filtered_d</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/classify_elixhauser.html">classify_elixhauser</a></span>(<span class="kw">icd_codes</span> <span class="kw">=</span> <span class="no">CODE1</span>)</pre></body></html></div>
 <pre><code>## Joining, by = "label"</code></pre>
@@ -280,20 +280,20 @@
   <span class="fu"><a href="../reference/sum_score.html">sum_score</a></span>(<span class="no">score_AHRQ</span>, <span class="no">score_van_Walraven</span>)</pre></body></html></div>
 <pre><code>## Joining, by = "label"</code></pre>
 <pre><code>## [1] "Element 'regex.rm' NOT in use. Exceptions omitted."</code></pre>
-<pre><code>## # A tibble: 295 x 3
+<pre><code>## # A tibble: 300 x 3
 ##    personid `sum(score_AHRQ)` `sum(score_van_Walraven)`
 ##       &lt;int&gt;             &lt;int&gt;                     &lt;int&gt;
-##  1     1201                -2                        11
-##  2     1202                 0                         0
-##  3     1203                 0                        -1
-##  4     1204                -1                         0
-##  5     1205                 0                         0
-##  6     1206                 0                         0
-##  7     1207                -5                         0
-##  8     1208                11                         4
-##  9     1209                 0                         5
+##  1     1201                 0                         0
+##  2     1202                11                        10
+##  3     1203                 9                         5
+##  4     1204                 0                         5
+##  5     1205                -5                         0
+##  6     1206                -5                        -3
+##  7     1207                 4                        11
+##  8     1208                 4                         6
+##  9     1209                 0                         0
 ## 10     1210                 0                         0
-## # ... with 285 more rows</code></pre>
+## # ... with 290 more rows</code></pre>
 </div>
 </div>
 <div id="todo" class="section level1">

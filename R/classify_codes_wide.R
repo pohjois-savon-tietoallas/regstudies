@@ -13,10 +13,11 @@
 #' @importFrom dplyr distinct
 #' @importFrom dplyr filter
 #' @importFrom dplyr left_join
+#' @importFrom dplyr select
+#' @importFrom dplyr contains
 #' @importFrom rlang as_label
 #' @importFrom rlang enquo
-#' @importFrom dplyr select
-#' 
+#' @importFrom stringr str_starts
 #' 
 #' @examples
 #' \dontrun{
@@ -31,23 +32,42 @@
 #'   filter(match>0)
 #' }
 #' 
-#' @rdname classify_codes
+#' @rdname classify_codes_wide
 #' @export
 #'
-classify_codes <- function(.data, id, icdcodes, diag_tbl, fill=0) {
+classify_codes_wide <- function(.data, id, icdcodes, diag_tbl, fill=0, wide=TRUE) {
   icdcodes_quo <- rlang::enquo(icdcodes)
   id_quo <- rlang::enquo(id)
-  ctobj <- make_classify_table(.data=.data,icdcodes=!!icdcodes_quo,diag_tbl=diag_tbl,return_binary=FALSE) #classification table object'
+  ctobj <- regstudies::make_classify_table(.data=.data,icdcodes=!!icdcodes_quo,diag_tbl=diag_tbl,return_binary=FALSE) #classification table object'
   
-#  classification_name <- .data %>% get_classification_name()
+  classification_name <- .data %>% get_classification_name()
   nimet <- names(ctobj)
-
+  
+  # TODO: Laske, minkä niminen muuttuja alkaa 'class_'  
+  if (wide) {
+    ctobj <- pivot_wider(ctobj %>% select(-tidyselect::contains("label_")) %>% filter(!is.na(!!icdcodes_quo)),
+                         names_from=nimet[stringr::str_starts(nimet,"class_")], #TODO: Ei välttämättä ole class_elixhauser- nimistä muuttujaa!
+                         values_from=match)
+  }
+#  return(ctobj)
   # icdcodes = KOODI1
   # id = lomno1 # user needs to enter this currently!
+  
+  na_replace_list <- list(
+   "logical"=FALSE,
+   "character"=NA_character_,
+   "integer"=0L,
+   "numeric"=0,
+   "Date"=lubridate::dmy("01-01-1900")
+  )
   text <- c(rlang::as_label(icdcodes_quo),"icd")
+  print(text)
+  #return(ctobj)
   outdat <- .data %>%
     #select(!!id_quo,!!icdcodes_quo) %>% # removed unnecessary variables
-    dplyr::left_join(ctobj %>% dplyr::filter(match) %>% dplyr::select(-match),by=text)
+    regstudies::left_join0(ctobj,# %>% dplyr::filter(match) %>% dplyr::select(-match),
+                      na_replace_list = na_replace_list,
+                      by=text) # ... arguments
   outdat
 }
 

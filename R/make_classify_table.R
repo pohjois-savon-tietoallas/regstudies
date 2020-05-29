@@ -77,12 +77,12 @@ make_classify_table <- function(.data,icdcodes,diag_tbl,return_binary=TRUE) {
       cr <- cr %>%
         dplyr::mutate(match=as.integer(match))
     }
-#    classification_name <- diag_tbl %>%
-#      dplyr::select(classification) %>%
-#      dplyr::distinct() %>% as.vector()
     #    print(paste0("Using classification '",classification_name,"'")) # TODO: Ei ole tarkastettu, ett? on annettu vain yksi luokittelu
     lt <- cr %>%
-      dplyr::select(-tidyselect::contains("regex")) #%>%
+      dplyr::select(-tidyselect::contains("regex")) %>%
+      # TODO: filtteröidään pois jos CODE1 on NA ja otetaan mukaan vain match>0
+      filter(!is.na(!! icdcodes)) %>%
+      filter(match>0)
     #mutate(label=paste0(substr(classification_name,1,5),"_",label))
     #    lt <- pivot_wider(lt,
     #                      names_from=label,

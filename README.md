@@ -19,7 +19,7 @@ classifiers, so the package suits needs of different countries having
 their own code definitions of disease codes for example.
 
 Authors: [Juho Kopra](https://github.com/jukop), [Jani
-Miettinen](https://github.com/janikmiet)
+Miettinen](https://github.com/janikmiet), [Reijo Sund](https://github.com/rsund)
 
 ## Installation
 

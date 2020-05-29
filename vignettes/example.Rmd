@@ -31,7 +31,7 @@ For demonstration purpose we are going to create random cohort and registry data
 cohort_data <- tibble::tibble(
   personid = seq(1201, 1500),
   gender = sample(c(1,2), 300, replace = T),
-  postingdate = rep(as.Date("2000-01-31"), 300)
+  postingdate = rep(as.Date("2000-01-01"), 300)
 )
 
 ## Generate random icd data -----
@@ -97,17 +97,6 @@ head(d)
 
 ## Filtering dataset
 
-```{r}
-# Filter dataset with either adm_date or disc_date within two years around 'postingdate'
-filtered_d <- d %>% 
-  regstudies::filter_date(indexdate=postingdate, 
-                          range=years(2),
-                          adm_date,
-                          disc_date) 
-head(filtered_d)
-```
-
-
 
 ```{r}
 # Filter dataset with occurences of hospital visits. If person has been in hospital during the time period two years prior 'postingdate' then those events are included in the filtering.
@@ -116,6 +105,16 @@ filtered_d <- d %>%
                    time_before=years(2),
                    admission_date=adm_date,
                    discharge_date=disc_date)
+head(filtered_d)
+```
+
+```{r}
+# Filter dataset with either adm_date or disc_date within two years around 'postingdate'
+filtered_d <- d %>% 
+  regstudies::filter_date(indexdate=postingdate, 
+                          range=years(2),
+                          adm_date,
+                          disc_date) 
 head(filtered_d)
 ```
 
@@ -133,7 +132,7 @@ head(elixscore)
 ```
 
 
-### Vaihtoehto, uusi funktio
+### Shortcut function for elixhauser classification
 
 ```{r}
 temp <- filtered_d %>% 

@@ -30,11 +30,12 @@ reg <- reg %>%
                         year(dischargedate)>=1996 ~ "icd10"
                       )
         )
+reg<-unique(reg)
 
 # complete code examples:
 filtereddata <- cohort %>%
   left_join(reg %>% select(personid,CODE1,admissiondate,dischargedate,icd),by="personid") %>%
-  filter_date_hosp(indexdate=postingdate,
+  filter_date_interval(indexdate=postingdate,
                    time_before=years(2),
                    admission_date=admissiondate,
                    discharge_date=dischargedate)
@@ -42,8 +43,8 @@ filtereddata <- cohort %>%
 # Elixhauser scores:
 elixhauser_classes2 <- read_classes_csv(file = "data/classification_codes/elixhauser_classes.csv")
 elixhauser_classes2 %>% get_classification_name()
-View(elixhauser_classes2)
-file.show("data/classification_codes/elixhauser_classes.csv")
+#View(elixhauser_classes2)
+#file.show("data/classification_codes/elixhauser_classes.csv")
 # classification table:
 elixhauser_icdtable <- filtereddata %>%
   make_classify_table(icdcodes=CODE1,diag_tbl=elixhauser_classes2)
@@ -78,11 +79,94 @@ elixscore <- cohort_founds %>%
   sum_score(score_AHRQ,score_van_Walraven)
 #View(elixscore)
 
+# dev:
+
+elixhauser_icdtable <- filtereddata %>%
+  make_classify_table(icdcodes=CODE1,diag_tbl=elixhauser_classes2)
+#elixhauser_icdtable <- elixhauser_icdtable %>%
+#  filter(!is.na(CODE1)) %>%
+#  filter(match>0)
+View(elixhauser_icdtable)
+# ltout on leveä versio elixhauser_icdtable:sta
+ltout <- pivot_wider(elixhauser_icdtable, 
+                   names_from=class_elixhauser,
+                   values_from=match)
+View(ltout)
+na_replace_list <- list(
+  "logical"=FALSE,
+  "character"=NA_character_,
+  "integer"=0L,
+  "double"=0.0,
+  "numeric"=0,
+  "Date"=lubridate::dmy("01-01-1900")
+)
+resdata <- filtereddata %>%
+  left_join0(ltout,na_replace_list = na_replace_list)
+resdata %>%
+  View()
 
 
 
+testdata <- filtereddata %>%
+  classify_codes_wide(icdcodes=CODE1,diag_tbl=elixhauser_classes2)
+get_var_types(testdata) %>% View()
+View(testdata)
+?replace_na
+# millä korvataan:
+na_replace_list <- list(
+  "logical"=FALSE,
+  "character"="",
+  "integer"=0L,
+  "double"=0.0,
+  "numeric"=0,
+  "Date"=lubridate::dmy("01-01-1900")
+)
+na_replace_list
+
+replace_na_by_type <- function(x,na_replace_list) {
+  # TODO: Tee tarkistus, että listan 'na_replace_list' nimet ovat sopivat!
+  cl <- class(x)
+  ifelse(is.na(x),
+         na_replace_list[cl],
+         x)
+}
+na_replace_list <- list(
+  "logical"=FALSE,
+  "character"="",
+  "integer"=0L,
+  "double"=0.0,
+  "numeric"=0,
+  "Date"=lubridate::dmy("01-01-1900")
+)
+testdata %>%
+  mutate_all(replace_na_by_type,na_replace_list) %>%
+  View()
+outdat <- left_join(get_var_types(testdata),get_na_vars(testdata)) %>%
+  filter(contains_na) %>%
+  spread(variable,class) # sisältää vain ne muuttujat sarakkeina, joissa on vähintään 1 NA datassa 'testdata'
 
 
+View(outdat)
+?pivot_wider
+# muuttujan rivien tyyppien on oltava samaa tyyppiä!
+
+#names(testdata)
+#testdata %>%
+#  filter(match)
+head(testdata)
+View(testdata)
+dim(testdata)
+dim(unique(testdata))
+
+lt <- filtereddata %>%
+  left_join(testdata)
+dim(lt)
+dim(unique(lt))
+#View(lt)
+lt2 <- pivot_wider(lt,
+                  names_from=class_elixhauser,
+                  values_from=match)
+View(lt2)
 #------------------------ POIKKI ------------------
 
 #na_fill0<-function(x) {
