@@ -7,7 +7,7 @@
 #' 
 #' @return character string
 #' 
-#' @rdname generate_random_hetu
+#' @rdname add_zero
 #' @export
 #'
 add_zero <- function(x,desired_length) {

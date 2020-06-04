@@ -1,4 +1,4 @@
-#' Function for generating random finnish personal identification number (Henkilötunnus)
+#' Function for generating random finnish personal identification number (Henkilotunnus)
 #'
 #' The function is able to generate a nearly valid random finnish personal identification number.
 #' 
