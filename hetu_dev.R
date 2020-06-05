@@ -18,7 +18,7 @@ dat <- dat %>%
 
 dat <- dat %>%
   mutate(age=get_age(vpaiva,birthdate,"years"))
-View(dat)
+#View(dat)
 
 # pseudonymisointi:
 hetukey <- make_hetu_key(.data=dat,hetu=hetu,randomize = TRUE)
@@ -27,9 +27,10 @@ dat <- dat %>%
   left_join(hetukey)
 dat <- dat %>%
   select(-hetu,-Nimi,-nnn,-POTILASNUMERO)
-View(dat)
-View(hetu)
+#View(dat)
+#View(hetu)
 
-#write.csv2(dat,file="skoodi_covid2019s.csv",row.names = FALSE)
+?write_csv3
+write_csv3(dat,path="hetu_example.csv")
 #write.csv2(hetu,file="hetu_covid2019s.csv",row.names = FALSE)
 

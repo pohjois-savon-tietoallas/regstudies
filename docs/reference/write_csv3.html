@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get variable types — get_var_types • regstudies</title>
+<title>Write csv file with dot decimal mark — write_csv3 • regstudies</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Get variable types — get_var_types" />
-<meta property="og:description" content="This function operates as an tidyverse style version of class() function" />
+<meta property="og:title" content="Write csv file with dot decimal mark — write_csv3" />
+<meta property="og:description" content="Write csv file with dot decimal mark" />
 
 
 
@@ -118,30 +118,25 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get variable types</h1>
+    <h1>Write csv file with dot decimal mark</h1>
     
-    <div class="hidden name"><code>get_variable_types.Rd</code></div>
+    <div class="hidden name"><code>write_csv3.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function operates as an tidyverse style version of class() function</p>
+    <p>Write csv file with dot decimal mark</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='get_var_types.html'>get_var_types</a></span>(<span class='no'>.data</span>)</pre>
+    <pre class="usage"><span class='fu'>write_csv3</span>(
+  <span class='no'>x</span>,
+  <span class='no'>path</span>,
+  <span class='kw'>na</span> <span class='kw'>=</span> <span class='st'>"NA"</span>,
+  <span class='kw'>append</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>col_names</span> <span class='kw'>=</span> !<span class='no'>append</span>,
+  <span class='kw'>quote_escape</span> <span class='kw'>=</span> <span class='st'>"double"</span>
+)</pre>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>.data</th>
-      <td><p>tibble data to be used</p></td>
-    </tr>
-    </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>returns a tibble with two character columns: variable and class.
-variable tells the variable name and class tells the type of that variable.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
