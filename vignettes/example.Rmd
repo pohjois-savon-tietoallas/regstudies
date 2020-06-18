@@ -100,6 +100,29 @@ d <- d %>%
 ```
 
 
+## Get first event per id
+
+With tidyverse verbs you can slice first occurence by
+
+```{r}
+d %>% 
+  group_by(personid) %>% 
+  arrange(adm_date) %>%
+  dplyr::slice(1)
+```
+
+and with regstudies verbs you can do the same with
+
+```{r}
+d %>% 
+  group_by(personid) %>%
+  regstudies::get_first(var = adm_date)
+
+```
+
+
+
+
 ## Filtering by date periods
 
 Filter dataset with occurences of hospital visits. If person has been in hospital during the time period two years prior `postingdate` then those events are included.
@@ -128,6 +151,8 @@ head(filtered_d)
 ## Classifications
 
 ### Code classification by own csv table
+
+
 
 ```{r}
 # Classify by Elixhauser:

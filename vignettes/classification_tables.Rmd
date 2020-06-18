@@ -20,3 +20,9 @@ DT::datatable(regstudies:::elixhauser_classes)
 
 
 
+## Charlson table
+
+```{r}
+
+```
+
