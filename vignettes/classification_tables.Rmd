@@ -1,0 +1,22 @@
+---
+title: "Classification tables"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{Classification tables}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+### Elixhauser table
+
+```{r}
+DT::datatable(regstudies:::elixhauser_classes)
+```
+
+
+

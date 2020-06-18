@@ -36,7 +36,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">regstudies</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.4</span>
       </span>
     </div>
 
@@ -59,6 +59,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
+      <a href="articles/classification_tables.html">Classification tables</a>
+    </li>
+    <li>
       <a href="articles/example.html">Example of regstudies workflow</a>
     </li>
     <li>
@@ -84,22 +87,23 @@
 <a href="#register-studies" class="anchor"></a>Register studies</h1></div>
 <!-- badges: start -->
 <!-- badges: end -->
-<p>The data utilised in register studies, often called as register-based data or administrative data typically consists of time stamp variables and codes describing events. This package has been designed specifically for handling of such data. The packages is based on tidyverse packages and examples utilise widely tidyverse programming style. The functions are designed with ICD codes in mind but can be used with any kind of string formatted codes and are thus not necessarily limited to healthcare data. Users are allowed to make their own definitions of code classifiers, so the package suits needs of different countries having their own code definitions of disease codes for example.</p>
+<p>Data utilised in register studies, often called as register-based data or administrative data, typically consists of id’s, time stamp variables and codes describing different events. This package has been designed specifically for handling of such data.</p>
+<p>regstudies-package is based on tidyverse and examples utilise widely tidyverse programming style. The functions are designed with ICD codes in mind, but can be used with any kind of string formatted codes and are thus not necessarily limited to healthcare data. Users are allowed to make their own definitions of code classifiers, so the package suits needs of different countries having their own code definitions of disease codes for example.</p>
 <p>Authors: <a href="https://github.com/jukop">Juho Kopra</a>, <a href="https://github.com/janikmiet">Jani Miettinen</a>, <a href="https://github.com/rsund">Reijo Sund</a></p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>You can install the released version of regstudies from <a href="https://CRAN.R-project.org">CRAN</a> with:</p>
-<div class="sourceCode"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"regstudies"</span>) <span class="co"># maybe some day!! </span></pre></div>
+<div class="sourceCode" id="cb1"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"regstudies"</span>) <span class="co"># maybe some day!! </span></pre></div>
 <p>And the development version from <a href="https://github.com/">GitHub</a> with:</p>
-<div class="sourceCode"><pre class="r"><span class="co"># install.packages("devtools")</span>
+<div class="sourceCode" id="cb2"><pre class="r"><span class="co"># install.packages("devtools")</span>
 <span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span>(<span class="st">"jukop/regstudies"</span>)</pre></div>
 </div>
 <div id="example" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example" class="anchor"></a>Example</h2>
 <p>This is a basic example which shows you how to solve a common problem:</p>
-<div class="sourceCode"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">regstudies</span>)
+<div class="sourceCode" id="cb3"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">regstudies</span>)
 <span class="co">## basic example code</span></pre></div>
 <p>For developers:</p>
 <ul>
