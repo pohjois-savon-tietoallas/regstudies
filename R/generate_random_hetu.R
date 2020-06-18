@@ -19,7 +19,12 @@ generate_random_hetu <- function(birthdate) {
     century==1900 ~ "-",
     century==2000 ~ "A"
   )
-  nnn <- sample(1:1000,size=14,replace=T)
-  l   <- sample(c(LETTERS,0:9),14)
-  paste0(format(birthdate, format="%d%m%y"),merkki,regstudies::add_zero(nnn,3),l)
+  nnn <- regstudies::add_zero(sample(1:1000,size=14,replace=T),3)
+  base<- format(birthdate, format="%d%m%y")
+  l   <- get_hetu_last_digit(paste0(base,nnn)) #sample(c(LETTERS,0:9),14)
+  paste0(base,merkki,nnn,l)
+}
+get_hetu_last_digit <- function(DDMMYYZZZ) {
+  t <- as.numeric(DDMMYYZZZ)
+  c(0:9,LETTERS[-26])[1+t%%31]
 }

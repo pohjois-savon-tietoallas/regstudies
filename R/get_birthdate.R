@@ -12,7 +12,6 @@
 #' @rdname get_birthdate
 #' @export
 #' 
-
 get_birthdate <- function(hetu) {
   # TODO: regex-testi!
   #  spaiva <- stringr::str_sub(hetu,1,6)
