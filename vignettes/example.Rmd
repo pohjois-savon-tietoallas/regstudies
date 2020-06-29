@@ -156,7 +156,7 @@ head(filtered_d)
 
 ```{r}
 # Classify by Elixhauser:
-my_classes <- read_classes_csv(file = "../data/classification_codes/elixhauser_classes.csv")
+my_classes <- read_classes_csv(file = "../data/elixhauser_classes.csv")
 classified_d <- filtered_d %>%
   classify_codes(icdcodes = CODE1,
                  diag_tbl = my_classes) 

@@ -35,9 +35,8 @@
 #' @rdname classify_codes_wide
 #' @export
 #'
-classify_codes_wide <- function(.data, id, icdcodes, diag_tbl, fill=0, wide=TRUE) {
+classify_codes_wide <- function(.data, icdcodes, diag_tbl, wide=TRUE) {
   icdcodes_quo <- rlang::enquo(icdcodes)
-  id_quo <- rlang::enquo(id)
   ctobj <- regstudies::make_classify_table(.data=.data,icdcodes=!!icdcodes_quo,diag_tbl=diag_tbl,return_binary=FALSE) #classification table object'
   
   classification_name <- .data %>% get_classification_name()
