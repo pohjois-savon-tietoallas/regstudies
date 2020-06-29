@@ -1,3 +1,21 @@
+---
+title: "BACKUP FILE"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{Example of regstudies workflow}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## BACKUP EXAMPLES
+
+
+
+```{r, eval=FALSE}
 # This dev_v3.R code starts to use wide classification data files.
 rm(list=ls())
 setwd("C:/Users/jukop/Documents/UEFhommat/Tietoallasprojekti/rekkarityokalu/regstudies")
@@ -101,7 +119,7 @@ na_replace_list <- list(
   "Date"=lubridate::dmy("01-01-1900")
 )
 resdata <- filtereddata %>%
-  left_join0(ltout,na_replace_list = na_replace_list)
+  left_join_replace_na(ltout,na_replace_list = na_replace_list)
 resdata %>%
   View()
 
@@ -252,3 +270,6 @@ cohortscores %>%
   head(10)
 plot(cohortscores)
 cor(cohortscores)
+
+```
+

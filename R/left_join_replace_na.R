@@ -15,6 +15,7 @@
 #' @examples
 #' \dontrun{
 #'
+#' ## Give list of NA values
 #' na_replace_list <- list(
 #'   "logical"=FALSE,
 #'   "character"="",
@@ -27,10 +28,10 @@
 #'   mutate_all(replace_na_by_type,na_replace_list)
 #' }
 #' 
-#' @rdname left_join0
+#' @rdname left_join_replace_na
 #' @export
 #' 
-left_join0 <- function(x,y,na_replace_list,...) {
+left_join_replace_na <- function(x, y, na_replace_list,...) {
   # Tarkistus, että listan "replace_by_type" nimet ovat sopivat:
   out <- left_join(x,y,...)
   found_types <- NULL

@@ -34,15 +34,14 @@
 #' @rdname classify_codes
 #' @export
 #'
-classify_codes <- function(.data, id, icdcodes, diag_tbl, fill=0) {
-  icdcodes_quo <- rlang::enquo(icdcodes)
-  id_quo <- rlang::enquo(id)
-  ctobj <- make_classify_table(.data=.data,icdcodes=!!icdcodes_quo,diag_tbl=diag_tbl,return_binary=FALSE) #classification table object'
+classify_codes <- function(.data, codes, diag_tbl) {
+  icdcodes_quo <- rlang::enquo(codes)
+  ctobj <- make_classify_table(.data=.data,codes=!!icdcodes_quo,diag_tbl=diag_tbl,return_binary=FALSE) #classification table object'
   
 #  classification_name <- .data %>% get_classification_name()
   nimet <- names(ctobj)
 
-  # icdcodes = KOODI1
+  # codes = KOODI1
   # id = lomno1 # user needs to enter this currently!
   text <- c(rlang::as_label(icdcodes_quo),"icd")
   outdat <- .data %>%

@@ -65,7 +65,7 @@ classify_codes_wide <- function(.data, id, icdcodes, diag_tbl, fill=0, wide=TRUE
   #return(ctobj)
   outdat <- .data %>%
     #select(!!id_quo,!!icdcodes_quo) %>% # removed unnecessary variables
-    regstudies::left_join0(ctobj,# %>% dplyr::filter(match) %>% dplyr::select(-match),
+    regstudies::left_join_replace_na(ctobj,# %>% dplyr::filter(match) %>% dplyr::select(-match),
                       na_replace_list = na_replace_list,
                       by=text) # ... arguments
   outdat
