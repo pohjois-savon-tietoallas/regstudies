@@ -1,0 +1,64 @@
+---
+title: "Introduction"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{Introduction}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Install and load necessary libraries for this example
+
+```{r, warning=FALSE, message=FALSE}
+library(regstudies) 
+library(tidyverse)
+library(vroom)
+library(lubridate)
+```
+
+
+# Classifications
+
+## Elixhauser classification and scores
+
+This calculates per row elixhauser classification. Check more info of classification from [classification tables](docs/articles/classification_tables.html)-section. We use random sample datasets `sample_cohort` and `sample_regdata`.
+
+```{r}
+sample_regdata <- sample_regdata %>% 
+  mutate(icd = case_when(
+    year(disc_date) < 1987 ~ "icd8",
+    year(disc_date) < 1996 & year(disc_date)>=1987 ~ "icd9",
+    year(disc_date) >= 1996 ~ "icd10"
+    ))
+
+elixscore <- sample_regdata %>% 
+  classify_elixhauser(icd_codes = CODE1)
+
+head(elixscore)
+```
+
+Calculate Elixhauser scores by id's
+
+```{r}
+# Calculate scores
+sample_regdata %>% 
+  classify_elixhauser(icd_codes = CODE1) %>% 
+  sum_score(score_AHRQ, score_van_Walraven)
+```
+
+
+## Charlson classification
+
+
+```{r, eval=FALSE}
+sample_regdata %>% 
+  classify_charlson(icd_codes = CODE1) #%>% View()
+```
+
+
+
+
