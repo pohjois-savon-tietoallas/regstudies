@@ -46,7 +46,26 @@ This is a basic example which shows you how to solve a common problem:
 
 ``` r
 library(regstudies)
+#> regstudies - register studies with R
 ## basic example code
+```
+
+## Citation
+
+To cite package ‘regstudies’ in publications use:
+
+Juho Kopra, Jani Miettinen and Reijo Sund (2020). regstudies: Tools for
+analyzing register data. R package version 0.5.1.
+
+A BibTeX entry for LaTeX users is
+
+``` 
+  @Manual{,
+    title = {regstudies: Tools for analyzing register data},
+    author = {Juho Kopra and Jani Miettinen and Reijo Sund},
+    year = {2020},
+    note = {R package version 0.5.1},
+  }
 ```
 
 For developers:

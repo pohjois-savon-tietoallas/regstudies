@@ -29,3 +29,10 @@ left_join(dg \%>\% select(lomno1,KOODI1,tulopvm,lahtopvm,icd),by="lomno1") \%>\%
   filter_date(indexdate=Postituspvm,range=years(2),tulopvm,lahtopvm)
 }
 }
+\seealso{
+\code{\link{filter_date_interval}} for date filtering by different intervals before and after the occurence
+
+Other filter functions: 
+\code{\link{filter_date_interval}()}
+}
+\concept{filter functions}

@@ -1,6 +1,6 @@
 Type: Package
 Package: regstudies
-Title: Register studies 
+Title: Tools for analyzing register data 
 Version: 0.5.1
 Date: 2020-06-29
 Authors@R:
@@ -27,6 +27,8 @@ Description: The data utilised in register studies, often called as register-bas
   necessarily limited to healthcare data. Users are allowed to make their own definitions of code classifiers, so the package
   suits needs of different countries having their own code definitions of disease codes for example.
 License: MIT + File LICENSE.txt
+URL: https://github.com/pohjois-savon-tietoallas/regstudies
+BugReports:https://github.com/pohjois-savon-tietoallas/regstudies/issues
 Depends: 
     R (>= 3.6.0)
 Imports: 

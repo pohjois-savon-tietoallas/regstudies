@@ -6,7 +6,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Filtering of date interval data within study interval. — filter_date_interval • regstudies</title>
+<title>Filtering of date interval data within study interval.
+Can be used for filtering e.g. for hospital visits, which are date intervals (time periods). — filter_date_interval • regstudies</title>
 
 
 <!-- jquery -->
@@ -39,8 +40,10 @@
 
 
 
-<meta property="og:title" content="Filtering of date interval data within study interval. — filter_date_interval" />
-<meta property="og:description" content="Can be used for filtering e.g. for hospital visits, which are date intervals (time periods)." />
+<meta property="og:title" content="Filtering of date interval data within study interval.
+Can be used for filtering e.g. for hospital visits, which are date intervals (time periods). — filter_date_interval" />
+<meta property="og:description" content="Filtering of date interval data within study interval.
+Can be used for filtering e.g. for hospital visits, which are date intervals (time periods)." />
 
 
 
@@ -110,7 +113,12 @@
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/pohjois-savon-tietoallas/regstudies/">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -124,13 +132,15 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Filtering of date interval data within study interval.</h1>
-    
+    <h1>Filtering of date interval data within study interval.
+Can be used for filtering e.g. for hospital visits, which are date intervals (time periods).</h1>
+    <small class="dont-index">Source: <a href='https://github.com/pohjois-savon-tietoallas/regstudies/blob/master/R/filter_date_interval.R'><code>R/filter_date_interval.R</code></a></small>
     <div class="hidden name"><code>filter_date_interval.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Can be used for filtering e.g. for hospital visits, which are date intervals (time periods).</p>
+    <p>Filtering of date interval data within study interval.
+Can be used for filtering e.g. for hospital visits, which are date intervals (time periods).</p>
     </div>
 
     <pre class="usage"><span class='fu'>filter_date_interval</span>(
@@ -170,6 +180,11 @@
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>returns a tibble object with filtered rows</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code><a href='filter_date.html'>filter_date</a></code> for date filtering by fixed interval</p>
+<p>Other filter functions: 
+<code><a href='filter_date.html'>filter_date</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
