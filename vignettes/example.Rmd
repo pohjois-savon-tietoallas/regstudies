@@ -35,37 +35,46 @@ cohort_data <- tibble::tibble(
 )
 
 # Read ICD-codes so that we generate from all classes:
-read_classes_tibble(regstudies:::charlson_classes) %>%
-  filter(icd=="icd10") %>%
-  select(regex) %>%
-  mutate(out=str_sub(string=regex,start=2,end=4)) %>%
-  filter(!is.na(out)) %>%
-  distinct() %>%
-  pull(out) ->
-genclasses
+#out <- 
+read_classes_tibble(regstudies:::charlson_classes) %>% 
+  filter(!is.na(regex)) %>% #View()
+  mutate(regex2=str_replace_all(regex,"^\\^","")) %>% #View()
+  group_by(icd,class_charlson) %>%
+  mutate(regex3=str_split(regex2,pattern="\\|\\^")) %>%
+  mutate(regex4=purrr::map_chr(regex3,magrittr::extract(1))) %>% 
+  pull(regex4) -> random_icd_codes
+#get_var_types(out)
+#View(out)
 
-## Generate random icd data
-random_icd_codes <- c(
-  paste0("F0", seq(1,9)),
-  paste0("F", seq(10,48)),
-  paste0("F", seq(50,98)),
-  paste0("I0", seq(0,2)),
-  paste0("I0", seq(05,09)),
-  paste0("I", seq(10,16)),
-  paste0("I", seq(20,25)),
-  paste0("I", seq(30,52)),
-  paste0("I", seq(60,99)),
-  paste0("E0", seq(0,7)),
-  paste0("E0", seq(08,13)),
-  paste0("E", seq(15,16)),
-  paste0("E", seq(20,35)),
-  paste0("E", seq(40,46)),
-  paste0("E", seq(70,89))
-)
-random_icd_codes <- genclasses # TODO: Modify!
+#regstudies:::charlson_classes %>%
+#  read_classes_tibble() %>%
+#  filter(icd=="icd10") %>%
+#  select(regex) %>%
+#  mutate(out=str_sub(string=regex,start=2,end=4)) %>%
+#  filter(!is.na(out)) %>%
+#  distinct() %>%
+#  pull(out) ->
+#  random_icd_codes
+
+
+sample_at_least_once <- function(x, size, replace = FALSE, prob = NULL) {
+  # size must be more than length(x)!
+  if (size >= length(x)) {
+    # take all elements at least once
+    sample1<-sample(x=x,size=length(x),replace=FALSE,prob=prob)
+    sample2<-sample(x=x,size=size-length(x),replace = replace,prob=prob)
+    return(c(sample1,sample2))
+  } else {
+    return(NULL)
+  }
+}
+#table(random_icd_codes)
+#sample_at_least_once(unique(random_icd_codes), 17, replace = TRUE) %>%
+#  table()
+
 reg_data <- tibble::tibble(
   personid = sample(cohort_data$personid, 10000, replace = TRUE),
-  CODE1 = sample(random_icd_codes, 10000, replace = TRUE),
+  CODE1 = sample_at_least_once(random_icd_codes, 10000, replace = TRUE),
   adm_date = sample(seq(as.Date("1990-01-01"), as.Date("2005-12-31"), by = 1), 10000, replace = T)
   # disc_date = ,
 )
@@ -88,7 +97,7 @@ summary(reg_data)
 ```
 
 
-Joining these two datasets we got dataset ready for analyzes:
+Joining these two data sets we got data set ready for analyzes:
 
 ```{r}
 # Join register data with population cohort data
@@ -110,10 +119,17 @@ d <- d %>%
     ))
 ```
 
+```{r}
+# Check the number of different classes
+d %>%
+  select(CODE1) %>%
+  table()
+
+```
 
 ## Get first event per id
 
-With tidyverse verbs you can slice first occurence by
+With tidyverse verbs you can slice first occurrence by
 
 ```{r}
 d %>% 
@@ -136,7 +152,7 @@ d %>%
 
 ## Filtering by date periods
 
-Filter dataset with occurences of hospital visits. If person has been in hospital during the time period two years prior `postingdate` then those events are included.
+Filter data set with occurrences of hospital visits. If person has been in hospital during the time period two years prior `postingdate` then those events are included.
 
 ```{r}
 filtered_d <- d %>% 
@@ -188,34 +204,51 @@ head(elixscore)
 
 ```{r, eval=FALSE}
 ### TODO KIRJOITA AUKI
-charlson <- filtered_d %>% 
+charlson <- d %>% 
   classify_charlson(icd_codes = CODE1) #%>% View()
 
 ## Funktio oletuksena
 charlson_classes <- read_classes_csv(file = "../data/charlson_classes.csv")
 #View(charlson_classes)
-filtered_d %>% 
+d %>% 
   classify_codes(codes=CODE1,charlson_classes) -> long # ns. tidy standardi
 head(long)
 #View(long)
 
 ## ok, kaytaja haluaa leveassa muodossa
 ## esimerkkiin
-# NOTE: Ei onnistu helposti
-filtered_d  %>% 
-  classify_charlson(icd_codes=CODE1) %>% 
+regstudies:::charlson_classes %>%
+  select(class_charlson,label_charlson) %>%
+  mutate(class_charlson=paste0("cl_",class_charlson)) -> labels
+
+d  %>% 
+  classify_charlson(icd_codes=CODE1) %>%
+  mutate(class_charlson=paste0("cl_",class_charlson)) %>% # TODO: laita tämä ominaisuus classify-funktioon sisälle!
+  mutate() %>%
   tidyr::pivot_wider(names_from="class_charlson",
                      values_from="score_charlson",
-                     values_fill=NA) -> wide
-head(wide)
+                     values_fill=0) %>%
+  select(-all_of("cl_NA")) -> wide
+
+# setting up the labels for wide data
+for(i in 1:dim(labels)[1]) {
+  l<-labels$class_charlson[i]
+  if(!is.null(wide[[l]])) {
+    attr(wide[[l]], "label") <- labels$label_charlson[i]
+  }
+}
+#head(wide)
 #View(wide)
 
 #View(charlson_classes)
 #file.show("../data/charlson_classes.csv")
 
 charlson_classes <- read_classes_csv(file = "../data/charlson_classes.csv") # toistoa, ks. ylempää
-make_classify_table(.data = filtered_d,icdcodes = CODE1,diag_tbl = charlson_classes,return_binary = TRUE) %>% View()
-wide1 <- filtered_d  %>% 
+
+mc <- make_classify_table(.data = filtered_d,icdcodes = CODE1,diag_tbl = charlson_classes,return_binary = TRUE)
+#View(mc)
+
+wide1 <- d  %>% 
   classify_codes_wide(icdcodes=CODE1,charlson_classes)
 #View(wide1)
 
