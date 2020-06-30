@@ -1,1 +1,35 @@
 destination: docs
+template:
+  params:
+    bootswatch: simplex
+reference:
+- title: "Classification"
+  desc: "Functions for classify codes"
+- contents:
+  - classify_codes
+  - classify_elixhauser
+  - classify_charlson
+  - sum_score
+  - make_classify_table
+- title: "Date functions"
+  desc: >
+    Functions for handling datetime variables
+- contents: 
+  - filter_date
+  - filter_date_interval
+  - get_nearest
+  - get_first
+  - get_last
+  - get_age
+- title: "Helpers"
+  desc: "Functions to help other functions"
+- contents:
+  - get_classification_name
+  - get_na_vars
+  - get_variable_types
+  - left_join_replace_na
+  - make_regex
+  - read_classes_csv
+  - read_classes_tibble
+  - replace_na_by_type
+  

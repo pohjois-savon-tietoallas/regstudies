@@ -27,3 +27,10 @@ dat \%>\%
   get_last(tulopvm)
 }
 }
+\seealso{
+Other date functions: 
+\code{\link{get_age}()},
+\code{\link{get_first}()},
+\code{\link{get_nearest}()}
+}
+\concept{date functions}

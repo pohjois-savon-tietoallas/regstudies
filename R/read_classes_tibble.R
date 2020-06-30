@@ -1,7 +1,7 @@
 #' Internal function for providing long classification definitions.
 #'
 #' Operates classification definitions from wide format to long format.
-#'
+#' @family help functions
 #' @param sel_classes This variable contains the data in the wide format. See the classifications defined in /datas/classification_codes/
 #' @return returns classification definintion in long format (tidy data) as that is what the package needs in operation.
 #'

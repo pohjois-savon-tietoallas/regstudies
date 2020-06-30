@@ -1,5 +1,6 @@
 #' Get last value based on datetime variable
 #'
+#' @family date functions
 #' @param .date data which contains datetime or other comparable variable
 #' @param var datetime or other comparable variable
 #' @return The row which is the first (by which.max) in the .date

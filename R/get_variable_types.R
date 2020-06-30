@@ -2,6 +2,7 @@
 #'
 #' This function operates as an tidyverse style version of class() function
 #'
+#' @family help functions
 #' @param .data tibble data to be used
 #' @return returns a tibble with two character columns: variable and class.
 #' variable tells the variable name and class tells the type of that variable.

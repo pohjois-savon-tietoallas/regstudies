@@ -1,5 +1,6 @@
 #' Make regural expression classifications from LIKE% classifications
 #'
+#' @family help functions
 #' @param .data holds the data which has variable names given as 'classname' and 'diagnosis'. Must be convertible to a tibble.
 #' @param classname name of the variable containing names/labels for the classes
 #' @param diagnosis name of the variable containing strings in LIKE% -format

@@ -26,3 +26,4 @@ elixscore <- filtereddata \%>\%
   sum_score(score_AHRQ,score_van_Walraven)
 }
 }
+\concept{classification functions}

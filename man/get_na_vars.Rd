@@ -15,3 +15,13 @@ returns a two-column tibble holding variable name as first column ('variable') a
 \description{
 Function for extracting names of variables which have any NA values
 }
+\seealso{
+Other help functions: 
+\code{\link{get_classification_name}()},
+\code{\link{get_var_types}()},
+\code{\link{left_join_replace_na}()},
+\code{\link{make_regex}()},
+\code{\link{read_classes_csv}()},
+\code{\link{read_classes_tibble}()}
+}
+\concept{help functions}

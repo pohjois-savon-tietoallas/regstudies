@@ -2,6 +2,8 @@
 #' 
 #' Allows user to do left_join and fill missing NA values with 0 or other optional value
 #' 
+#' @family help functions
+#' 
 #' @param x tibble data to used as left in a join
 #' @param y tibble data to used as right in a join
 #' @param na_replace_list a list definitions of na replacement values for each type of variable (based on 'class' or 'get_var_types' functions)

@@ -2,6 +2,7 @@
 #'
 #' Reads classes definitions based on the file path and operates classification definitions from wide format to long format.
 #'
+#' @family help functions
 #' @param file the filename or path to the filename as a character string.
 #' 
 #' @return returns classification definintion in long format (tidy data) as that is what the package needs in operation.

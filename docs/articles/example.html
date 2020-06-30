@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Example of regstudies workflow • regstudies</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/simplex/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
@@ -159,18 +159,18 @@
 ##  Min.   :1201   Min.   :1.000   Min.   :2000-01-01  
 ##  1st Qu.:1276   1st Qu.:1.000   1st Qu.:2000-01-01  
 ##  Median :1350   Median :2.000   Median :2000-01-01  
-##  Mean   :1350   Mean   :1.513   Mean   :2000-01-01  
+##  Mean   :1350   Mean   :1.527   Mean   :2000-01-01  
 ##  3rd Qu.:1425   3rd Qu.:2.000   3rd Qu.:2000-01-01  
 ##  Max.   :1500   Max.   :2.000   Max.   :2000-01-01</code></pre>
 <p>Dataset <code>reg_data</code> is a dataset which has events for the selected population with ICD codes and date-variables:</p>
 <div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">reg_data</span>)</pre></body></html></div>
 <pre><code>##     personid       CODE1              adm_date            disc_date         
-##  Min.   :1201   Length:10000       Min.   :1990-01-01   Min.   :1990-01-16  
-##  1st Qu.:1276   Class :character   1st Qu.:1993-11-25   1st Qu.:1994-02-25  
-##  Median :1351   Mode  :character   Median :1997-11-23   Median :1998-02-25  
-##  Mean   :1350                      Mean   :1997-12-11   Mean   :1998-03-10  
-##  3rd Qu.:1425                      3rd Qu.:2001-11-28   3rd Qu.:2002-02-28  
-##  Max.   :1500                      Max.   :2005-12-31   Max.   :2006-06-11</code></pre>
+##  Min.   :1201   Length:10000       Min.   :1990-01-01   Min.   :1990-01-08  
+##  1st Qu.:1276   Class :character   1st Qu.:1993-12-29   1st Qu.:1994-04-02  
+##  Median :1353   Mode  :character   Median :1997-12-29   Median :1998-03-24  
+##  Mean   :1352                      Mean   :1997-12-23   Mean   :1998-03-23  
+##  3rd Qu.:1427                      3rd Qu.:2001-12-15   3rd Qu.:2002-03-20  
+##  Max.   :1500                      Max.   :2005-12-31   Max.   :2006-06-16</code></pre>
 <p>Joining these two datasets we got dataset ready for analyzes:</p>
 <div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="co"># Join register data with population cohort data</span>
 <span class="no">d</span> <span class="kw">&lt;-</span> <span class="no">reg_data</span> <span class="kw">%&gt;%</span>
@@ -180,12 +180,12 @@
 <pre><code>## # A tibble: 6 x 6
 ##   personid CODE1 adm_date   disc_date  gender postingdate
 ##      &lt;int&gt; &lt;chr&gt; &lt;date&gt;     &lt;date&gt;      &lt;dbl&gt; &lt;date&gt;     
-## 1     1225 I85   2002-11-22 2003-01-05      1 2000-01-01 
-## 2     1276 I21   1995-12-12 1996-03-27      2 2000-01-01 
-## 3     1333 G45   1992-03-15 1992-06-27      1 2000-01-01 
-## 4     1339 M05   1997-12-12 1998-04-29      2 2000-01-01 
-## 5     1282 B18   1995-10-14 1996-02-13      1 2000-01-01 
-## 6     1421 F00   1995-11-29 1995-12-31      2 2000-01-01</code></pre>
+## 1     1292 I85   1994-08-19 1994-09-02      2 2000-01-01 
+## 2     1343 B20   2000-04-10 2000-04-19      1 2000-01-01 
+## 3     1228 I70   1994-08-04 1995-01-04      2 2000-01-01 
+## 4     1418 M05   1990-06-29 1990-12-05      1 2000-01-01 
+## 5     1326 C00   2003-03-10 2003-03-21      2 2000-01-01 
+## 6     1367 F00   2004-09-14 2004-10-28      1 2000-01-01</code></pre>
 <p>We can also create a new help variable <code>icd</code> which determines if code is ICD-8, ICD-9 or ICD-10 by year:</p>
 <div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="co"># Determine if codes are ICD-8, ICD-9 or ICD-10</span>
 <span class="no">d</span> <span class="kw">&lt;-</span> <span class="no">d</span> <span class="kw">%&gt;%</span>
@@ -208,16 +208,16 @@
 ## # Groups:   personid [300]
 ##    personid CODE1 adm_date   disc_date  gender postingdate icd  
 ##       &lt;int&gt; &lt;chr&gt; &lt;date&gt;     &lt;date&gt;      &lt;dbl&gt; &lt;date&gt;      &lt;chr&gt;
-##  1     1201 I12   1990-09-02 1990-10-14      2 2000-01-01  icd9 
-##  2     1202 G04   1990-09-26 1991-02-01      1 2000-01-01  icd9 
-##  3     1203 I70   1990-03-03 1990-08-03      1 2000-01-01  icd9 
-##  4     1204 I70   1990-07-18 1990-10-18      2 2000-01-01  icd9 
-##  5     1205 B18   1990-11-05 1990-11-30      1 2000-01-01  icd9 
-##  6     1206 I70   1990-01-01 1990-06-26      2 2000-01-01  icd9 
-##  7     1207 C00   1990-10-30 1990-12-06      1 2000-01-01  icd9 
-##  8     1208 E10   1990-02-20 1990-02-25      1 2000-01-01  icd9 
-##  9     1209 C00   1990-03-31 1990-04-28      2 2000-01-01  icd9 
-## 10     1210 I09   1990-04-01 1990-08-15      2 2000-01-01  icd9 
+##  1     1201 I70   1990-03-01 1990-07-31      1 2000-01-01  icd9 
+##  2     1202 C00   1991-10-19 1992-02-15      1 2000-01-01  icd9 
+##  3     1203 G45   1990-05-22 1990-08-05      2 2000-01-01  icd9 
+##  4     1204 K25   1990-12-29 1991-01-24      1 2000-01-01  icd9 
+##  5     1205 I70   1990-04-29 1990-06-25      2 2000-01-01  icd9 
+##  6     1206 I27   1991-09-01 1992-02-15      2 2000-01-01  icd9 
+##  7     1207 F00   1990-05-24 1990-07-02      1 2000-01-01  icd9 
+##  8     1208 C00   1990-03-07 1990-05-07      1 2000-01-01  icd9 
+##  9     1209 C77   1990-03-03 1990-03-06      2 2000-01-01  icd9 
+## 10     1210 K25   1990-01-31 1990-03-21      2 2000-01-01  icd9 
 ## # … with 290 more rows</code></pre>
 <p>and with regstudies verbs you can do the same with</p>
 <div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="no">d</span> <span class="kw">%&gt;%</span>
@@ -227,16 +227,16 @@
 ## # Groups:   personid [300]
 ##    personid CODE1 adm_date   disc_date  gender postingdate icd  
 ##       &lt;int&gt; &lt;chr&gt; &lt;date&gt;     &lt;date&gt;      &lt;dbl&gt; &lt;date&gt;      &lt;chr&gt;
-##  1     1201 I12   1990-09-02 1990-10-14      2 2000-01-01  icd9 
-##  2     1202 G04   1990-09-26 1991-02-01      1 2000-01-01  icd9 
-##  3     1203 I70   1990-03-03 1990-08-03      1 2000-01-01  icd9 
-##  4     1204 I70   1990-07-18 1990-10-18      2 2000-01-01  icd9 
-##  5     1205 B18   1990-11-05 1990-11-30      1 2000-01-01  icd9 
-##  6     1206 I70   1990-01-01 1990-06-26      2 2000-01-01  icd9 
-##  7     1207 C00   1990-10-30 1990-12-06      1 2000-01-01  icd9 
-##  8     1208 E10   1990-02-20 1990-02-25      1 2000-01-01  icd9 
-##  9     1209 C00   1990-03-31 1990-04-28      2 2000-01-01  icd9 
-## 10     1210 I09   1990-04-01 1990-08-15      2 2000-01-01  icd9 
+##  1     1201 I70   1990-03-01 1990-07-31      1 2000-01-01  icd9 
+##  2     1202 C00   1991-10-19 1992-02-15      1 2000-01-01  icd9 
+##  3     1203 G45   1990-05-22 1990-08-05      2 2000-01-01  icd9 
+##  4     1204 K25   1990-12-29 1991-01-24      1 2000-01-01  icd9 
+##  5     1205 I70   1990-04-29 1990-06-25      2 2000-01-01  icd9 
+##  6     1206 I27   1991-09-01 1992-02-15      2 2000-01-01  icd9 
+##  7     1207 F00   1990-05-24 1990-07-02      1 2000-01-01  icd9 
+##  8     1208 C00   1990-03-07 1990-05-07      1 2000-01-01  icd9 
+##  9     1209 C77   1990-03-03 1990-03-06      2 2000-01-01  icd9 
+## 10     1210 K25   1990-01-31 1990-03-21      2 2000-01-01  icd9 
 ## # … with 290 more rows</code></pre>
 </div>
 <div id="filtering-by-date-periods" class="section level2">
@@ -252,12 +252,12 @@
 <pre><code>## # A tibble: 6 x 7
 ##   personid CODE1 adm_date   disc_date  gender postingdate icd  
 ##      &lt;int&gt; &lt;chr&gt; &lt;date&gt;     &lt;date&gt;      &lt;dbl&gt; &lt;date&gt;      &lt;chr&gt;
-## 1     1339 M05   1997-12-12 1998-04-29      2 2000-01-01  icd10
-## 2     1470 B20   1998-01-01 1998-01-15      2 2000-01-01  icd10
-## 3     1386 M05   1998-02-12 1998-05-12      2 2000-01-01  icd10
-## 4     1446 E10   1999-02-22 1999-03-26      1 2000-01-01  icd10
-## 5     1302 I12   1999-02-27 1999-03-28      1 2000-01-01  icd10
-## 6     1210 F00   1999-11-24 2000-04-27      2 2000-01-01  icd10</code></pre>
+## 1     1425 F00   1999-03-23 1999-04-15      2 2000-01-01  icd10
+## 2     1339 C00   1998-03-09 1998-07-24      2 2000-01-01  icd10
+## 3     1324 I21   1998-09-25 1999-01-19      2 2000-01-01  icd10
+## 4     1270 I12   1997-12-28 1998-05-29      1 2000-01-01  icd10
+## 5     1281 C00   1998-09-27 1998-10-10      1 2000-01-01  icd10
+## 6     1465 I70   1999-10-20 2000-04-15      2 2000-01-01  icd10</code></pre>
 <p>Filter dataset with either <code>adm_date</code> or <code>disc_date</code> within two years around <code>postingdate</code></p>
 <div class="sourceCode" id="cb20"><html><body><pre class="r"><span class="no">filtered_d</span> <span class="kw">&lt;-</span> <span class="no">d</span> <span class="kw">%&gt;%</span>
   <span class="kw pkg">regstudies</span><span class="kw ns">::</span><span class="fu"><a href="../reference/filter_date.html">filter_date</a></span>(<span class="kw">indexdate</span><span class="kw">=</span><span class="no">postingdate</span>,
@@ -268,12 +268,12 @@
 <pre><code>## # A tibble: 6 x 7
 ##   personid CODE1 adm_date   disc_date  gender postingdate icd  
 ##      &lt;int&gt; &lt;chr&gt; &lt;date&gt;     &lt;date&gt;      &lt;dbl&gt; &lt;date&gt;      &lt;chr&gt;
-## 1     1470 B20   1998-01-01 1998-01-15      2 2000-01-01  icd10
-## 2     1386 M05   1998-02-12 1998-05-12      2 2000-01-01  icd10
-## 3     1446 E10   1999-02-22 1999-03-26      1 2000-01-01  icd10
-## 4     1302 I12   1999-02-27 1999-03-28      1 2000-01-01  icd10
-## 5     1210 F00   1999-11-24 2000-04-27      2 2000-01-01  icd10
-## 6     1283 F00   1998-07-03 1998-07-22      2 2000-01-01  icd10</code></pre>
+## 1     1343 B20   2000-04-10 2000-04-19      1 2000-01-01  icd10
+## 2     1283 I85   2000-08-01 2000-11-23      2 2000-01-01  icd10
+## 3     1425 F00   1999-03-23 1999-04-15      2 2000-01-01  icd10
+## 4     1339 C00   1998-03-09 1998-07-24      2 2000-01-01  icd10
+## 5     1324 I21   1998-09-25 1999-01-19      2 2000-01-01  icd10
+## 6     1336 G04   2000-02-14 2000-06-12      2 2000-01-01  icd10</code></pre>
 </div>
 <div id="classifications" class="section level2">
 <h2 class="hasAnchor">
@@ -300,12 +300,12 @@
 <pre><code>## # A tibble: 6 x 11
 ##   personid CODE1 adm_date   disc_date  gender postingdate icd   class_elixhauser
 ##      &lt;int&gt; &lt;chr&gt; &lt;date&gt;     &lt;date&gt;      &lt;dbl&gt; &lt;date&gt;      &lt;chr&gt; &lt;chr&gt;           
-## 1     1470 B20   1998-01-01 1998-01-15      2 2000-01-01  icd10 aids            
-## 2     1386 M05   1998-02-12 1998-05-12      2 2000-01-01  icd10 rheumd          
-## 3     1446 E10   1999-02-22 1999-03-26      1 2000-01-01  icd10 &lt;NA&gt;            
-## 4     1302 I12   1999-02-27 1999-03-28      1 2000-01-01  icd10 hypc            
-## 5     1210 F00   1999-11-24 2000-04-27      2 2000-01-01  icd10 &lt;NA&gt;            
-## 6     1283 F00   1998-07-03 1998-07-22      2 2000-01-01  icd10 &lt;NA&gt;            
+## 1     1343 B20   2000-04-10 2000-04-19      1 2000-01-01  icd10 aids            
+## 2     1283 I85   2000-08-01 2000-11-23      2 2000-01-01  icd10 ld              
+## 3     1425 F00   1999-03-23 1999-04-15      2 2000-01-01  icd10 &lt;NA&gt;            
+## 4     1339 C00   1998-03-09 1998-07-24      2 2000-01-01  icd10 solidtum        
+## 5     1324 I21   1998-09-25 1999-01-19      2 2000-01-01  icd10 &lt;NA&gt;            
+## 6     1336 G04   2000-02-14 2000-06-12      2 2000-01-01  icd10 &lt;NA&gt;            
 ## # … with 3 more variables: label_elixhauser &lt;chr&gt;, score_AHRQ &lt;dbl&gt;,
 ## #   score_van_Walraven &lt;dbl&gt;</code></pre>
 </div>
@@ -321,12 +321,12 @@
 <pre><code>## # A tibble: 6 x 11
 ##   personid CODE1 adm_date   disc_date  gender postingdate icd   class_elixhauser
 ##      &lt;int&gt; &lt;chr&gt; &lt;date&gt;     &lt;date&gt;      &lt;dbl&gt; &lt;date&gt;      &lt;chr&gt; &lt;chr&gt;           
-## 1     1470 B20   1998-01-01 1998-01-15      2 2000-01-01  icd10 aids            
-## 2     1386 M05   1998-02-12 1998-05-12      2 2000-01-01  icd10 rheumd          
-## 3     1446 E10   1999-02-22 1999-03-26      1 2000-01-01  icd10 &lt;NA&gt;            
-## 4     1302 I12   1999-02-27 1999-03-28      1 2000-01-01  icd10 hypc            
-## 5     1210 F00   1999-11-24 2000-04-27      2 2000-01-01  icd10 &lt;NA&gt;            
-## 6     1283 F00   1998-07-03 1998-07-22      2 2000-01-01  icd10 &lt;NA&gt;            
+## 1     1343 B20   2000-04-10 2000-04-19      1 2000-01-01  icd10 aids            
+## 2     1283 I85   2000-08-01 2000-11-23      2 2000-01-01  icd10 ld              
+## 3     1425 F00   1999-03-23 1999-04-15      2 2000-01-01  icd10 &lt;NA&gt;            
+## 4     1339 C00   1998-03-09 1998-07-24      2 2000-01-01  icd10 solidtum        
+## 5     1324 I21   1998-09-25 1999-01-19      2 2000-01-01  icd10 &lt;NA&gt;            
+## 6     1336 G04   2000-02-14 2000-06-12      2 2000-01-01  icd10 &lt;NA&gt;            
 ## # … with 3 more variables: label_elixhauser &lt;chr&gt;, score_AHRQ &lt;dbl&gt;,
 ## #   score_van_Walraven &lt;dbl&gt;</code></pre>
 <div class="sourceCode" id="cb34"><html><body><pre class="r"><span class="co">### TODO KIRJOITA AUKI</span>
@@ -378,16 +378,16 @@
 <pre><code>## # A tibble: 300 x 3
 ##    personid `sum(score_AHRQ)` `sum(score_van_Walraven)`
 ##       &lt;int&gt;             &lt;dbl&gt;                     &lt;dbl&gt;
-##  1     1201                 2                         2
-##  2     1202                11                        15
-##  3     1203                17                        23
-##  4     1204                -1                         0
-##  5     1205                10                        15
-##  6     1206                 0                         0
-##  7     1207                 2                         2
-##  8     1208                10                        15
-##  9     1209                15                        10
-## 10     1210                13                         8
+##  1     1201                 3                         2
+##  2     1202                12                        17
+##  3     1203                10                        15
+##  4     1204                13                        17
+##  5     1205                16                        14
+##  6     1206                25                        27
+##  7     1207                13                        17
+##  8     1208                12                         8
+##  9     1209                14                        17
+## 10     1210                20                        25
 ## # … with 290 more rows</code></pre>
 </div>
 </div>

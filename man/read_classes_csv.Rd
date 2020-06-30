@@ -18,3 +18,13 @@ Reads classes definitions based on the file path and operates classification def
 \examples{
 elixhauser_cl <- read_classes_csv(file = "data/classification_codes/elixhauser_classes_wide.csv")
 }
+\seealso{
+Other help functions: 
+\code{\link{get_classification_name}()},
+\code{\link{get_na_vars}()},
+\code{\link{get_var_types}()},
+\code{\link{left_join_replace_na}()},
+\code{\link{make_regex}()},
+\code{\link{read_classes_tibble}()}
+}
+\concept{help functions}
