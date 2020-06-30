@@ -4,7 +4,7 @@ author: "Juho Kopra"
 date: "`r Sys.Date()`"
 output: word_document#rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{regstudies R package use cases}
+  %\VignetteIndexEntry{Use cases of 'regstudies' R package}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

@@ -3,7 +3,7 @@ title: "BACKUP FILE"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteIndexEntry{Example of regstudies workflow}
+  %\VignetteIndexEntry{BACKUP FILE}
   %\VignetteEncoding{UTF-8}
 ---
 

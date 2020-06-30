@@ -94,7 +94,7 @@
 <div id="backup-examples" class="section level2">
 <h2 class="hasAnchor">
 <a href="#backup-examples" class="anchor"></a>BACKUP EXAMPLES</h2>
-<div class="sourceCode"><html><body><pre class="r"><span class="co"># This dev_v3.R code starts to use wide classification data files.</span>
+<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="co"># This dev_v3.R code starts to use wide classification data files.</span>
 <span class="fu"><a href="https://rdrr.io/r/base/rm.html">rm</a></span>(<span class="kw">list</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/ls.html">ls</a></span>())
 <span class="fu"><a href="https://rdrr.io/r/base/getwd.html">setwd</a></span>(<span class="st">"C:/Users/jukop/Documents/UEFhommat/Tietoallasprojekti/rekkarityokalu/regstudies"</span>)
 <span class="co">#install.packages(c("dplyr", "tidyr", "stringr", "purrr"))</span>
@@ -346,7 +346,7 @@
 <span class="no">cohortscores</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="no">`sum(score_AHRQ)`</span>+<span class="no">`sum(score_van_Walraven)`</span>+<span class="no">`sum(score_charlson)`</span><span class="kw">&gt;</span><span class="fl">0</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fl">10</span>)
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="no">cohortscores</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">cohortscores</span>)
 <span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span>(<span class="no">cohortscores</span>)</pre></body></html></div>
 </div>
   </div>

@@ -2,7 +2,6 @@
 # devtools::document()
 pkgdown::build_site()
 
-#options(stringsAsFactors = FALSE)
 ## Vie classification datat sysdataan ----
 
 ## Elixhauser scores
