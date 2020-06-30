@@ -1,0 +1,39 @@
+Three vignettes:
+
+1. Introduction & basic usage
+-----------------------------
+
+classify_elixhauser
+classify_charlson
+sum_score
+# Not sure if we should include filter_interval on this. It is part of data wrangling also but perhaps useful for getting general view.
+
+2. Using own classifications
+----------------------------
+
+classify_codes
+make_classify_table
+make_regex
+get_classification_name
+classification_checker # TODO
+
+read_classes_csv
+read_classes_tibble
+
+3. Data wrangling for register studies
+--------------------------------------
+
+filter_date
+filter_interval
+
+left_join_replace_na
+replace_na_by_type
+
+get_variable_types
+
+# helper functions:
+get_age
+get_first
+get_last
+get_nearest
+get_na_vars
