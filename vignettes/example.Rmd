@@ -34,6 +34,16 @@ cohort_data <- tibble::tibble(
   postingdate = rep(as.Date("2000-01-01"), 300)
 )
 
+# Read ICD-codes so that we generate from all classes:
+read_classes_tibble(regstudies:::charlson_classes) %>%
+  filter(icd=="icd10") %>%
+  select(regex) %>%
+  mutate(out=str_sub(string=regex,start=2,end=4)) %>%
+  filter(!is.na(out)) %>%
+  distinct() %>%
+  pull(out) ->
+genclasses
+
 ## Generate random icd data
 random_icd_codes <- c(
   paste0("F0", seq(1,9)),
@@ -52,6 +62,7 @@ random_icd_codes <- c(
   paste0("E", seq(40,46)),
   paste0("E", seq(70,89))
 )
+random_icd_codes <- genclasses # TODO: Modify!
 reg_data <- tibble::tibble(
   personid = sample(cohort_data$personid, 10000, replace = TRUE),
   CODE1 = sample(random_icd_codes, 10000, replace = TRUE),
@@ -157,8 +168,9 @@ head(filtered_d)
 ```{r}
 # Classify by Elixhauser:
 my_classes <- read_classes_csv(file = "../data/elixhauser_classes.csv")
+
 classified_d <- filtered_d %>%
-  classify_codes(icdcodes = CODE1,
+  classify_codes(codes = CODE1,
                  diag_tbl = my_classes) 
 head(classified_d)
 ```
@@ -174,20 +186,46 @@ elixscore <- filtered_d %>%
 head(elixscore)
 ```
 
-```{r}
+```{r, eval=FALSE}
 ### TODO KIRJOITA AUKI
 charlson <- filtered_d %>% 
-  classify_charlson(icd_codes = CODE1)
+  classify_charlson(icd_codes = CODE1) #%>% View()
 
 ## Funktio oletuksena
-d %>% 
-  classify_codes() -> long # ns. tidy standardi
+charlson_classes <- read_classes_csv(file = "../data/charlson_classes.csv")
+#View(charlson_classes)
+filtered_d %>% 
+  classify_codes(codes=CODE1,charlson_classes) -> long # ns. tidy standardi
+head(long)
+#View(long)
 
 ## ok, kaytaja haluaa leveassa muodossa
 ## esimerkkiin
-d %>% 
-  classify_codes() %>% 
-  dplyr:: pivot_longer() -> wide
+# NOTE: Ei onnistu helposti
+filtered_d  %>% 
+  classify_charlson(icd_codes=CODE1) %>% 
+  tidyr::pivot_wider(names_from="class_charlson",
+                     values_from="score_charlson",
+                     values_fill=NA) -> wide
+head(wide)
+#View(wide)
+
+#View(charlson_classes)
+#file.show("../data/charlson_classes.csv")
+
+charlson_classes <- read_classes_csv(file = "../data/charlson_classes.csv") # toistoa, ks. ylempää
+make_classify_table(.data = filtered_d,icdcodes = CODE1,diag_tbl = charlson_classes,return_binary = TRUE) %>% View()
+wide1 <- filtered_d  %>% 
+  classify_codes_wide(icdcodes=CODE1,charlson_classes)
+#View(wide1)
+
+filtered_d  %>% 
+  classify_codes(codes=CODE1,charlson_classes) %>% 
+  tidyr::pivot_wider(names_from="class_charlson",
+                     values_from="score_charlson",
+                     values_fill=0) -> wide2
+head(wide2)
+#View(wide2)
 ```
 
 

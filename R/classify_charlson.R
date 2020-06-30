@@ -31,7 +31,7 @@ classify_charlson <- function(.data, icd_codes) {
                                diag_tbl = diag_tbl,
                                return_binary = FALSE) #classification table object'
   
-  classification_name <- "elixhauser" #get_classification_name(diag_tbl)
+  classification_name <- get_classification_name(diag_tbl)
   nimet <- names(ctobj)
   
   text <- c(rlang::as_label(icdcodes_quo),"icd")

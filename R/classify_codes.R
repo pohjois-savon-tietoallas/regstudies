@@ -36,7 +36,7 @@
 #'
 classify_codes <- function(.data, codes, diag_tbl) {
   icdcodes_quo <- rlang::enquo(codes)
-  ctobj <- make_classify_table(.data=.data,codes=!!icdcodes_quo,diag_tbl=diag_tbl,return_binary=FALSE) #classification table object'
+  ctobj <- make_classify_table(.data=.data,icdcodes=!!icdcodes_quo,diag_tbl=diag_tbl,return_binary=FALSE) #classification table object'
   
 #  classification_name <- .data %>% get_classification_name()
   nimet <- names(ctobj)

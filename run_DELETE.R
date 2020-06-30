@@ -2,14 +2,14 @@
 # devtools::document()
 pkgdown::build_site()
 
-
+#options(stringsAsFactors = FALSE)
 ## Vie classification datat sysdataan ----
 
 ## Elixhauser scores
-elixhauser_classes <- read.csv2("./data/elixhauser_classes_wide.csv")
-elixhauser_classes <- tibble::as.tibble(elixhauser_classes)
-charlson_classes <- read.csv2("./data/charlson_classes_wide.csv")
-charlson_classes <- tibble::as.tibble(charlson_classes)
+elixhauser_classes <- readr::read_csv2("./data/elixhauser_classes.csv")
+elixhauser_classes <- tibble::as_tibble(elixhauser_classes)
+charlson_classes <- readr::read_csv2("./data/charlson_classes.csv")
+charlson_classes <- tibble::as_tibble(charlson_classes)
 save(charlson_classes, elixhauser_classes, file = "./R/sysdata.rda")
 
 # usethis::use_data(elixhauser_classes, internal = TRUE) # toinen tapa

@@ -6,7 +6,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>left_join with fill option — left_join0 • regstudies</title>
+<title>Extends the original data with the classification table and keeps data in long format.
+Computes classification table and attaches it to original data. Data stays in long format. — classify_charlson • regstudies</title>
 
 
 <!-- jquery -->
@@ -39,8 +40,10 @@
 
 
 
-<meta property="og:title" content="left_join with fill option — left_join0" />
-<meta property="og:description" content="Allows user to do left_join and fill missing NA values with 0 or other optional value" />
+<meta property="og:title" content="Extends the original data with the classification table and keeps data in long format.
+Computes classification table and attaches it to original data. Data stays in long format. — classify_charlson" />
+<meta property="og:description" content="Extends the original data with the classification table and keeps data in long format.
+Computes classification table and attaches it to original data. Data stays in long format." />
 
 
 
@@ -72,7 +75,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">regstudies</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.1</span>
       </span>
     </div>
 
@@ -94,6 +97,9 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/backup_file_delete.html">BACKUP FILE</a>
+    </li>
     <li>
       <a href="../articles/classification_tables.html">Classification tables</a>
     </li>
@@ -121,53 +127,38 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>left_join with fill option</h1>
+    <h1>Extends the original data with the classification table and keeps data in long format.
+Computes classification table and attaches it to original data. Data stays in long format.</h1>
     
-    <div class="hidden name"><code>left_join0.Rd</code></div>
+    <div class="hidden name"><code>classify_charlson.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Allows user to do left_join and fill missing NA values with 0 or other optional value</p>
+    <p>Extends the original data with the classification table and keeps data in long format.
+Computes classification table and attaches it to original data. Data stays in long format.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>left_join0</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>na_replace_list</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>classify_charlson</span>(<span class='no'>.data</span>, <span class='no'>icd_codes</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>tibble data to used as left in a join</p></td>
+      <th>.data</th>
+      <td><p>tibble of register data which we want to study</p></td>
     </tr>
     <tr>
-      <th>y</th>
-      <td><p>tibble data to used as right in a join</p></td>
-    </tr>
-    <tr>
-      <th>na_replace_list</th>
-      <td><p>a list definitions of na replacement values for each type of variable (based on 'class' or 'get_var_types' functions)</p></td>
+      <th>icd_codes</th>
+      <td><p>name of the variable holding ICD-codes</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    
-
-
+    <p>data frame</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-
-<span class='no'>na_replace_list</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-  <span class='st'>"logical"</span><span class='kw'>=</span><span class='fl'>FALSE</span>,
-  <span class='st'>"character"</span><span class='kw'>=</span><span class='st'>""</span>,
-  <span class='st'>"integer"</span><span class='kw'>=</span><span class='fl'>0L</span>,
-  <span class='st'>"double"</span><span class='kw'>=</span><span class='fl'>0.0</span>,
-  <span class='st'>"numeric"</span><span class='kw'>=</span><span class='fl'>0</span>,
-  <span class='st'>"Date"</span><span class='kw'>=</span><span class='kw pkg'>lubridate</span><span class='kw ns'>::</span><span class='fu'><a href='http://lubridate.tidyverse.org/reference/ymd.html'>dmy</a></span>(<span class='st'>"01-01-1900"</span>)
-)
-<span class='no'>testdata</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>mutate_all</span>(<span class='no'>replace_na_by_type</span>,<span class='no'>na_replace_list</span>)
 }</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -4,17 +4,17 @@
 \alias{classify_codes}
 \title{Extends the original data with the classification table and keeps data in long format.}
 \usage{
-classify_codes(.data, id, icdcodes, diag_tbl, fill = 0)
+classify_codes(.data, codes, diag_tbl)
 }
 \arguments{
 \item{.data}{tibble of register data which we want to study}
-
-\item{icdcodes}{name of the variable holding ICD-codes}
 
 \item{diag_tbl}{tibble which holds the classification details: needs to have variables 'regex' and 'label'
 'regex' must hold a string with a regular expression defining classes.
 'regex.rm' is optional, defines exceptions to 'regex' (these are not in the group they are named in)
 'label' defines the names of the variables of classes (e.g. comorbidity indicators)}
+
+\item{icdcodes}{name of the variable holding ICD-codes}
 }
 \value{
 
