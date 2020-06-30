@@ -2,7 +2,9 @@ pandoc: 1.19.2.1
 pkgdown: 1.5.1
 pkgdown_sha: ~
 articles:
+  backup_file_delete: backup_file_delete.html
+  classification_tables: classification_tables.html
   example: example.html
   vignette_v2_old: vignette_v2_old.html
-last_built: 2020-06-05T11:45Z
+last_built: 2020-06-29T12:46Z
 

@@ -11,9 +11,9 @@ vignette: >
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-Load necessary libraries
+Install and load necessary libraries for this example
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 library(regstudies) 
 library(tidyverse)
 library(vroom)
@@ -34,7 +34,17 @@ cohort_data <- tibble::tibble(
   postingdate = rep(as.Date("2000-01-01"), 300)
 )
 
-## Generate random icd data -----
+# Read ICD-codes so that we generate from all classes:
+read_classes_tibble(regstudies:::charlson_classes) %>%
+  filter(icd=="icd10") %>%
+  select(regex) %>%
+  mutate(out=str_sub(string=regex,start=2,end=4)) %>%
+  filter(!is.na(out)) %>%
+  distinct() %>%
+  pull(out) ->
+genclasses
+
+## Generate random icd data
 random_icd_codes <- c(
   paste0("F0", seq(1,9)),
   paste0("F", seq(10,48)),
@@ -52,6 +62,7 @@ random_icd_codes <- c(
   paste0("E", seq(40,46)),
   paste0("E", seq(70,89))
 )
+random_icd_codes <- genclasses # TODO: Modify!
 reg_data <- tibble::tibble(
   personid = sample(cohort_data$personid, 10000, replace = TRUE),
   CODE1 = sample(random_icd_codes, 10000, replace = TRUE),
@@ -59,25 +70,18 @@ reg_data <- tibble::tibble(
   # disc_date = ,
 )
 reg_data$disc_date <- (reg_data$adm_date + sample(seq(0,180), 10000, replace = T))
-
-
-# Determine if codes are ICD-8, ICD-9 or ICD-10 -----
-reg_data <- reg_data %>%
-  mutate(icd = case_when(
-    year(disc_date) < 1987 ~ "icd8",
-    year(disc_date) < 1996 & year(disc_date)>=1987 ~ "icd9",
-    year(disc_date) >= 1996 ~ "icd10"
-    ))
 ```
 
 
-Dataset `cohort_data` is base dataset including basic variables of population and variable `posting_date` **explain var**
+### Sample dataset 
+
+Dataset `cohort_data` is base dataset including basic descriptive variables of the population (in this case only gener) and variable `posting_date` which is a survey letter posting date:
 
 ```{r}
 summary(cohort_data)
 ```
 
-Dataset `reg_data` is dataset which has events for the population with ICD codes and date-variables:
+Dataset `reg_data` is a dataset which has events for the selected population with ICD codes and date-variables:
 
 ```{r}
 summary(reg_data)
@@ -94,22 +98,58 @@ d <- reg_data %>%
 head(d)
 ```
 
-
-## Filtering dataset
-
+We can also create a new help variable `icd` which determines if code is ICD-8, ICD-9 or ICD-10 by year:
 
 ```{r}
-# Filter dataset with occurences of hospital visits. If person has been in hospital during the time period two years prior 'postingdate' then those events are included in the filtering.
+# Determine if codes are ICD-8, ICD-9 or ICD-10
+d <- d %>%
+  mutate(icd = case_when(
+    year(disc_date) < 1987 ~ "icd8",
+    year(disc_date) < 1996 & year(disc_date)>=1987 ~ "icd9",
+    year(disc_date) >= 1996 ~ "icd10"
+    ))
+```
+
+
+## Get first event per id
+
+With tidyverse verbs you can slice first occurence by
+
+```{r}
+d %>% 
+  group_by(personid) %>% 
+  arrange(adm_date) %>%
+  dplyr::slice(1)
+```
+
+and with regstudies verbs you can do the same with
+
+```{r}
+d %>% 
+  group_by(personid) %>%
+  regstudies::get_first(var = adm_date)
+
+```
+
+
+
+
+## Filtering by date periods
+
+Filter dataset with occurences of hospital visits. If person has been in hospital during the time period two years prior `postingdate` then those events are included.
+
+```{r}
 filtered_d <- d %>% 
   filter_date_interval(indexdate = postingdate,
-                   time_before=years(2),
-                   admission_date=adm_date,
-                   discharge_date=disc_date)
+                       time_before=years(2),
+                       admission_date=adm_date,
+                       discharge_date=disc_date)
 head(filtered_d)
 ```
 
+Filter dataset with either `adm_date` or `disc_date` within two years around `postingdate`
+
 ```{r}
-# Filter dataset with either adm_date or disc_date within two years around 'postingdate'
 filtered_d <- d %>% 
   regstudies::filter_date(indexdate=postingdate, 
                           range=years(2),
@@ -119,28 +159,78 @@ head(filtered_d)
 ```
 
 
-## Elixhauser classification and scores
+## Classifications
+
+### Code classification by own csv table
+
+
 
 ```{r}
 # Classify by Elixhauser:
-elixhauser_classes <- read_classes_csv(file = "../data/classification_codes/elixhauser_classes.csv")
+my_classes <- read_classes_csv(file = "../data/elixhauser_classes.csv")
 
-elixscore <- filtered_d %>%
-  classify_codes(icdcodes = CODE1,
-                     diag_tbl = elixhauser_classes) 
+classified_d <- filtered_d %>%
+  classify_codes(codes = CODE1,
+                 diag_tbl = my_classes) 
+head(classified_d)
+```
+
+
+### Elixhauser classification and scores
+
+This calculates per row elixhauser classification. Check more info of classification from [classification tables](docs/articles/classification_tables.html)-section.
+
+```{r}
+elixscore <- filtered_d %>% 
+  classify_elixhauser(icd_codes = CODE1)
 head(elixscore)
 ```
 
+```{r, eval=FALSE}
+### TODO KIRJOITA AUKI
+charlson <- filtered_d %>% 
+  classify_charlson(icd_codes = CODE1) #%>% View()
 
-### Shortcut function for elixhauser classification
+## Funktio oletuksena
+charlson_classes <- read_classes_csv(file = "../data/charlson_classes.csv")
+#View(charlson_classes)
+filtered_d %>% 
+  classify_codes(codes=CODE1,charlson_classes) -> long # ns. tidy standardi
+head(long)
+#View(long)
 
-```{r}
-temp <- filtered_d %>% 
-  classify_elixhauser(icd_codes = CODE1)
+## ok, kaytaja haluaa leveassa muodossa
+## esimerkkiin
+# NOTE: Ei onnistu helposti
+filtered_d  %>% 
+  classify_charlson(icd_codes=CODE1) %>% 
+  tidyr::pivot_wider(names_from="class_charlson",
+                     values_from="score_charlson",
+                     values_fill=NA) -> wide
+head(wide)
+#View(wide)
 
+#View(charlson_classes)
+#file.show("../data/charlson_classes.csv")
+
+charlson_classes <- read_classes_csv(file = "../data/charlson_classes.csv") # toistoa, ks. ylempää
+make_classify_table(.data = filtered_d,icdcodes = CODE1,diag_tbl = charlson_classes,return_binary = TRUE) %>% View()
+wide1 <- filtered_d  %>% 
+  classify_codes_wide(icdcodes=CODE1,charlson_classes)
+#View(wide1)
+
+filtered_d  %>% 
+  classify_codes(codes=CODE1,charlson_classes) %>% 
+  tidyr::pivot_wider(names_from="class_charlson",
+                     values_from="score_charlson",
+                     values_fill=0) -> wide2
+head(wide2)
+#View(wide2)
 ```
 
-### Calculate Elixhauser scores
+
+
+Calculate Elixhauser scores by id's
 
 ```{r}
 # Calculate scores
@@ -148,6 +238,7 @@ filtered_d %>%
   classify_elixhauser(icd_codes = CODE1) %>% 
   sum_score(score_AHRQ, score_van_Walraven)
 ```
+
 
 
 
@@ -161,7 +252,7 @@ elixscore %>%
   get_var_types()
 
 elixscore
-elixscore <- left_join0(cohort %>% select(personid), elixscore)
+elixscore <- left_join_replace_na(cohort %>% select(personid), elixscore)
 #View(elixscore)
 
 # [X] demoa Hospital Frailty Risk Score -indeksiä!
@@ -180,7 +271,6 @@ elixscore <- left_join0(cohort %>% select(personid), elixscore)
 ## Charlson classification
 
 ```{r, eval=FALSE}
-
 # Charlson score:
 #charlson_classes <- classes_to_wide(vroom(file = "data/classification_codes/charlson_classes_wide.csv"))
 charlson_classes <- read_classes_csv(file = "data/classification_codes/charlson_classes_wide.csv")

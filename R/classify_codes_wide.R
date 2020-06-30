@@ -35,23 +35,18 @@
 #' @rdname classify_codes_wide
 #' @export
 #'
-classify_codes_wide <- function(.data, id, icdcodes, diag_tbl, fill=0, wide=TRUE) {
+classify_codes_wide <- function(.data, icdcodes, diag_tbl, wide=TRUE) {
   icdcodes_quo <- rlang::enquo(icdcodes)
-  id_quo <- rlang::enquo(id)
   ctobj <- regstudies::make_classify_table(.data=.data,icdcodes=!!icdcodes_quo,diag_tbl=diag_tbl,return_binary=FALSE) #classification table object'
   
-  classification_name <- .data %>% get_classification_name()
+  classification_name <- .data %>% regstudies::get_classification_name()
   nimet <- names(ctobj)
-  
-  # TODO: Laske, minkä niminen muuttuja alkaa 'class_'  
+
   if (wide) {
-    ctobj <- pivot_wider(ctobj %>% select(-tidyselect::contains("label_")) %>% filter(!is.na(!!icdcodes_quo)),
+    ctobj <- pivot_wider(ctobj %>% select(-tidyselect::contains("label_")) %>% dplyr::filter(!is.na(!!icdcodes_quo)),
                          names_from=nimet[stringr::str_starts(nimet,"class_")], #TODO: Ei välttämättä ole class_elixhauser- nimistä muuttujaa!
                          values_from=match)
   }
-#  return(ctobj)
-  # icdcodes = KOODI1
-  # id = lomno1 # user needs to enter this currently!
   
   na_replace_list <- list(
    "logical"=FALSE,
@@ -65,7 +60,7 @@ classify_codes_wide <- function(.data, id, icdcodes, diag_tbl, fill=0, wide=TRUE
   #return(ctobj)
   outdat <- .data %>%
     #select(!!id_quo,!!icdcodes_quo) %>% # removed unnecessary variables
-    regstudies::left_join0(ctobj,# %>% dplyr::filter(match) %>% dplyr::select(-match),
+    regstudies::left_join_replace_na(ctobj,# %>% dplyr::filter(match) %>% dplyr::select(-match),
                       na_replace_list = na_replace_list,
                       by=text) # ... arguments
   outdat

@@ -4,7 +4,7 @@
 \alias{classify_codes_wide}
 \title{Extends the original data with the classification table and keeps data in long format.}
 \usage{
-classify_codes_wide(.data, id, icdcodes, diag_tbl, fill = 0, wide = TRUE)
+classify_codes_wide(.data, icdcodes, diag_tbl, wide = TRUE)
 }
 \arguments{
 \item{.data}{tibble of register data which we want to study}

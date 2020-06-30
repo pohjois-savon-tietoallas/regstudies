@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">regstudies</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.1</span>
       </span>
     </div>
 
@@ -94,6 +94,12 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/backup_file_delete.html">BACKUP FILE</a>
+    </li>
+    <li>
+      <a href="../articles/classification_tables.html">Classification tables</a>
+    </li>
     <li>
       <a href="../articles/example.html">Example of regstudies workflow</a>
     </li>
@@ -127,7 +133,7 @@
     <p>Computes classification table and attaches it to original data. Data stays in long format.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>classify_codes</span>(<span class='no'>.data</span>, <span class='no'>id</span>, <span class='no'>icdcodes</span>, <span class='no'>diag_tbl</span>, <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fl'>0</span>)</pre>
+    <pre class="usage"><span class='fu'>classify_codes</span>(<span class='no'>.data</span>, <span class='no'>codes</span>, <span class='no'>diag_tbl</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -137,15 +143,15 @@
       <td><p>tibble of register data which we want to study</p></td>
     </tr>
     <tr>
-      <th>icdcodes</th>
-      <td><p>name of the variable holding ICD-codes</p></td>
-    </tr>
-    <tr>
       <th>diag_tbl</th>
       <td><p>tibble which holds the classification details: needs to have variables 'regex' and 'label'
 'regex' must hold a string with a regular expression defining classes.
 'regex.rm' is optional, defines exceptions to 'regex' (these are not in the group they are named in)
 'label' defines the names of the variables of classes (e.g. comorbidity indicators)</p></td>
+    </tr>
+    <tr>
+      <th>icdcodes</th>
+      <td><p>name of the variable holding ICD-codes</p></td>
     </tr>
     </table>
 

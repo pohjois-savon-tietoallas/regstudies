@@ -1,0 +1,2 @@
+YEARS: 2020
+COPYRIGHT HOLDER: Juho Kopra, Jani Miettinen, Reijo Sund
