@@ -197,13 +197,13 @@ head(elixscore)
 
 d %>% 
   classify_charlson(CODE1) -> charlson # ns. tidy standardi
-head(long)
+head(charlson)
 ```
 
 ### Long data to wide data
 
 ```{r}
-long %>%
+charlson %>%
   mutate(class_charlson=paste0("cl_",class_charlson)) %>% # TODO: laita tämä ominaisuus classify-funktioon sisälle!
   mutate(score_charlson=as.integer(score_charlson>0)) %>% 
   tidyr::pivot_wider(names_from="class_charlson",
