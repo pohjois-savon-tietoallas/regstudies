@@ -70,7 +70,7 @@ reg_data$disc_date <- (reg_data$adm_date + sample(seq(0,180), 10000, replace = T
 We need to also create a new help variable `icd` which determines if code is ICD-9, ICD-10 or some other format by year:
 
 ```{r}
-
+d <- left_join(cohort_data,reg_data)
 
 # Determine if codes are ICD-8, ICD-9 or ICD-10
 d <- d %>%
@@ -101,14 +101,7 @@ head(cohort_data)
 ```{r}
 head(reg_data)
 ```
-# TODO: Tarvitaanko left_join(cohort_data,reg_data) tähän väliin?
-```{r}
-d <- left_join(cohort_data,reg_data)
-```
-
 # Filtering
-
-
 
 ## Filtering by dates
 
@@ -140,10 +133,7 @@ head(filtered_d)
 ### Complex filtering
 
 ```{r}
-head(d)
-head(regstudies:::elixhauser_classes)
 elixh_d <- d %>% 
   classify_elixhauser(CODE1)
 head(elixh_d)
-
 ```

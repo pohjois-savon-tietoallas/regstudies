@@ -203,21 +203,20 @@ filtered_d %>%
 ## Classifying Charlson comorbidity classes to long format
 
 d %>% 
-  classify_charlson(CODE1) -> charlson # ns. tidy standardi
-head(long)
+  classify_charlson(CODE1) -> charlson_long # ns. tidy standardi
 ```
 
 ### Long data to wide data
 
 ```{r}
-long %>%
+charlson_long %>%
   mutate(class_charlson=paste0("cl_",class_charlson)) %>% # TODO: laita tämä ominaisuus classify-funktioon sisälle!
   mutate(score_charlson=as.integer(score_charlson>0)) %>% 
   tidyr::pivot_wider(names_from="class_charlson",
                      values_from="score_charlson",
                      values_fill=0) %>%
-  select(-all_of(c("cl_NA","label_charlson"))) -> wide
-head(wide)
+  select(-all_of(c("cl_NA","label_charlson"))) -> charlson_wide
+head(charlson_wide)
 ```
 
 ### Some extra: labeling wide data
@@ -231,11 +230,11 @@ regstudies:::charlson_classes %>%
 # setting up the labels for wide data
 for(i in 1:dim(labels)[1]) {
   l<-labels$class_charlson[i]
-  if(!is.null(wide[[l]])) {
-    attr(wide[[l]], "label") <- labels$label_charlson[i]
+  if(!is.null(charlson_wide[[l]])) {
+    attr(charlson_wide[[l]], "label") <- labels$label_charlson[i]
   }
 }
-head(wide)
+head(charlson_wide)
 ```
 
 

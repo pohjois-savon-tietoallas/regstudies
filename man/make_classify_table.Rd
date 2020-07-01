@@ -24,6 +24,6 @@ Computes classification table which can be attached to original data using left_
 }
 \examples{
 \dontrun{
-TODO:
+x<-1
 }
 }

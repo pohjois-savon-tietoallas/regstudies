@@ -15,7 +15,7 @@
 #' 
 #' @examples
 #' \dontrun{
-#' TODO:
+#' x<-1
 #' }
 #' 
 #' @rdname classify_elixhauser
@@ -60,7 +60,7 @@ classify_elixhauser <- function(.data, icd_codes) {
 #' 
 #' @examples
 #' \dontrun{
-#' TODO:
+#' x<-1
 #' }
 #' 
 #' @rdname classify_charlson
@@ -114,7 +114,7 @@ classify_charlson <- function(.data, icd_codes) {
 #' 
 #' @examples
 #' \dontrun{
-#' TODO:
+#' x<-1
 #' }
 #' 
 #' @rdname classify_codes_wide
@@ -175,7 +175,7 @@ classify_codes_wide <- function(.data, icdcodes, diag_tbl, wide=TRUE) {
 #' 
 #' @examples
 #' \dontrun{
-#' TODO:
+#' x<-1
 #' }
 #' 
 #' @rdname classify_codes
@@ -220,7 +220,7 @@ classify_codes <- function(.data, codes, diag_tbl) {
 #' 
 #' @examples
 #' \dontrun{
-#' TODO:
+#' x<-1
 #' }
 #' @rdname make_classify_table
 #' @export
