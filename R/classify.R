@@ -15,6 +15,7 @@
 #' 
 #' @examples
 #' \dontrun{
+#' TODO:
 #' }
 #' 
 #' @rdname classify_elixhauser
@@ -36,7 +37,6 @@ classify_elixhauser <- function(.data, icd_codes) {
   
   text <- c(rlang::as_label(icdcodes_quo),"icd")
   outdat <- .data %>%
-    #select(!!id_quo,!!icdcodes_quo) %>% # removed unnecessary variables
     dplyr::left_join(ctobj %>% dplyr::filter(match) %>% dplyr::select(-match),by=text)
   
   return(outdat)
@@ -60,6 +60,7 @@ classify_elixhauser <- function(.data, icd_codes) {
 #' 
 #' @examples
 #' \dontrun{
+#' TODO:
 #' }
 #' 
 #' @rdname classify_charlson
@@ -113,15 +114,7 @@ classify_charlson <- function(.data, icd_codes) {
 #' 
 #' @examples
 #' \dontrun{
-#' # we calculate the table which can be used for classification.
-#' # 'ostprekoh' is the register data containing 'lomno1' individual id number and data 'dg' contains the register data of disease diagnoses.
-#' 
-#' dat<-ostprekoh %>%
-#' left_join(dg %>% select(lomno1,KOODI1,tulopvm,lahtopvm,icd),by="lomno1") %>%
-#'   mutate(Postituspvm=ymd(Postituspvm)) %>%
-#'   datefilter(indexdate=Postituspvm,range=years(2),tulopvm,lahtopvm) %>%
-#'   classify_data_long(icdcodes=KOODI1,diag_tbl=sel_classes) %>%
-#'   filter(match>0)
+#' TODO:
 #' }
 #' 
 #' @rdname classify_codes_wide
@@ -182,15 +175,7 @@ classify_codes_wide <- function(.data, icdcodes, diag_tbl, wide=TRUE) {
 #' 
 #' @examples
 #' \dontrun{
-#' # we calculate the table which can be used for classification.
-#' # 'ostprekoh' is the register data containing 'lomno1' individual id number and data 'dg' contains the register data of disease diagnoses.
-#' 
-#' dat<-ostprekoh %>%
-#' left_join(dg %>% select(lomno1,KOODI1,tulopvm,lahtopvm,icd),by="lomno1") %>%
-#'   mutate(Postituspvm=ymd(Postituspvm)) %>%
-#'   datefilter(indexdate=Postituspvm,range=years(2),tulopvm,lahtopvm) %>%
-#'   classify_data_long(icdcodes=KOODI1,diag_tbl=sel_classes) %>%
-#'   filter(match>0)
+#' TODO:
 #' }
 #' 
 #' @rdname classify_codes
@@ -203,8 +188,6 @@ classify_codes <- function(.data, codes, diag_tbl) {
   #  classification_name <- .data %>% get_classification_name()
   nimet <- names(ctobj)
   
-  # codes = KOODI1
-  # id = lomno1 # user needs to enter this currently!
   text <- c(rlang::as_label(icdcodes_quo),"icd")
   outdat <- .data %>%
     #select(!!id_quo,!!icdcodes_quo) %>% # removed unnecessary variables
@@ -212,7 +195,7 @@ classify_codes <- function(.data, codes, diag_tbl) {
   outdat
 }
 
-#' Classify diagnosis codes to long format with exemptions
+#' Classify diagnosis codes to long format with exceptions
 #'
 #' Computes classification table which can be attached to original data using left_join().
 #'
@@ -237,13 +220,7 @@ classify_codes <- function(.data, codes, diag_tbl) {
 #' 
 #' @examples
 #' \dontrun{
-#' # we calculate the table which can be used for classification.
-#' # 'ostprekoh' is the register data containing 'lomno1' individual id number and data 'dg' contains the register data of disease diagnoses.
-#' ostprekoh %>%
-#'   left_join(dg %>% select(lomno1,KOODI1,tulopvm,lahtopvm),by="lomno1") %>%
-#'   mutate(Postituspvm=ymd(Postituspvm)) %>%
-#'   filter_date(indexdate=Postituspvm,range=years(2),tulopvm,lahtopvm) %>% # filtering the diagnosis codes which are in the interval for each individual!
-#'   classify_long(icdcodes=KOODI1,diag_tbl=sel_classes)
+#' TODO:
 #' }
 #' @rdname make_classify_table
 #' @export

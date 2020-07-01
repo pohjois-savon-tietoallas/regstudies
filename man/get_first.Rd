@@ -4,10 +4,10 @@
 \alias{get_first}
 \title{Get first value based on datetime variable}
 \usage{
-get_first(.date, var)
+get_first(.data, var)
 }
 \arguments{
-\item{.date}{data which contains datetime or other comparable variable}
+\item{.data}{data which contains datetime or other comparable variable}
 
 \item{var}{datetime or other comparable variable}
 }
@@ -22,8 +22,8 @@ Get first value based on datetime variable
 # searching for the first event of the each class (for each individual):
 dat \%>\%
   filter(!is.na(label)) \%>\%
-  group_by(lomno1,label) \%>\%
-  get_first(tulopvm)
+  group_by(personid,label) \%>\%
+  get_first(adm_date)
 }
 }
 \seealso{

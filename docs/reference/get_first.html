@@ -101,7 +101,16 @@
       <a href="../articles/classification_tables.html">Classification tables</a>
     </li>
     <li>
+      <a href="../articles/data_wrangling.html">Data wrangling for register studies</a>
+    </li>
+    <li>
       <a href="../articles/example.html">Example of regstudies workflow</a>
+    </li>
+    <li>
+      <a href="../articles/introduction.html">Introduction</a>
+    </li>
+    <li>
+      <a href="../articles/using_own_classifications.html">Using own classifications</a>
     </li>
     <li>
       <a href="../articles/vignette_v2_old.html">Use cases of 'regstudies' R package</a>
@@ -138,13 +147,13 @@
     <p>Get first value based on datetime variable</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_first</span>(<span class='no'>.date</span>, <span class='no'>var</span>)</pre>
+    <pre class="usage"><span class='fu'>get_first</span>(<span class='no'>.data</span>, <span class='no'>var</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>.date</th>
+      <th>.data</th>
       <td><p>data which contains datetime or other comparable variable</p></td>
     </tr>
     <tr>
@@ -168,8 +177,8 @@
 <span class='co'># searching for the first event of the each class (for each individual):</span>
 <span class='no'>dat</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span>(!<span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span>(<span class='no'>label</span>)) <span class='kw'>%&gt;%</span>
-  <span class='fu'>group_by</span>(<span class='no'>lomno1</span>,<span class='no'>label</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>get_first</span>(<span class='no'>tulopvm</span>)
+  <span class='fu'>group_by</span>(<span class='no'>personid</span>,<span class='no'>label</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'>get_first</span>(<span class='no'>adm_date</span>)
 }</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

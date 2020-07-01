@@ -1,4 +1,5 @@
-#' Filtering of datetime data within interval.
+#' Filtering of datetime data within a time range.
+#' 
 #' @family filter functions
 #' @seealso \code{\link{filter_date_interval}} for date filtering by different intervals before and after the occurence
 #' @param indexdate index date (which date variable is to be compared with register data)
@@ -16,26 +17,17 @@
 #' 
 #' @examples
 #' \dontrun{
-#' #'ostprekoh' is the register data containing 'lomno1' individual id number and data 'dg' contains the register data of disease diagnoses.
-#'
-#' dat <- ostprekoh %>%
-#' left_join(dg %>% select(lomno1,KOODI1,tulopvm,lahtopvm,icd),by="lomno1") %>%
-#'   mutate(Postituspvm=ymd(Postituspvm)) %>%
-#'   filter_date(indexdate=Postituspvm,range=years(2),tulopvm,lahtopvm)
+#' TODO:
 #' }
-#' @rdname filter_date
+#' @rdname filter_date_range
 #' @export
 #' 
-filter_date <- function(.data,indexdate,range=years(2),...) { #,datevars=c("tulopvm","lahtopvm")
-  # .data: data to be used
-  # indexdate: index date (which date variable is to be compared with register data)
-  # range: the distance from index date (lubridate format, e.g years(1), weeks(10), days(20) etc.)
-  # ...: variables which user wants to be used for filtering. May be any number (>1) of variables. If one variable is within interval, then that row is included in the data (Applies OR operator).
+filter_date_range <- function(.data,indexdate,range=years(2),...) {
+  
   indexdate <- dplyr::enquo(indexdate)
   datevars  <- dplyr::enquos(...)
   ndatevars <- length(datevars)
   
-  #require(purrr) # TODO: not needed?
   fwithin <- function(var,ival) {
     expr((!! var) %within% ival)
   }
@@ -43,6 +35,6 @@ filter_date <- function(.data,indexdate,range=years(2),...) { #,datevars=c("tulo
   
   .data %>% # join the datas
     dplyr::mutate(ival= ((!!indexdate)-range) %--% ((!!indexdate)+range)) %>% # 2. create an interval out of 'indexdate'
-    dplyr::filter(!!!vars_within_ival) %>%# this works with arbirary number of date variables entered
+    dplyr::filter(!!!vars_within_ival) %>%# this works with arbitrary number of date variables entered
     dplyr::select(-ival)
 }

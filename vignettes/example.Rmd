@@ -153,7 +153,7 @@ Filter dataset with either `adm_date` or `disc_date` within two years around `po
 
 ```{r}
 filtered_d <- d %>% 
-  regstudies::filter_date(indexdate=postingdate, 
+  regstudies::filter_date_range(indexdate=postingdate, 
                           range=years(2),
                           adm_date,
                           disc_date) 
@@ -186,9 +186,16 @@ This calculates per row elixhauser classification. Check more info of classifica
 elixscore <- filtered_d %>% 
   classify_elixhauser(icd_codes = CODE1)
 head(elixscore)
-
-# TODO: Scores
 ```
+
+To calculate elixhauser scores for each individual you just need to add `sum_score` function. The premade classification table contains two alternative scores to be used `score_AHRQ` and `score_van_Walraven` both of which can be calculated at one function call.
+```{r}
+filtered_d %>% 
+  classify_elixhauser(icd_codes = CODE1) %>% 
+  sum_score(score_AHRQ, score_van_Walraven)
+
+```
+
 
 ### Charlson classification and scores
 

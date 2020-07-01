@@ -34,21 +34,19 @@ Can be used for filtering e.g. for hospital visits, which are date intervals (ti
 }
 \examples{
 \dontrun{
-#'ostprekoh' is the register data containing 'lomno1' individual id number and data 'dg' contains the register data of disease diagnoses.
-
-dat <- cohort \%>\%
-left_join(reg \%>\% select(personid,CODE1,admissiondate,dischargedate,icd),by="personid") \%>\%
-  filter_date_interval(indexdate=postingdate,
-                   time_before=years(2),
-                   admission_date=admissiondate,
-                   discharge_date=dischargedate)
-head(dat)
+d <- dplyr::left_join(cohort_data,reg_data)
+filtered_d <- d \%>\% 
+  filter_date_interval(indexdate = postingdate,
+                       time_before=years(2),
+                       admission_date=adm_date,
+                       discharge_date=disc_date)
+head(filtered_d)
 }
 }
 \seealso{
-\code{\link{filter_date}} for date filtering by fixed interval
+\code{\link{filter_date_range}} for date filtering by fixed interval
 
 Other filter functions: 
-\code{\link{filter_date}()}
+\code{\link{filter_date_range}()}
 }
 \concept{filter functions}

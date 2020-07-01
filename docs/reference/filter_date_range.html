@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function for extracting names of variables which have any NA values — get_na_vars • regstudies</title>
+<title>Filtering of datetime data within a time range. — filter_date_range • regstudies</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Function for extracting names of variables which have any NA values — get_na_vars" />
-<meta property="og:description" content="Function for extracting names of variables which have any NA values" />
+<meta property="og:title" content="Filtering of datetime data within a time range. — filter_date_range" />
+<meta property="og:description" content="Filtering of datetime data within a time range." />
 
 
 
@@ -138,39 +138,45 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Function for extracting names of variables which have any NA values</h1>
-    <small class="dont-index">Source: <a href='https://github.com/pohjois-savon-tietoallas/regstudies/blob/master/R/get_na_vars.R'><code>R/get_na_vars.R</code></a></small>
-    <div class="hidden name"><code>get_na_vars.Rd</code></div>
+    <h1>Filtering of datetime data within a time range.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/pohjois-savon-tietoallas/regstudies/blob/master/R/filter_date.R'><code>R/filter_date.R</code></a></small>
+    <div class="hidden name"><code>filter_date_range.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Function for extracting names of variables which have any NA values</p>
+    <p>Filtering of datetime data within a time range.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_na_vars</span>(<span class='no'>.data</span>)</pre>
+    <pre class="usage"><span class='fu'>filter_date_range</span>(<span class='no'>.data</span>, <span class='no'>indexdate</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='fu'>years</span>(<span class='fl'>2</span>), <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>.data</th>
-      <td><p>data to be studied</p></td>
+      <th>indexdate</th>
+      <td><p>index date (which date variable is to be compared with register data)</p></td>
+    </tr>
+    <tr>
+      <th>range</th>
+      <td><p>the distance from index date (lubridate format, e.g years(1), weeks(10), days(20) etc.)</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>datetime variables which need to be within the range. May be any number (&gt;1) of variables.  If one variable is within interval, then that row is included in the data (Applies OR operator).</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>returns a two-column tibble holding variable name as first column ('variable') and 'contains_na' as second column.</p>
+    <p>returns a tibble object with filtered rows</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other help functions: 
-<code><a href='get_classification_name.html'>get_classification_name</a>()</code>,
-<code><a href='get_var_types.html'>get_var_types</a>()</code>,
-<code><a href='left_join_replace_na.html'>left_join_replace_na</a>()</code>,
-<code><a href='make_regex.html'>make_regex</a>()</code>,
-<code><a href='read_classes_csv.html'>read_classes_csv</a>()</code>,
-<code><a href='read_classes_tibble.html'>read_classes_tibble</a>()</code></p></div>
+    <div class='dont-index'><p><code><a href='filter_date_interval.html'>filter_date_interval</a></code> for date filtering by different intervals before and after the occurence</p>
+<p>Other filter functions: 
+<code><a href='filter_date_interval.html'>filter_date_interval</a>()</code></p></div>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

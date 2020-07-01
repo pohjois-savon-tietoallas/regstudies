@@ -1,5 +1,8 @@
 #' Get nearest value based on datetime variable
-#'
+#' 
+#' This function helps user to find data rows which have datetime value of interest `date_var` closest to specified `centroid` value.
+#' User can use argument `only_previous` to handle if nearest row can be only before or also after the `centroid` date.
+#' 
 #' @family date functions
 #' @param .date data which contains datetime or other comparable variable
 #' @param var datetime or other comparable variable
@@ -14,18 +17,19 @@
 #' @examples
 #' \dontrun{
 #' # searching for the first event of the each class (for each individual):
-#' dat %>%
-#'   get_nearest(tulopvm,centroid=Postituspvm)
+#' d %>%
+#'   group_by(personid) %>%
+#'   get_nearest(adm_date,centroid=postingdate)
 #' }
 #' 
 #' @rdname get_nearest
 #' @export
 #' 
-get_nearest<-function(.date, var, centroid, only_previous=FALSE) {
-  var_quo<-dplyr::enquo(var)
+get_nearest<-function(.data, date_var, centroid, only_previous=FALSE) {
+  var_quo<-dplyr::enquo(date_var)
   cen_quo<-dplyr::enquo(centroid)
   if (only_previous) {
-    .date %>%
+    .data %>%
       dplyr::filter((!!var_quo) <= (!!cen_quo)) %>%
       dplyr::slice(which.min(abs((!!var_quo)-(!!cen_quo)))) %>%
       return()
