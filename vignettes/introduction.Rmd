@@ -16,49 +16,128 @@ Install and load necessary libraries for this example
 ```{r, warning=FALSE, message=FALSE}
 library(regstudies) 
 library(tidyverse)
-library(vroom)
 library(lubridate)
 ```
 
 
-# Classifications
+## Example dataset
 
-## Elixhauser classification and scores
+The regstudies package provides useful tools for modifying and filtering the register data sets. Typically in register studies the data consists of events, which are stored in data as time stamps. In our example dataset the time stamps are date of hospital visits. Also, in register studies the data are commonly studied with respect to index date, which is a date of interest that can vary by individuals.
 
-This calculates per row elixhauser classification. Check more info of classification from [classification tables](docs/articles/classification_tables.html)-section. We use random sample datasets `sample_cohort` and `sample_regdata`.
+Our example data is simulated data that represents a postal questionnaire survey study which has been extended to register data. There are two data sets, the `sample_cohort` is holding the study group, and `sample_regdata` holds the hospital visits for the study group members.
+
+More precisely, the `sample_cohort` lists the individual id study numbers as `id` for whom the register data has been collected. It also list the `postingdate` holding the date of submitting the postal questionnaire.
+
+The `sample_regdata` contains also variable `id` which is necessary to be able to link the data sets. The `sample_regdata` also contains variables holding the diagnosis codes at `CODE1` and times of hospital admission `adm_date` and hospital discharge `disc_date`.
+
 
 ```{r}
-sample_regdata <- sample_regdata %>% 
+summary(sample_cohort)
+```
+
+Dataset `sample_regdata` is a dataset which has events for the selected population with ICD codes and date-variables:
+
+```{r}
+summary(sample_regdata)
+```
+
+
+## Elixhauser and Charlson classifications
+
+We use two sample datasets `sample_regdata` and `sample_cohort`, which are included in the package.  Joining these two datasets we got a full dataset ready for analyzes:
+
+```{r}
+# Join register data with population cohort data
+d <- sample_regdata %>%
+  left_join(sample_cohort)
+
+head(d)
+```
+
+Classification need help variable, which tells us which version of ICD-codes we are using:
+
+```{r}
+## create a new help variable `icd` which determines if code is ICD-8, ICD-9 or ICD-10 by year
+d <- d %>% 
   mutate(icd = case_when(
     year(disc_date) < 1987 ~ "icd8",
     year(disc_date) < 1996 & year(disc_date)>=1987 ~ "icd9",
     year(disc_date) >= 1996 ~ "icd10"
     ))
-
-elixscore <- sample_regdata %>% 
-  classify_elixhauser(icd_codes = CODE1)
-
-head(elixscore)
 ```
 
-Calculate Elixhauser scores by id's
+
+### Elixhauser classification and scores
+
+With function `classify_elixhauser()` and `sum_score()` you can use Elixhauser classification and calculate scores. Check more info of classifications from [classification tables](docs/articles/classification_tables.html)-section.
+
+```{r}
+regstudies:::elixhauser_classes
+```
+
+
+```{r}
+d %>% 
+  filter(icd == "icd10") %>% 
+  classify_elixhauser(icd_codes = CODE1)
+```
+
+
+To calculate elixhauser scores for each individual you just need to add `sum_score` function. The premade classification table contains two alternative scores to be used `score_AHRQ` and `score_van_Walraven` both of which can be calculated at one function call.
 
 ```{r}
 # Calculate scores
-sample_regdata %>% 
+d %>% 
   classify_elixhauser(icd_codes = CODE1) %>% 
   sum_score(score_AHRQ, score_van_Walraven)
 ```
 
 
-## Charlson classification
+### Charlson classification and scores
 
+Classifying Charlson comorbidity classes give as output long formatted data as wel Elixhauser classification:
 
-```{r, eval=FALSE}
-sample_regdata %>% 
-  classify_charlson(icd_codes = CODE1) #%>% View()
+```{r}
+## Classifying Charlson comorbidity classes to long format
+d %>% 
+  classify_charlson(CODE1) -> charlson # ns. tidy standardi
+head(charlson)
 ```
 
+### Long data to wide data
+
+In case you need data in wide format, use `dplyr::pivot_wider()` verb
+
+```{r}
+charlson %>%
+  mutate(class_charlson=paste0("cl_",class_charlson)) %>% # TODO: laita tämä ominaisuus classify-funktioon sisälle!
+  mutate(score_charlson=as.integer(score_charlson>0)) %>% 
+  tidyr::pivot_wider(names_from="class_charlson",
+                     values_from="score_charlson",
+                     values_fill=0) %>%
+  select(-all_of(c("cl_NA","label_charlson"))) -> charlson_wide
+head(charlson_wide)
+```
+
+### Extra: labeling wide data
+
+You can also add labels to wide format variables with code below
+
+```{r, eval=FALSE}
+## calculating labels
+regstudies:::charlson_classes %>%
+  select(class_charlson,label_charlson) %>%
+  mutate(class_charlson=paste0("cl_",class_charlson)) -> labels
+
+# setting up the labels for wide data
+for(i in 1:dim(labels)[1]) {
+  l <- labels$class_charlson[i]
+  if(!is.null(charlson_wide[[l]])) {
+    attr(charlson_wide[[l]], "label") <- labels$label_charlson[i]
+  }
+}
+head(charlson_wide)
+```
 
 
 

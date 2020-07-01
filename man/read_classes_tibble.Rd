@@ -10,7 +10,7 @@ read_classes_tibble(sel_classes)
 \item{sel_classes}{This variable contains the data in the wide format. See the classifications defined in /datas/classification_codes/}
 }
 \value{
-returns classification definintion in long format (tidy data) as that is what the package needs in operation.
+returns classification definition in long format (tidy data) as that is what the package needs in operation.
 }
 \description{
 Operates classification definitions from wide format to long format.
