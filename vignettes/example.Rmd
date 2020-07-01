@@ -35,27 +35,13 @@ cohort_data <- tibble::tibble(
 )
 
 # Read ICD-codes so that we generate from all classes:
-#out <- 
 read_classes_tibble(regstudies:::charlson_classes) %>% 
-  filter(!is.na(regex)) %>% #View()
-  mutate(regex2=str_replace_all(regex,"^\\^","")) %>% #View()
+  filter(!is.na(regex)) %>% 
+  mutate(regex2=str_replace_all(regex,"^\\^","")) %>% 
   group_by(icd,class_charlson) %>%
   mutate(regex3=str_split(regex2,pattern="\\|\\^")) %>%
   mutate(regex4=purrr::map_chr(regex3,magrittr::extract(1))) %>% 
   pull(regex4) -> random_icd_codes
-#get_var_types(out)
-#View(out)
-
-#regstudies:::charlson_classes %>%
-#  read_classes_tibble() %>%
-#  filter(icd=="icd10") %>%
-#  select(regex) %>%
-#  mutate(out=str_sub(string=regex,start=2,end=4)) %>%
-#  filter(!is.na(out)) %>%
-#  distinct() %>%
-#  pull(out) ->
-#  random_icd_codes
-
 
 sample_at_least_once <- function(x, size, replace = FALSE, prob = NULL) {
   # size must be more than length(x)!
@@ -200,35 +186,40 @@ This calculates per row elixhauser classification. Check more info of classifica
 elixscore <- filtered_d %>% 
   classify_elixhauser(icd_codes = CODE1)
 head(elixscore)
+
+# TODO: Scores
 ```
 
-```{r, eval=FALSE}
-### TODO KIRJOITA AUKI
-charlson <- d %>% 
-  classify_charlson(icd_codes = CODE1) #%>% View()
+### Charlson classification and scores
 
-## Funktio oletuksena
-charlson_classes <- read_classes_csv(file = "../data/charlson_classes.csv")
-#View(charlson_classes)
+```{r}
+## Classifying Charlson comorbidity classes to long format
+
 d %>% 
-  classify_codes(codes=CODE1,charlson_classes) -> long # ns. tidy standardi
+  classify_charlson(CODE1) -> charlson # ns. tidy standardi
 head(long)
-#View(long)
+```
 
-## ok, kaytaja haluaa leveassa muodossa
-## esimerkkiin
-regstudies:::charlson_classes %>%
-  select(class_charlson,label_charlson) %>%
-  mutate(class_charlson=paste0("cl_",class_charlson)) -> labels
+### Long data to wide data
 
-d  %>% 
-  classify_charlson(icd_codes=CODE1) %>%
+```{r}
+long %>%
   mutate(class_charlson=paste0("cl_",class_charlson)) %>% # TODO: laita tämä ominaisuus classify-funktioon sisälle!
-  mutate() %>%
+  mutate(score_charlson=as.integer(score_charlson>0)) %>% 
   tidyr::pivot_wider(names_from="class_charlson",
                      values_from="score_charlson",
                      values_fill=0) %>%
-  select(-all_of("cl_NA")) -> wide
+  select(-all_of(c("cl_NA","label_charlson"))) -> wide
+head(wide)
+```
+
+### Some extra: labeling wide data
+
+```{r, eval=FALSE}
+## calculating labels
+regstudies:::charlson_classes %>%
+  select(class_charlson,label_charlson) %>%
+  mutate(class_charlson=paste0("cl_",class_charlson)) -> labels
 
 # setting up the labels for wide data
 for(i in 1:dim(labels)[1]) {
@@ -237,28 +228,7 @@ for(i in 1:dim(labels)[1]) {
     attr(wide[[l]], "label") <- labels$label_charlson[i]
   }
 }
-#head(wide)
-#View(wide)
-
-#View(charlson_classes)
-#file.show("../data/charlson_classes.csv")
-
-charlson_classes <- read_classes_csv(file = "../data/charlson_classes.csv") # toistoa, ks. ylempää
-
-mc <- make_classify_table(.data = filtered_d,icdcodes = CODE1,diag_tbl = charlson_classes,return_binary = TRUE)
-#View(mc)
-
-wide1 <- d  %>% 
-  classify_codes_wide(icdcodes=CODE1,charlson_classes)
-#View(wide1)
-
-filtered_d  %>% 
-  classify_codes(codes=CODE1,charlson_classes) %>% 
-  tidyr::pivot_wider(names_from="class_charlson",
-                     values_from="score_charlson",
-                     values_fill=0) -> wide2
-head(wide2)
-#View(wide2)
+head(wide)
 ```
 
 
