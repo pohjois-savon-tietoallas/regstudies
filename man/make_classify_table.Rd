@@ -2,7 +2,7 @@
 % Please edit documentation in R/classify.R
 \name{make_classify_table}
 \alias{make_classify_table}
-\title{Classify diagnosis codes to long format with exemptions}
+\title{Classify diagnosis codes to long format with exceptions}
 \usage{
 make_classify_table(.data, icdcodes, diag_tbl, return_binary = TRUE)
 }
@@ -24,12 +24,6 @@ Computes classification table which can be attached to original data using left_
 }
 \examples{
 \dontrun{
-# we calculate the table which can be used for classification.
-# 'ostprekoh' is the register data containing 'lomno1' individual id number and data 'dg' contains the register data of disease diagnoses.
-ostprekoh \%>\%
-  left_join(dg \%>\% select(lomno1,KOODI1,tulopvm,lahtopvm),by="lomno1") \%>\%
-  mutate(Postituspvm=ymd(Postituspvm)) \%>\%
-  filter_date(indexdate=Postituspvm,range=years(2),tulopvm,lahtopvm) \%>\% # filtering the diagnosis codes which are in the interval for each individual!
-  classify_long(icdcodes=KOODI1,diag_tbl=sel_classes)
+x<-1
 }
 }

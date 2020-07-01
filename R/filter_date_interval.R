@@ -2,7 +2,7 @@
 #' Can be used for filtering e.g. for hospital visits, which are date intervals (time periods).
 #' 
 #' @family filter functions
-#' @seealso \code{\link{filter_date}} for date filtering by fixed interval
+#' @seealso \code{\link{filter_date_range}} for date filtering by fixed interval
 #' @param indexdate index date (which date variable is to be compared with register data)
 #' @param time_before the time before the index date what defines the start of filtering interval (lubridate format, e.g years(1), weeks(10), days(20) etc.)
 #' @param time_after the time before the index date (default is 0 days) what defines the start of filtering interval (lubridate format, e.g years(1), weeks(10), days(20) etc.)
@@ -18,15 +18,13 @@
 #' 
 #' @examples
 #' \dontrun{
-#' #'ostprekoh' is the register data containing 'lomno1' individual id number and data 'dg' contains the register data of disease diagnoses.
-#'
-#' dat <- cohort %>%
-#' left_join(reg %>% select(personid,CODE1,admissiondate,dischargedate,icd),by="personid") %>%
-#'   filter_date_interval(indexdate=postingdate,
-#'                    time_before=years(2),
-#'                    admission_date=admissiondate,
-#'                    discharge_date=dischargedate)
-#' head(dat)
+#' d <- dplyr::left_join(cohort_data,reg_data)
+#' filtered_d <- d %>% 
+#'   filter_date_interval(indexdate = postingdate,
+#'                        time_before=years(2),
+#'                        admission_date=adm_date,
+#'                        discharge_date=disc_date)
+#' head(filtered_d)
 #' }
 #' @rdname filter_date_interval
 #' @export

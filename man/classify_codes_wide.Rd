@@ -24,15 +24,7 @@ Computes classification table and attaches it to original data. Data stays in lo
 }
 \examples{
 \dontrun{
-# we calculate the table which can be used for classification.
-# 'ostprekoh' is the register data containing 'lomno1' individual id number and data 'dg' contains the register data of disease diagnoses.
-
-dat<-ostprekoh \%>\%
-left_join(dg \%>\% select(lomno1,KOODI1,tulopvm,lahtopvm,icd),by="lomno1") \%>\%
-  mutate(Postituspvm=ymd(Postituspvm)) \%>\%
-  datefilter(indexdate=Postituspvm,range=years(2),tulopvm,lahtopvm) \%>\%
-  classify_data_long(icdcodes=KOODI1,diag_tbl=sel_classes) \%>\%
-  filter(match>0)
+x<-1
 }
 
 }

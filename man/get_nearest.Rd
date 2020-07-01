@@ -4,28 +4,30 @@
 \alias{get_nearest}
 \title{Get nearest value based on datetime variable}
 \usage{
-get_nearest(.date, var, centroid, only_previous = FALSE)
+get_nearest(.data, date_var, centroid, only_previous = FALSE)
 }
 \arguments{
-\item{.date}{data which contains datetime or other comparable variable}
-
-\item{var}{datetime or other comparable variable}
-
 \item{centroid}{datetime or other comparable variable as reference point around which to search}
 
 \item{only_previous}{optional parameter (default=FALSE): should we search only previously observed data prior centroid?}
+
+\item{.date}{data which contains datetime or other comparable variable}
+
+\item{var}{datetime or other comparable variable}
 }
 \value{
 The row which is the nearest .date
 }
 \description{
-Get nearest value based on datetime variable
+This function helps user to find data rows which have datetime value of interest \code{date_var} closest to specified \code{centroid} value.
+User can use argument \code{only_previous} to handle if nearest row can be only before or also after the \code{centroid} date.
 }
 \examples{
 \dontrun{
 # searching for the first event of the each class (for each individual):
-dat \%>\%
-  get_nearest(tulopvm,centroid=Postituspvm)
+d \%>\%
+  group_by(personid) \%>\%
+  get_nearest(adm_date,centroid=postingdate)
 }
 
 }

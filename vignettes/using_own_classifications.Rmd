@@ -1,0 +1,80 @@
+---
+title: "Using own classifications"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{Using own classifications}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Classifications
+
+### Code classification by own csv table
+
+
+
+```{r}
+# Classify by Elixhauser:
+my_classes <- read_classes_csv(file = "../data/elixhauser_classes.csv")
+
+classified_d <- filtered_d %>%
+  classify_codes(codes = CODE1,
+                 diag_tbl = my_classes) 
+head(classified_d)
+```
+
+
+### Elixhauser classification and scores
+
+This calculates per row elixhauser classification. Check more info of classification from [classification tables](docs/articles/classification_tables.html)-section.
+
+```{r}
+elixscore <- filtered_d %>% 
+  classify_elixhauser(icd_codes = CODE1)
+head(elixscore)
+
+# TODO: Scores
+```
+
+### Charlson classification and scores
+
+```{r}
+## Classifying Charlson comorbidity classes to long format
+
+d %>% 
+  classify_charlson(CODE1) -> charlson # ns. tidy standardi
+head(long)
+```
+
+### Long data to wide data
+
+```{r}
+long %>%
+  mutate(class_charlson=paste0("cl_",class_charlson)) %>% # TODO: laita tämä ominaisuus classify-funktioon sisälle!
+  mutate(score_charlson=as.integer(score_charlson>0)) %>% 
+  tidyr::pivot_wider(names_from="class_charlson",
+                     values_from="score_charlson",
+                     values_fill=0) %>%
+  select(-all_of(c("cl_NA","label_charlson"))) -> wide
+head(wide)
+```
+
+### Some extra: labeling wide data
+
+```{r, eval=FALSE}
+## calculating labels
+regstudies:::charlson_classes %>%
+  select(class_charlson,label_charlson) %>%
+  mutate(class_charlson=paste0("cl_",class_charlson)) -> labels
+
+# setting up the labels for wide data
+for(i in 1:dim(labels)[1]) {
+  l<-labels$class_charlson[i]
+  if(!is.null(wide[[l]])) {
+    attr(wide[[l]], "label") <- labels$label_charlson[i]
+  }
+}
+head(wide)
+```
+
+

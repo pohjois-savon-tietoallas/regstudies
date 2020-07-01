@@ -21,6 +21,7 @@ Computes classification table and attaches it to original data. Data stays in lo
 }
 \examples{
 \dontrun{
+x<-1
 }
 
 }
