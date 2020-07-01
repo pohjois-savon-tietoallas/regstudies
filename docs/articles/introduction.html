@@ -54,19 +54,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/backup_file_delete.html">BACKUP FILE</a>
-    </li>
-    <li>
-      <a href="../articles/classification_tables.html">Classification tables</a>
-    </li>
-    <li>
-      <a href="../articles/example.html">Example of regstudies workflow</a>
-    </li>
-    <li>
       <a href="../articles/introduction.html">Introduction</a>
     </li>
     <li>
-      <a href="../articles/vignette_v2_old.html">Use cases of 'regstudies' R package</a>
+      <a href="../articles/own-classifications.html">Using own classifications</a>
     </li>
   </ul>
 </li>
@@ -130,9 +121,9 @@
 ##  3rd Qu.:1428                      3rd Qu.:2001-12-11   3rd Qu.:2002-03-11  
 ##  Max.   :1500                      Max.   :2005-12-31   Max.   :2006-06-20</code></pre>
 </div>
-<div id="elixhauser-and-charlson-classifications" class="section level2">
+<div id="preparation-for-classifications" class="section level2">
 <h2 class="hasAnchor">
-<a href="#elixhauser-and-charlson-classifications" class="anchor"></a>Elixhauser and Charlson classifications</h2>
+<a href="#preparation-for-classifications" class="anchor"></a>Preparation for classifications</h2>
 <p>We use two sample datasets <code>sample_regdata</code> and <code>sample_cohort</code>, which are included in the package. Joining these two datasets we got a full dataset ready for analyzes:</p>
 <div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="co"># Join register data with population cohort data</span>
 <span class="no">d</span> <span class="kw">&lt;-</span> <span class="no">sample_regdata</span> <span class="kw">%&gt;%</span>
@@ -156,9 +147,10 @@
     <span class="fu"><a href="http://lubridate.tidyverse.org/reference/year.html">year</a></span>(<span class="no">disc_date</span>) <span class="kw">&lt;</span> <span class="fl">1996</span> <span class="kw">&amp;</span> <span class="fu"><a href="http://lubridate.tidyverse.org/reference/year.html">year</a></span>(<span class="no">disc_date</span>)<span class="kw">&gt;=</span><span class="fl">1987</span> ~ <span class="st">"icd9"</span>,
     <span class="fu"><a href="http://lubridate.tidyverse.org/reference/year.html">year</a></span>(<span class="no">disc_date</span>) <span class="kw">&gt;=</span> <span class="fl">1996</span> ~ <span class="st">"icd10"</span>
     ))</pre></body></html></div>
-<div id="elixhauser-classification-and-scores" class="section level3">
-<h3 class="hasAnchor">
-<a href="#elixhauser-classification-and-scores" class="anchor"></a>Elixhauser classification and scores</h3>
+</div>
+<div id="elixhauser" class="section level2">
+<h2 class="hasAnchor">
+<a href="#elixhauser" class="anchor"></a>Elixhauser</h2>
 <p>With function <code><a href="../reference/classify_elixhauser.html">classify_elixhauser()</a></code> and <code><a href="../reference/sum_score.html">sum_score()</a></code> you can use Elixhauser classification and calculate scores. Check more info of classifications from <a href="docs/articles/classification_tables.html">classification tables</a>-section.</p>
 <div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="kw pkg">regstudies</span><span class="kw ns">:::</span><span class="no">elixhauser_classes</span></pre></body></html></div>
 <pre><code>## # A tibble: 31 x 6
@@ -217,9 +209,9 @@
 ## 10     1210                38                        46
 ## # … with 290 more rows</code></pre>
 </div>
-<div id="charlson-classification-and-scores" class="section level3">
-<h3 class="hasAnchor">
-<a href="#charlson-classification-and-scores" class="anchor"></a>Charlson classification and scores</h3>
+<div id="charlson" class="section level2">
+<h2 class="hasAnchor">
+<a href="#charlson" class="anchor"></a>Charlson</h2>
 <p>Classifying Charlson comorbidity classes give as output long formatted data as wel Elixhauser classification:</p>
 <div class="sourceCode" id="cb21"><html><body><pre class="r"><span class="co">## Classifying Charlson comorbidity classes to long format</span>
 <span class="no">d</span> <span class="kw">%&gt;%</span>
@@ -238,9 +230,9 @@
 ## 6     1379 C77   1998-02-08 1998-07-04      2 2000-01-01  icd10 metacanc      
 ## # … with 2 more variables: label_charlson &lt;chr&gt;, score_charlson &lt;dbl&gt;</code></pre>
 </div>
-<div id="long-data-to-wide-data" class="section level3">
-<h3 class="hasAnchor">
-<a href="#long-data-to-wide-data" class="anchor"></a>Long data to wide data</h3>
+<div id="long-data-to-wide-data" class="section level2">
+<h2 class="hasAnchor">
+<a href="#long-data-to-wide-data" class="anchor"></a>Long data to wide data</h2>
 <p>In case you need data in wide format, use <code>dplyr::pivot_wider()</code> verb</p>
 <div class="sourceCode" id="cb26"><html><body><pre class="r"><span class="no">charlson</span> <span class="kw">%&gt;%</span>
   <span class="fu">mutate</span>(<span class="kw">class_charlson</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="st">"cl_"</span>,<span class="no">class_charlson</span>)) <span class="kw">%&gt;%</span> <span class="co"># TODO: laita tämä ominaisuus classify-funktioon sisälle!</span>
@@ -264,9 +256,9 @@
 ## #   cl_cevd &lt;int&gt;, cl_msld &lt;int&gt;, cl_chf &lt;int&gt;, cl_dementia &lt;int&gt;,
 ## #   cl_rheumd &lt;int&gt;, cl_hp &lt;int&gt;, cl_pvd &lt;int&gt;</code></pre>
 </div>
-<div id="extra-labeling-wide-data" class="section level3">
-<h3 class="hasAnchor">
-<a href="#extra-labeling-wide-data" class="anchor"></a>Extra: labeling wide data</h3>
+<div id="extra-labeling-wide-data" class="section level2">
+<h2 class="hasAnchor">
+<a href="#extra-labeling-wide-data" class="anchor"></a>Extra: labeling wide data</h2>
 <p>You can also add labels to wide format variables with code below</p>
 <div class="sourceCode" id="cb28"><html><body><pre class="r"><span class="co">## calculating labels</span>
 <span class="kw pkg">regstudies</span><span class="kw ns">:::</span><span class="no">charlson_classes</span> <span class="kw">%&gt;%</span>
@@ -281,7 +273,6 @@
   }
 }
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">charlson_wide</span>)</pre></body></html></div>
-</div>
 </div>
   </div>
 

@@ -42,7 +42,7 @@ summary(sample_regdata)
 ```
 
 
-## Elixhauser and Charlson classifications
+## Preparation for classifications
 
 We use two sample datasets `sample_regdata` and `sample_cohort`, which are included in the package.  Joining these two datasets we got a full dataset ready for analyzes:
 
@@ -67,7 +67,7 @@ d <- d %>%
 ```
 
 
-### Elixhauser classification and scores
+## Elixhauser
 
 With function `classify_elixhauser()` and `sum_score()` you can use Elixhauser classification and calculate scores. Check more info of classifications from [classification tables](docs/articles/classification_tables.html)-section.
 
@@ -93,7 +93,7 @@ d %>%
 ```
 
 
-### Charlson classification and scores
+## Charlson 
 
 Classifying Charlson comorbidity classes give as output long formatted data as wel Elixhauser classification:
 
@@ -104,7 +104,7 @@ d %>%
 head(charlson)
 ```
 
-### Long data to wide data
+## Long data to wide data
 
 In case you need data in wide format, use `dplyr::pivot_wider()` verb
 
@@ -119,7 +119,7 @@ charlson %>%
 head(charlson_wide)
 ```
 
-### Extra: labeling wide data
+## Extra: labeling wide data
 
 You can also add labels to wide format variables with code below
 
