@@ -104,16 +104,10 @@ Can be used for filtering e.g. for hospital visits, which are date intervals (ti
       <a href="../articles/classification_tables.html">Classification tables</a>
     </li>
     <li>
-      <a href="../articles/data_wrangling.html">Data wrangling for register studies</a>
-    </li>
-    <li>
       <a href="../articles/example.html">Example of regstudies workflow</a>
     </li>
     <li>
       <a href="../articles/introduction.html">Introduction</a>
-    </li>
-    <li>
-      <a href="../articles/using_own_classifications.html">Using own classifications</a>
     </li>
     <li>
       <a href="../articles/vignette_v2_old.html">Use cases of 'regstudies' R package</a>
@@ -191,19 +185,21 @@ Can be used for filtering e.g. for hospital visits, which are date intervals (ti
     <p>returns a tibble object with filtered rows</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='filter_date_range.html'>filter_date_range</a></code> for date filtering by fixed interval</p>
+    <div class='dont-index'><p><code><a href='filter_date.html'>filter_date</a></code> for date filtering by fixed interval</p>
 <p>Other filter functions: 
-<code><a href='filter_date_range.html'>filter_date_range</a>()</code></p></div>
+<code><a href='filter_date.html'>filter_date</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='no'>d</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>left_join</a></span>(<span class='no'>cohort_data</span>,<span class='no'>reg_data</span>)
-<span class='no'>filtered_d</span> <span class='kw'>&lt;-</span> <span class='no'>d</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>filter_date_interval</span>(<span class='kw'>indexdate</span> <span class='kw'>=</span> <span class='no'>postingdate</span>,
-                       <span class='kw'>time_before</span><span class='kw'>=</span><span class='fu'>years</span>(<span class='fl'>2</span>),
-                       <span class='kw'>admission_date</span><span class='kw'>=</span><span class='no'>adm_date</span>,
-                       <span class='kw'>discharge_date</span><span class='kw'>=</span><span class='no'>disc_date</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>filtered_d</span>)
+<span class='co'>#'ostprekoh' is the register data containing 'lomno1' individual id number and data 'dg' contains the register data of disease diagnoses.</span>
+
+<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='no'>cohort</span> <span class='kw'>%&gt;%</span>
+<span class='fu'>left_join</span>(<span class='no'>reg</span> <span class='kw'>%&gt;%</span> <span class='fu'>select</span>(<span class='no'>personid</span>,<span class='no'>CODE1</span>,<span class='no'>admissiondate</span>,<span class='no'>dischargedate</span>,<span class='no'>icd</span>),<span class='kw'>by</span><span class='kw'>=</span><span class='st'>"personid"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'>filter_date_interval</span>(<span class='kw'>indexdate</span><span class='kw'>=</span><span class='no'>postingdate</span>,
+                   <span class='kw'>time_before</span><span class='kw'>=</span><span class='fu'>years</span>(<span class='fl'>2</span>),
+                   <span class='kw'>admission_date</span><span class='kw'>=</span><span class='no'>admissiondate</span>,
+                   <span class='kw'>discharge_date</span><span class='kw'>=</span><span class='no'>dischargedate</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>dat</span>)
 }</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
