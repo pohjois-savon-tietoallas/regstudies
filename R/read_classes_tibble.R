@@ -3,7 +3,7 @@
 #' Operates classification definitions from wide format to long format.
 #'
 #' @param sel_classes This variable contains the data in the wide format. See the classifications defined in /datas/classification_codes/
-#' @return returns classification definintion in long format (tidy data) as that is what the package needs in operation.
+#' @return returns classification definition in long format (tidy data) as that is what the package needs in operation.
 #'
 #' @importFrom dplyr mutate
 #' @importFrom dplyr left_join
