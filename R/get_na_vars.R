@@ -1,5 +1,6 @@
 #' Function for extracting names of variables which have any NA values
 #'
+#' @family help functions
 #' @param .data data to be studied
 #' @return returns a two-column tibble holding variable name as first column ('variable') and 'contains_na' as second column.
 #'

@@ -38,3 +38,13 @@ sel_classes<-bind_rows(cl9,cl10) \%>\%
   mutate(classification="own_definition")
 }
 }
+\seealso{
+Other help functions: 
+\code{\link{get_classification_name}()},
+\code{\link{get_na_vars}()},
+\code{\link{get_var_types}()},
+\code{\link{left_join_replace_na}()},
+\code{\link{read_classes_csv}()},
+\code{\link{read_classes_tibble}()}
+}
+\concept{help functions}

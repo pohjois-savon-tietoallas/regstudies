@@ -2,7 +2,8 @@
 % Please edit documentation in R/filter_date_interval.R
 \name{filter_date_interval}
 \alias{filter_date_interval}
-\title{Filtering of date interval data within study interval.}
+\title{Filtering of date interval data within study interval.
+Can be used for filtering e.g. for hospital visits, which are date intervals (time periods).}
 \usage{
 filter_date_interval(
   .data,
@@ -28,6 +29,7 @@ filter_date_interval(
 returns a tibble object with filtered rows
 }
 \description{
+Filtering of date interval data within study interval.
 Can be used for filtering e.g. for hospital visits, which are date intervals (time periods).
 }
 \examples{
@@ -43,3 +45,10 @@ left_join(reg \%>\% select(personid,CODE1,admissiondate,dischargedate,icd),by="p
 head(dat)
 }
 }
+\seealso{
+\code{\link{filter_date}} for date filtering by fixed interval
+
+Other filter functions: 
+\code{\link{filter_date}()}
+}
+\concept{filter functions}

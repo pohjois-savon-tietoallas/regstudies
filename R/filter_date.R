@@ -1,5 +1,6 @@
 #' Filtering of datetime data within interval.
-#' 
+#' @family filter functions
+#' @seealso \code{\link{filter_date_interval}} for date filtering by different intervals before and after the occurence
 #' @param indexdate index date (which date variable is to be compared with register data)
 #' @param range the distance from index date (lubridate format, e.g years(1), weeks(10), days(20) etc.)
 #' @param ... datetime variables which need to be within the range. May be any number (>1) of variables.  If one variable is within interval, then that row is included in the data (Applies OR operator).

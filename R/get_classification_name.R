@@ -1,5 +1,6 @@
 #' Internal function for getting classification name out of classification tibbles
 #' 
+#' @family help functions
 #' @param .data tibble of classification definition
 #'   
 #' @return Returns a string which tells the name of a classification

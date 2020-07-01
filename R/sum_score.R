@@ -1,6 +1,6 @@
 #' Sum scores for each individual. Allows arbitrary number of scores to be calculated using single function call.
 #'
-#'
+#' @family classification functions
 #' @param .data the data which contains the variables to be summed over.
 #' @param ... the names of the variables to be summed over.
 #'

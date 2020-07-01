@@ -4,3 +4,5 @@
 ^docs$
 ^pkgdown$
 ^README\.Rmd$
+run_DELETE.R
+vignette_plan.txt

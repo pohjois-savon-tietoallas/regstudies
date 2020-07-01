@@ -13,4 +13,5 @@ replace_na_by_type(x, na_replace_list)
 This function allows user to replace NA values based on type of the variable.
 For example NA in character columns can be replaced by "", logical NA values as FALSE, integer NA values as 0L and so on.
 User need to give the list of the default values what he or she want to be used in replacing.
+@family help functions
 }

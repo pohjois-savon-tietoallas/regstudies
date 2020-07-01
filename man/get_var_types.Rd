@@ -16,3 +16,13 @@ variable tells the variable name and class tells the type of that variable.
 \description{
 This function operates as an tidyverse style version of class() function
 }
+\seealso{
+Other help functions: 
+\code{\link{get_classification_name}()},
+\code{\link{get_na_vars}()},
+\code{\link{left_join_replace_na}()},
+\code{\link{make_regex}()},
+\code{\link{read_classes_csv}()},
+\code{\link{read_classes_tibble}()}
+}
+\concept{help functions}

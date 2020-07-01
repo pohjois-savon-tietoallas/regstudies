@@ -12,8 +12,8 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/simplex/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
@@ -42,7 +42,8 @@
 <meta property="og:title" content="Replace NA values as default values based no the type of the variable — replace_na_by_type" />
 <meta property="og:description" content="This function allows user to replace NA values based on type of the variable.
 For example NA in character columns can be replaced by &quot;&quot;, logical NA values as FALSE, integer NA values as 0L and so on.
-User need to give the list of the default values what he or she want to be used in replacing." />
+User need to give the list of the default values what he or she want to be used in replacing.
+@family help functions" />
 
 
 
@@ -112,7 +113,12 @@ User need to give the list of the default values what he or she want to be used 
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/pohjois-savon-tietoallas/regstudies/">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -127,14 +133,15 @@ User need to give the list of the default values what he or she want to be used 
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Replace NA values as default values based no the type of the variable</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/pohjois-savon-tietoallas/regstudies/blob/master/R/replace_na_by_type.R'><code>R/replace_na_by_type.R</code></a></small>
     <div class="hidden name"><code>replace_na_by_type.Rd</code></div>
     </div>
 
     <div class="ref-description">
     <p>This function allows user to replace NA values based on type of the variable.
 For example NA in character columns can be replaced by "", logical NA values as FALSE, integer NA values as 0L and so on.
-User need to give the list of the default values what he or she want to be used in replacing.</p>
+User need to give the list of the default values what he or she want to be used in replacing.
+@family help functions</p>
     </div>
 
     <pre class="usage"><span class='fu'>replace_na_by_type</span>(<span class='no'>x</span>, <span class='no'>na_replace_list</span>)</pre>

@@ -1,5 +1,6 @@
 #' Get nearest value based on datetime variable
 #'
+#' @family date functions
 #' @param .date data which contains datetime or other comparable variable
 #' @param var datetime or other comparable variable
 #' @param centroid datetime or other comparable variable as reference point around which to search

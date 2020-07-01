@@ -17,3 +17,10 @@ get_age(eventdate, birthdate, accuracy = "years")
 \description{
 The function helps calculating the age of person at the eventdate
 }
+\seealso{
+Other date functions: 
+\code{\link{get_first}()},
+\code{\link{get_last}()},
+\code{\link{get_nearest}()}
+}
+\concept{date functions}
