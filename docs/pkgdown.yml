@@ -4,9 +4,11 @@ pkgdown_sha: ~
 articles:
   backup_file_delete: backup_file_delete.html
   classification_tables: classification_tables.html
+  data_wrangling: data_wrangling.html
   example: example.html
   introduction: introduction.html
   own-classifications: own-classifications.html
+  using_own_classifications: using_own_classifications.html
   vignette_v2_old: vignette_v2_old.html
-last_built: 2020-07-01T13:07Z
+last_built: 2020-07-02T06:38Z
 
