@@ -149,9 +149,9 @@
 <div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="co">## create a new help variable `icd` which determines if code is ICD-8, ICD-9 or ICD-10 by year</span>
 <span class="no">d</span> <span class="kw">&lt;-</span> <span class="no">d</span> <span class="kw">%&gt;%</span>
   <span class="fu">mutate</span>(<span class="kw">icd</span> <span class="kw">=</span> <span class="fu">case_when</span>(
-    <span class="fu"><a href="https://rdrr.io/pkg/lubridate/man/year.html">year</a></span>(<span class="no">disc_date</span>) <span class="kw">&lt;</span> <span class="fl">1987</span> ~ <span class="st">"icd8"</span>,
-    <span class="fu"><a href="https://rdrr.io/pkg/lubridate/man/year.html">year</a></span>(<span class="no">disc_date</span>) <span class="kw">&lt;</span> <span class="fl">1996</span> <span class="kw">&amp;</span> <span class="fu"><a href="https://rdrr.io/pkg/lubridate/man/year.html">year</a></span>(<span class="no">disc_date</span>)<span class="kw">&gt;=</span><span class="fl">1987</span> ~ <span class="st">"icd9"</span>,
-    <span class="fu"><a href="https://rdrr.io/pkg/lubridate/man/year.html">year</a></span>(<span class="no">disc_date</span>) <span class="kw">&gt;=</span> <span class="fl">1996</span> ~ <span class="st">"icd10"</span>
+    <span class="fu"><a href="http://lubridate.tidyverse.org/reference/year.html">year</a></span>(<span class="no">disc_date</span>) <span class="kw">&lt;</span> <span class="fl">1987</span> ~ <span class="st">"icd8"</span>,
+    <span class="fu"><a href="http://lubridate.tidyverse.org/reference/year.html">year</a></span>(<span class="no">disc_date</span>) <span class="kw">&lt;</span> <span class="fl">1996</span> <span class="kw">&amp;</span> <span class="fu"><a href="http://lubridate.tidyverse.org/reference/year.html">year</a></span>(<span class="no">disc_date</span>)<span class="kw">&gt;=</span><span class="fl">1987</span> ~ <span class="st">"icd9"</span>,
+    <span class="fu"><a href="http://lubridate.tidyverse.org/reference/year.html">year</a></span>(<span class="no">disc_date</span>) <span class="kw">&gt;=</span> <span class="fl">1996</span> ~ <span class="st">"icd10"</span>
     ))</pre></body></html></div>
 </div>
 <div id="elixhauser" class="section level2">
