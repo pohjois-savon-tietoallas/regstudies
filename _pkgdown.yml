@@ -32,4 +32,9 @@ reference:
   - read_classes_csv
   - read_classes_tibble
   - replace_na_by_type
-  
+articles:
+- title: Articles
+  navbar: ~
+  contents:
+  - introduction
+  - own-classifications
