@@ -9,7 +9,6 @@ if(TRUE){
   elixhauser_classes <- tibble::as_tibble(elixhauser_classes)
   charlson_classes <- readr::read_csv2("./data/charlson_classes.csv")
   charlson_classes <- tibble::as_tibble(charlson_classes)
-  # save(charlson_classes, elixhauser_classes, file = "./R/sysdata.rda")
   ## save file
   save(charlson_classes, elixhauser_classes, file = "./R/sysdata.rda")
   
@@ -26,10 +25,10 @@ if(TRUE){
   )
   
   ## Read ICD-codes so that we generate from all classes:
-  read_classes_tibble(regstudies:::charlson_classes) %>% 
+  regstudies::read_classes_tibble(elixhauser_classes) %>% 
     filter(!is.na(regex)) %>% 
     mutate(regex2=str_replace_all(regex,"^\\^","")) %>% 
-    group_by(icd,class_charlson) %>%
+    group_by(icd,class_elixhauser) %>%
     mutate(regex3=str_split(regex2,pattern="\\|\\^")) %>%
     mutate(regex4=purrr::map_chr(regex3,magrittr::extract(1))) %>% 
     pull(regex4) -> random_icd_codes
@@ -54,6 +53,14 @@ if(TRUE){
     # disc_date = ,
   )
   sample_regdata$disc_date <- (sample_regdata$adm_date + sample(seq(0,180), 10000, replace = T))
+  
+  # Determine if codes are ICD-8, ICD-9 or ICD-10
+  sample_regdata <- sample_regdata %>%
+    mutate(icd = case_when(
+      lubridate::year(disc_date) < 1987 ~ "icd8",
+      lubridate::year(disc_date) < 1996 & lubridate::year(disc_date)>=1987 ~ "icd9",
+      lubridate::year(disc_date) >= 1996 ~ "icd10"
+    ))
   
   save(sample_regdata, file = "./data/sample_regdata.RData")
   save(sample_cohort, file = "./data/sample_cohort.RData")
