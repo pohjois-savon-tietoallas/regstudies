@@ -40,7 +40,8 @@
 
 
 <meta property="og:title" content="Get nearest value based on datetime variable — get_nearest" />
-<meta property="og:description" content="Get nearest value based on datetime variable" />
+<meta property="og:description" content="This function helps user to find data rows which have datetime value of interest date_var closest to specified centroid value.
+User can use argument only_previous to handle if nearest row can be only before or also after the centroid date." />
 
 
 
@@ -129,22 +130,15 @@
     </div>
 
     <div class="ref-description">
-    <p>Get nearest value based on datetime variable</p>
+    <p>This function helps user to find data rows which have datetime value of interest <code>date_var</code> closest to specified <code>centroid</code> value.
+User can use argument <code>only_previous</code> to handle if nearest row can be only before or also after the <code>centroid</code> date.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_nearest</span>(<span class='no'>.date</span>, <span class='no'>var</span>, <span class='no'>centroid</span>, <span class='kw'>only_previous</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>get_nearest</span>(<span class='no'>.data</span>, <span class='no'>date_var</span>, <span class='no'>centroid</span>, <span class='kw'>only_previous</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>.date</th>
-      <td><p>data which contains datetime or other comparable variable</p></td>
-    </tr>
-    <tr>
-      <th>var</th>
-      <td><p>datetime or other comparable variable</p></td>
-    </tr>
     <tr>
       <th>centroid</th>
       <td><p>datetime or other comparable variable as reference point around which to search</p></td>
@@ -152,6 +146,14 @@
     <tr>
       <th>only_previous</th>
       <td><p>optional parameter (default=FALSE): should we search only previously observed data prior centroid?</p></td>
+    </tr>
+    <tr>
+      <th>.date</th>
+      <td><p>data which contains datetime or other comparable variable</p></td>
+    </tr>
+    <tr>
+      <th>var</th>
+      <td><p>datetime or other comparable variable</p></td>
     </tr>
     </table>
 
@@ -168,8 +170,9 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># searching for the first event of the each class (for each individual):</span>
-<span class='no'>dat</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>get_nearest</span>(<span class='no'>tulopvm</span>,<span class='kw'>centroid</span><span class='kw'>=</span><span class='no'>Postituspvm</span>)
+<span class='no'>d</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>group_by</span>(<span class='no'>personid</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'>get_nearest</span>(<span class='no'>adm_date</span>,<span class='kw'>centroid</span><span class='kw'>=</span><span class='no'>postingdate</span>)
 }</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

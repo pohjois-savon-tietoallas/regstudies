@@ -26,7 +26,7 @@ if(TRUE){
   )
   
   ## Read ICD-codes so that we generate from all classes:
-  read_classes_tibble(regstudies:::charlson_classes) %>% 
+  regstudies::read_classes_tibble(regstudies:::charlson_classes) %>% 
     filter(!is.na(regex)) %>% 
     mutate(regex2=str_replace_all(regex,"^\\^","")) %>% 
     group_by(icd,class_charlson) %>%

@@ -78,10 +78,11 @@ regstudies:::elixhauser_classes
 
 ```{r}
 d %>% 
-  filter(icd == "icd10") %>% 
-  classify_elixhauser(icd_codes = CODE1)
+  # filter(icd == "icd10") %>% 
+  classify_elixhauser(icd_codes = CODE1) 
 ```
 
+*When using function argument `verbose = TRUE`, message "Element 'regex.rm' NOT in use. Exceptions omitted." is normal when ........ * 
 
 To calculate elixhauser scores for each individual you just need to add `sum_score` function. The premade classification table contains two alternative scores to be used `score_AHRQ` and `score_van_Walraven` both of which can be calculated at one function call.
 
@@ -92,21 +93,27 @@ d %>%
   sum_score(score_AHRQ, score_van_Walraven)
 ```
 
+Function classifies all the rows which has classification code in `regstudies:::elixhauser_classes`. If the is no classification on certain ICD code, row will get NA values.
 
-## Charlson 
+
+
+
+*Historgram of sums.....*
+
+## Charlson comorbidity
 
 Classifying Charlson comorbidity classes give as output long formatted data as wel Elixhauser classification:
 
 ```{r}
 ## Classifying Charlson comorbidity classes to long format
-d %>% 
-  classify_charlson(CODE1) -> charlson # ns. tidy standardi
+charlson <- d %>% 
+  classify_charlson(CODE1) 
 head(charlson)
 ```
 
 ## Long data to wide data
 
-In case you need data in wide format, use `dplyr::pivot_wider()` verb
+For example in modelling you might want to have dataset in wide format. To modify dataset to wide format, use `dplyr::pivot_wider()` verb:
 
 ```{r}
 charlson %>%
@@ -121,9 +128,9 @@ head(charlson_wide)
 
 ## Extra: labeling wide data
 
-You can also add labels to wide format variables with code below
+You can also add labels to variables in wide format data with code below
 
-```{r, eval=FALSE}
+```{r}
 ## calculating labels
 regstudies:::charlson_classes %>%
   select(class_charlson,label_charlson) %>%
@@ -136,8 +143,8 @@ for(i in 1:dim(labels)[1]) {
     attr(charlson_wide[[l]], "label") <- labels$label_charlson[i]
   }
 }
-head(charlson_wide)
 ```
 
 
+![](../img/labels.png)
 
