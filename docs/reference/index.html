@@ -176,7 +176,7 @@ Computes classification table and attaches it to original data. Data stays in lo
         <td>
           <p><code><a href="make_classify_table.html">make_classify_table()</a></code> </p>
         </td>
-        <td><p>Classify diagnosis codes to long format with exemptions</p></td>
+        <td><p>Classify diagnosis codes to long format with exceptions</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -193,9 +193,29 @@ Computes classification table and attaches it to original data. Data stays in lo
       <tr>
         
         <td>
-          <p><code><a href="filter_date.html">filter_date()</a></code> </p>
+          <p><code><a href="classify_charlson.html">classify_charlson()</a></code> </p>
         </td>
-        <td><p>Filtering of datetime data within interval.</p></td>
+        <td><p>Extends the original data with the classification table and keeps data in long format.
+Computes classification table and attaches it to original data. Data stays in long format.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="classify_codes.html">classify_codes()</a></code> </p>
+        </td>
+        <td><p>Extends the original data with the classification table and keeps data in long format.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="classify_codes_wide.html">classify_codes_wide()</a></code> </p>
+        </td>
+        <td><p>Extends the original data with the classification table and keeps data in long format.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="classify_elixhauser.html">classify_elixhauser()</a></code> </p>
+        </td>
+        <td><p>Extends the original data with the classification table and keeps data in long format.
+Computes classification table and attaches it to original data. Data stays in long format.</p></td>
       </tr><tr>
         
         <td>
@@ -206,9 +226,21 @@ Can be used for filtering e.g. for hospital visits, which are date intervals (ti
       </tr><tr>
         
         <td>
-          <p><code><a href="get_nearest.html">get_nearest()</a></code> </p>
+          <p><code><a href="filter_date_range.html">filter_date_range()</a></code> </p>
         </td>
-        <td><p>Get nearest value based on datetime variable</p></td>
+        <td><p>Filtering of datetime data within a time range.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="get_age.html">get_age()</a></code> </p>
+        </td>
+        <td><p>Function for calculating age at eventdate</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="get_classification_name.html">get_classification_name()</a></code> </p>
+        </td>
+        <td><p>Internal function for getting classification name out of classification tibbles</p></td>
       </tr><tr>
         
         <td>
@@ -224,9 +256,63 @@ Can be used for filtering e.g. for hospital visits, which are date intervals (ti
       </tr><tr>
         
         <td>
-          <p><code><a href="get_age.html">get_age()</a></code> </p>
+          <p><code><a href="get_na_vars.html">get_na_vars()</a></code> </p>
         </td>
-        <td><p>Function for calculating age at eventdate</p></td>
+        <td><p>Function for extracting names of variables which have any NA values</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="get_nearest.html">get_nearest()</a></code> </p>
+        </td>
+        <td><p>Get nearest value based on datetime variable</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="get_var_types.html">get_var_types()</a></code> </p>
+        </td>
+        <td><p>Get variable types</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="left_join_replace_na.html">left_join_replace_na()</a></code> </p>
+        </td>
+        <td><p>left_join with fill option</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="make_classify_table.html">make_classify_table()</a></code> </p>
+        </td>
+        <td><p>Classify diagnosis codes to long format with exceptions</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="make_regex.html">make_regex()</a></code> </p>
+        </td>
+        <td><p>Make regural expression classifications from LIKE% classifications</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="read_classes_csv.html">read_classes_csv()</a></code> </p>
+        </td>
+        <td><p>Read classes definitions from csv file</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="read_classes_tibble.html">read_classes_tibble()</a></code> </p>
+        </td>
+        <td><p>Internal function for providing long classification definitions.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="replace_na_by_type.html">replace_na_by_type()</a></code> </p>
+        </td>
+        <td><p>Replace NA values as default values based no the type of the variable</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="sum_score.html">sum_score()</a></code> </p>
+        </td>
+        <td><p>Sum scores for each individual. Allows arbitrary number of scores to be calculated using single function call.</p></td>
       </tr>
     </tbody><tbody>
       <tr>
