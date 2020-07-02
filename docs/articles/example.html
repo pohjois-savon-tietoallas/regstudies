@@ -57,7 +57,13 @@
       <a href="../articles/introduction.html">Introduction</a>
     </li>
     <li>
-      <a href="../articles/own-classifications.html">Using own classifications</a>
+      <a href="../articles/using_own_classifications.html">Using own classifications</a>
+    </li>
+    <li>
+      <a href="../articles/data_wrangling.html">Data wrangling for register studies</a>
+    </li>
+    <li>
+      <a href="../articles/classification_tables.html">Classification tables</a>
     </li>
   </ul>
 </li>
@@ -156,9 +162,9 @@
 <div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="co"># Determine if codes are ICD-8, ICD-9 or ICD-10</span>
 <span class="no">d</span> <span class="kw">&lt;-</span> <span class="no">d</span> <span class="kw">%&gt;%</span>
   <span class="fu">mutate</span>(<span class="kw">icd</span> <span class="kw">=</span> <span class="fu">case_when</span>(
-    <span class="fu"><a href="http://lubridate.tidyverse.org/reference/year.html">year</a></span>(<span class="no">disc_date</span>) <span class="kw">&lt;</span> <span class="fl">1987</span> ~ <span class="st">"icd8"</span>,
-    <span class="fu"><a href="http://lubridate.tidyverse.org/reference/year.html">year</a></span>(<span class="no">disc_date</span>) <span class="kw">&lt;</span> <span class="fl">1996</span> <span class="kw">&amp;</span> <span class="fu"><a href="http://lubridate.tidyverse.org/reference/year.html">year</a></span>(<span class="no">disc_date</span>)<span class="kw">&gt;=</span><span class="fl">1987</span> ~ <span class="st">"icd9"</span>,
-    <span class="fu"><a href="http://lubridate.tidyverse.org/reference/year.html">year</a></span>(<span class="no">disc_date</span>) <span class="kw">&gt;=</span> <span class="fl">1996</span> ~ <span class="st">"icd10"</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/lubridate/man/year.html">year</a></span>(<span class="no">disc_date</span>) <span class="kw">&lt;</span> <span class="fl">1987</span> ~ <span class="st">"icd8"</span>,
+    <span class="fu"><a href="https://rdrr.io/pkg/lubridate/man/year.html">year</a></span>(<span class="no">disc_date</span>) <span class="kw">&lt;</span> <span class="fl">1996</span> <span class="kw">&amp;</span> <span class="fu"><a href="https://rdrr.io/pkg/lubridate/man/year.html">year</a></span>(<span class="no">disc_date</span>)<span class="kw">&gt;=</span><span class="fl">1987</span> ~ <span class="st">"icd9"</span>,
+    <span class="fu"><a href="https://rdrr.io/pkg/lubridate/man/year.html">year</a></span>(<span class="no">disc_date</span>) <span class="kw">&gt;=</span> <span class="fl">1996</span> ~ <span class="st">"icd10"</span>
     ))</pre></body></html></div>
 <div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="co"># Check the number of different classes</span>
 <span class="no">d</span> <span class="kw">%&gt;%</span>
@@ -185,14 +191,14 @@
 <p>Filter data set with occurrences of hospital visits. If person has been in hospital during the time period two years prior <code>postingdate</code> then those events are included.</p>
 <div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="no">filtered_d</span> <span class="kw">&lt;-</span> <span class="no">d</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/filter_date_interval.html">filter_date_interval</a></span>(<span class="kw">indexdate</span> <span class="kw">=</span> <span class="no">postingdate</span>,
-                       <span class="kw">time_before</span><span class="kw">=</span><span class="fu"><a href="http://lubridate.tidyverse.org/reference/period.html">years</a></span>(<span class="fl">2</span>),
+                       <span class="kw">time_before</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/pkg/lubridate/man/period.html">years</a></span>(<span class="fl">2</span>),
                        <span class="kw">admission_date</span><span class="kw">=</span><span class="no">adm_date</span>,
                        <span class="kw">discharge_date</span><span class="kw">=</span><span class="no">disc_date</span>)
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">filtered_d</span>)</pre></body></html></div>
 <p>Filter dataset with either <code>adm_date</code> or <code>disc_date</code> within two years around <code>postingdate</code></p>
 <div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="no">filtered_d</span> <span class="kw">&lt;-</span> <span class="no">d</span> <span class="kw">%&gt;%</span>
   <span class="kw pkg">regstudies</span><span class="kw ns">::</span><span class="fu">filter_date</span>(<span class="kw">indexdate</span><span class="kw">=</span><span class="no">postingdate</span>,
-                          <span class="kw">range</span><span class="kw">=</span><span class="fu"><a href="http://lubridate.tidyverse.org/reference/period.html">years</a></span>(<span class="fl">2</span>),
+                          <span class="kw">range</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/pkg/lubridate/man/period.html">years</a></span>(<span class="fl">2</span>),
                           <span class="no">adm_date</span>,
                           <span class="no">disc_date</span>)
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">filtered_d</span>)</pre></body></html></div>

@@ -146,5 +146,5 @@ for(i in 1:dim(labels)[1]) {
 ```
 
 
-![](../img/labels.png)
+![](labels.png)
 

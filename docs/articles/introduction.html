@@ -57,7 +57,13 @@
       <a href="../articles/introduction.html">Introduction</a>
     </li>
     <li>
-      <a href="../articles/own-classifications.html">Using own classifications</a>
+      <a href="../articles/using_own_classifications.html">Using own classifications</a>
+    </li>
+    <li>
+      <a href="../articles/data_wrangling.html">Data wrangling for register studies</a>
+    </li>
+    <li>
+      <a href="../articles/classification_tables.html">Classification tables</a>
     </li>
   </ul>
 </li>
@@ -143,9 +149,9 @@
 <div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="co">## create a new help variable `icd` which determines if code is ICD-8, ICD-9 or ICD-10 by year</span>
 <span class="no">d</span> <span class="kw">&lt;-</span> <span class="no">d</span> <span class="kw">%&gt;%</span>
   <span class="fu">mutate</span>(<span class="kw">icd</span> <span class="kw">=</span> <span class="fu">case_when</span>(
-    <span class="fu"><a href="http://lubridate.tidyverse.org/reference/year.html">year</a></span>(<span class="no">disc_date</span>) <span class="kw">&lt;</span> <span class="fl">1987</span> ~ <span class="st">"icd8"</span>,
-    <span class="fu"><a href="http://lubridate.tidyverse.org/reference/year.html">year</a></span>(<span class="no">disc_date</span>) <span class="kw">&lt;</span> <span class="fl">1996</span> <span class="kw">&amp;</span> <span class="fu"><a href="http://lubridate.tidyverse.org/reference/year.html">year</a></span>(<span class="no">disc_date</span>)<span class="kw">&gt;=</span><span class="fl">1987</span> ~ <span class="st">"icd9"</span>,
-    <span class="fu"><a href="http://lubridate.tidyverse.org/reference/year.html">year</a></span>(<span class="no">disc_date</span>) <span class="kw">&gt;=</span> <span class="fl">1996</span> ~ <span class="st">"icd10"</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/lubridate/man/year.html">year</a></span>(<span class="no">disc_date</span>) <span class="kw">&lt;</span> <span class="fl">1987</span> ~ <span class="st">"icd8"</span>,
+    <span class="fu"><a href="https://rdrr.io/pkg/lubridate/man/year.html">year</a></span>(<span class="no">disc_date</span>) <span class="kw">&lt;</span> <span class="fl">1996</span> <span class="kw">&amp;</span> <span class="fu"><a href="https://rdrr.io/pkg/lubridate/man/year.html">year</a></span>(<span class="no">disc_date</span>)<span class="kw">&gt;=</span><span class="fl">1987</span> ~ <span class="st">"icd9"</span>,
+    <span class="fu"><a href="https://rdrr.io/pkg/lubridate/man/year.html">year</a></span>(<span class="no">disc_date</span>) <span class="kw">&gt;=</span> <span class="fl">1996</span> ~ <span class="st">"icd10"</span>
     ))</pre></body></html></div>
 </div>
 <div id="elixhauser" class="section level2">
@@ -168,25 +174,26 @@
 ## 10 cpd              Chronic pulmonar… ^4168|… ^I278…          3                3
 ## # … with 21 more rows</code></pre>
 <div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="no">d</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="no">icd</span> <span class="kw">==</span> <span class="st">"icd10"</span>) <span class="kw">%&gt;%</span>
+  <span class="co"># filter(icd == "icd10") %&gt;% </span>
   <span class="fu"><a href="../reference/classify_elixhauser.html">classify_elixhauser</a></span>(<span class="kw">icd_codes</span> <span class="kw">=</span> <span class="no">CODE1</span>)</pre></body></html></div>
 <pre><code>## Joining, by = "label_elixhauser"</code></pre>
 <pre><code>## [1] "Element 'regex.rm' NOT in use. Exceptions omitted."</code></pre>
-<pre><code>## # A tibble: 6,606 x 11
+<pre><code>## # A tibble: 10,497 x 11
 ##    personid CODE1 adm_date   disc_date  gender postingdate icd  
 ##       &lt;int&gt; &lt;chr&gt; &lt;date&gt;     &lt;date&gt;      &lt;dbl&gt; &lt;date&gt;      &lt;chr&gt;
-##  1     1324 40301 2004-02-12 2004-02-27      2 2000-01-01  icd10
-##  2     1236 G45   2000-06-05 2000-11-26      2 2000-01-01  icd10
-##  3     1492 I099  1997-03-03 1997-04-09      1 2000-01-01  icd10
-##  4     1420 36234 2000-11-19 2000-11-27      2 2000-01-01  icd10
-##  5     1359 C77   2000-12-05 2000-12-05      1 2000-01-01  icd10
-##  6     1472 137   1999-10-01 1999-10-13      2 2000-01-01  icd10
-##  7     1367 I278  1998-02-08 1998-07-20      1 2000-01-01  icd10
-##  8     1367 I278  1998-02-08 1998-07-20      1 2000-01-01  icd10
-##  9     1464 4560  2000-09-24 2000-10-08      1 2000-01-01  icd10
-## 10     1395 203   1997-10-08 1998-01-11      2 2000-01-01  icd10
-## # … with 6,596 more rows, and 4 more variables: class_elixhauser &lt;chr&gt;,
+##  1     1246 C00   1994-04-22 1994-08-05      2 2000-01-01  icd9 
+##  2     1317 115   1991-08-02 1991-08-28      2 2000-01-01  icd9 
+##  3     1324 40301 2004-02-12 2004-02-27      2 2000-01-01  icd10
+##  4     1236 G45   2000-06-05 2000-11-26      2 2000-01-01  icd10
+##  5     1492 I099  1997-03-03 1997-04-09      1 2000-01-01  icd10
+##  6     1426 140   1992-04-08 1992-04-29      1 2000-01-01  icd9 
+##  7     1204 I21   1991-11-29 1992-04-27      1 2000-01-01  icd9 
+##  8     1420 36234 2000-11-19 2000-11-27      2 2000-01-01  icd10
+##  9     1359 C77   2000-12-05 2000-12-05      1 2000-01-01  icd10
+## 10     1472 137   1999-10-01 1999-10-13      2 2000-01-01  icd10
+## # … with 10,487 more rows, and 4 more variables: class_elixhauser &lt;chr&gt;,
 ## #   label_elixhauser &lt;chr&gt;, score_AHRQ &lt;dbl&gt;, score_van_Walraven &lt;dbl&gt;</code></pre>
+<p><em>When using function argument <code>verbose = TRUE</code>, message “Element ‘regex.rm’ NOT in use. Exceptions omitted.” is normal when …….. </em></p>
 <p>To calculate elixhauser scores for each individual you just need to add <code>sum_score</code> function. The premade classification table contains two alternative scores to be used <code>score_AHRQ</code> and <code>score_van_Walraven</code> both of which can be calculated at one function call.</p>
 <div class="sourceCode" id="cb17"><html><body><pre class="r"><span class="co"># Calculate scores</span>
 <span class="no">d</span> <span class="kw">%&gt;%</span>
@@ -208,14 +215,16 @@
 ##  9     1209                42                        41
 ## 10     1210                40                        41
 ## # … with 290 more rows</code></pre>
+<p>Function classifies all the rows which has classification code in <code>regstudies:::elixhauser_classes</code>. If the is no classification on certain ICD code, row will get NA values.</p>
+<p><em>Historgram of sums…..</em></p>
 </div>
-<div id="charlson" class="section level2">
+<div id="charlson-comorbidity" class="section level2">
 <h2 class="hasAnchor">
-<a href="#charlson" class="anchor"></a>Charlson</h2>
+<a href="#charlson-comorbidity" class="anchor"></a>Charlson comorbidity</h2>
 <p>Classifying Charlson comorbidity classes give as output long formatted data as wel Elixhauser classification:</p>
 <div class="sourceCode" id="cb21"><html><body><pre class="r"><span class="co">## Classifying Charlson comorbidity classes to long format</span>
-<span class="no">d</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/classify_charlson.html">classify_charlson</a></span>(<span class="no">CODE1</span>) <span class="kw">-&gt;</span> <span class="no">charlson</span> <span class="co"># ns. tidy standardi</span></pre></body></html></div>
+<span class="no">charlson</span> <span class="kw">&lt;-</span> <span class="no">d</span> <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="../reference/classify_charlson.html">classify_charlson</a></span>(<span class="no">CODE1</span>)</pre></body></html></div>
 <pre><code>## Joining, by = "label_charlson"</code></pre>
 <pre><code>## [1] "Element 'regex.rm' NOT in use. Exceptions omitted."</code></pre>
 <div class="sourceCode" id="cb24"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">charlson</span>)</pre></body></html></div>
@@ -233,7 +242,7 @@
 <div id="long-data-to-wide-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#long-data-to-wide-data" class="anchor"></a>Long data to wide data</h2>
-<p>In case you need data in wide format, use <code>dplyr::pivot_wider()</code> verb</p>
+<p>For example in modelling you might want to have dataset in wide format. To modify dataset to wide format, use <code>dplyr::pivot_wider()</code> verb:</p>
 <div class="sourceCode" id="cb26"><html><body><pre class="r"><span class="no">charlson</span> <span class="kw">%&gt;%</span>
   <span class="fu">mutate</span>(<span class="kw">class_charlson</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="st">"cl_"</span>,<span class="no">class_charlson</span>)) <span class="kw">%&gt;%</span> <span class="co"># TODO: laita tämä ominaisuus classify-funktioon sisälle!</span>
   <span class="fu">mutate</span>(<span class="kw">score_charlson</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span>(<span class="no">score_charlson</span><span class="kw">&gt;</span><span class="fl">0</span>)) <span class="kw">%&gt;%</span>
@@ -259,7 +268,7 @@
 <div id="extra-labeling-wide-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#extra-labeling-wide-data" class="anchor"></a>Extra: labeling wide data</h2>
-<p>You can also add labels to wide format variables with code below</p>
+<p>You can also add labels to variables in wide format data with code below</p>
 <div class="sourceCode" id="cb28"><html><body><pre class="r"><span class="co">## calculating labels</span>
 <span class="kw pkg">regstudies</span><span class="kw ns">:::</span><span class="no">charlson_classes</span> <span class="kw">%&gt;%</span>
   <span class="fu">select</span>(<span class="no">class_charlson</span>,<span class="no">label_charlson</span>) <span class="kw">%&gt;%</span>
@@ -271,8 +280,8 @@
   <span class="kw">if</span>(!<span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span>(<span class="no">charlson_wide</span><span class="kw">[[</span><span class="no">l</span>]])) {
     <span class="fu"><a href="https://rdrr.io/r/base/attr.html">attr</a></span>(<span class="no">charlson_wide</span><span class="kw">[[</span><span class="no">l</span>]], <span class="st">"label"</span>) <span class="kw">&lt;-</span> <span class="no">labels</span>$<span class="no">label_charlson</span>[<span class="no">i</span>]
   }
-}
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">charlson_wide</span>)</pre></body></html></div>
+}</pre></body></html></div>
+<p><img src="labels.png"></p>
 </div>
   </div>
 

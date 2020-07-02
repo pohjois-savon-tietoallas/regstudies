@@ -20,8 +20,6 @@ Other help functions:
 \code{\link{get_classification_name}()},
 \code{\link{get_var_types}()},
 \code{\link{left_join_replace_na}()},
-\code{\link{make_regex}()},
-\code{\link{read_classes_csv}()},
-\code{\link{read_classes_tibble}()}
+\code{\link{make_regex}()}
 }
 \concept{help functions}

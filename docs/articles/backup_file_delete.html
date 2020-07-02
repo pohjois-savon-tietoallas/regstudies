@@ -57,7 +57,13 @@
       <a href="../articles/introduction.html">Introduction</a>
     </li>
     <li>
-      <a href="../articles/own-classifications.html">Using own classifications</a>
+      <a href="../articles/using_own_classifications.html">Using own classifications</a>
+    </li>
+    <li>
+      <a href="../articles/data_wrangling.html">Data wrangling for register studies</a>
+    </li>
+    <li>
+      <a href="../articles/classification_tables.html">Classification tables</a>
     </li>
   </ul>
 </li>
@@ -115,16 +121,16 @@
 <span class="co"># prepare some register data:</span>
 <span class="no">reg</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://vroom.r-lib.org/reference/vroom.html">vroom</a></span>(<span class="kw">file</span><span class="kw">=</span><span class="st">"../rekisteridatat/ostpre_hilmo_9616_dgt_eng.csv"</span>)
 <span class="no">reg</span> <span class="kw">&lt;-</span> <span class="no">reg</span> <span class="kw">%&gt;%</span>
-  <span class="fu">mutate</span>(<span class="kw">admissiondate</span><span class="kw">=</span><span class="fu"><a href="http://lubridate.tidyverse.org/reference/ymd.html">dmy</a></span>(<span class="no">admissiondate</span>),<span class="kw">dischargedate</span><span class="kw">=</span><span class="fu"><a href="http://lubridate.tidyverse.org/reference/ymd.html">dmy</a></span>(<span class="no">dischargedate</span>)) <span class="kw">%&gt;%</span>
+  <span class="fu">mutate</span>(<span class="kw">admissiondate</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/pkg/lubridate/man/ymd.html">dmy</a></span>(<span class="no">admissiondate</span>),<span class="kw">dischargedate</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/pkg/lubridate/man/ymd.html">dmy</a></span>(<span class="no">dischargedate</span>)) <span class="kw">%&gt;%</span>
   <span class="fu">mutate</span>(<span class="kw">CODE1</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span>(<span class="no">CODE1</span><span class="kw">==</span><span class="st">"-"</span>,<span class="fl">NA</span>,<span class="no">CODE1</span>),<span class="kw">CODE2</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span>(<span class="no">CODE2</span><span class="kw">==</span><span class="st">"-"</span>,<span class="fl">NA</span>,<span class="no">CODE2</span>))
 <span class="no">reg</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>()
 
 <span class="co"># lets calculate if the code is icd-8, icd-9 or icd-10</span>
 <span class="no">reg</span> <span class="kw">&lt;-</span> <span class="no">reg</span> <span class="kw">%&gt;%</span>
-  <span class="fu">mutate</span>(<span class="kw">icd</span><span class="kw">=</span><span class="fu">case_when</span>( <span class="fu"><a href="http://lubridate.tidyverse.org/reference/year.html">year</a></span>(<span class="no">dischargedate</span>)<span class="kw">&lt;</span><span class="fl">1987</span> ~ <span class="st">"icd8"</span>,
-                        <span class="fu"><a href="http://lubridate.tidyverse.org/reference/year.html">year</a></span>(<span class="no">dischargedate</span>)<span class="kw">&lt;</span><span class="fl">1996</span> <span class="kw">&amp;</span> <span class="fu"><a href="http://lubridate.tidyverse.org/reference/year.html">year</a></span>(<span class="no">dischargedate</span>)<span class="kw">&gt;=</span><span class="fl">1987</span> ~ <span class="st">"icd9"</span>,
-                        <span class="fu"><a href="http://lubridate.tidyverse.org/reference/year.html">year</a></span>(<span class="no">dischargedate</span>)<span class="kw">&gt;=</span><span class="fl">1996</span> ~ <span class="st">"icd10"</span>
+  <span class="fu">mutate</span>(<span class="kw">icd</span><span class="kw">=</span><span class="fu">case_when</span>( <span class="fu"><a href="https://rdrr.io/pkg/lubridate/man/year.html">year</a></span>(<span class="no">dischargedate</span>)<span class="kw">&lt;</span><span class="fl">1987</span> ~ <span class="st">"icd8"</span>,
+                        <span class="fu"><a href="https://rdrr.io/pkg/lubridate/man/year.html">year</a></span>(<span class="no">dischargedate</span>)<span class="kw">&lt;</span><span class="fl">1996</span> <span class="kw">&amp;</span> <span class="fu"><a href="https://rdrr.io/pkg/lubridate/man/year.html">year</a></span>(<span class="no">dischargedate</span>)<span class="kw">&gt;=</span><span class="fl">1987</span> ~ <span class="st">"icd9"</span>,
+                        <span class="fu"><a href="https://rdrr.io/pkg/lubridate/man/year.html">year</a></span>(<span class="no">dischargedate</span>)<span class="kw">&gt;=</span><span class="fl">1996</span> ~ <span class="st">"icd10"</span>
                       )
         )
 <span class="no">reg</span><span class="kw">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>(<span class="no">reg</span>)
@@ -133,7 +139,7 @@
 <span class="no">filtereddata</span> <span class="kw">&lt;-</span> <span class="no">cohort</span> <span class="kw">%&gt;%</span>
   <span class="fu">left_join</span>(<span class="no">reg</span> <span class="kw">%&gt;%</span> <span class="fu">select</span>(<span class="no">personid</span>,<span class="no">CODE1</span>,<span class="no">admissiondate</span>,<span class="no">dischargedate</span>,<span class="no">icd</span>),<span class="kw">by</span><span class="kw">=</span><span class="st">"personid"</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/filter_date_interval.html">filter_date_interval</a></span>(<span class="kw">indexdate</span><span class="kw">=</span><span class="no">postingdate</span>,
-                   <span class="kw">time_before</span><span class="kw">=</span><span class="fu"><a href="http://lubridate.tidyverse.org/reference/period.html">years</a></span>(<span class="fl">2</span>),
+                   <span class="kw">time_before</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/pkg/lubridate/man/period.html">years</a></span>(<span class="fl">2</span>),
                    <span class="kw">admission_date</span><span class="kw">=</span><span class="no">admissiondate</span>,
                    <span class="kw">discharge_date</span><span class="kw">=</span><span class="no">dischargedate</span>)
 
@@ -195,7 +201,7 @@
   <span class="st">"integer"</span><span class="kw">=</span><span class="fl">0L</span>,
   <span class="st">"double"</span><span class="kw">=</span><span class="fl">0.0</span>,
   <span class="st">"numeric"</span><span class="kw">=</span><span class="fl">0</span>,
-  <span class="st">"Date"</span><span class="kw">=</span><span class="kw pkg">lubridate</span><span class="kw ns">::</span><span class="fu"><a href="http://lubridate.tidyverse.org/reference/ymd.html">dmy</a></span>(<span class="st">"01-01-1900"</span>)
+  <span class="st">"Date"</span><span class="kw">=</span><span class="kw pkg">lubridate</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/lubridate/man/ymd.html">dmy</a></span>(<span class="st">"01-01-1900"</span>)
 )
 <span class="no">resdata</span> <span class="kw">&lt;-</span> <span class="no">filtereddata</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/left_join_replace_na.html">left_join_replace_na</a></span>(<span class="no">ltout</span>,<span class="kw">na_replace_list</span> <span class="kw">=</span> <span class="no">na_replace_list</span>)
@@ -216,7 +222,7 @@
   <span class="st">"integer"</span><span class="kw">=</span><span class="fl">0L</span>,
   <span class="st">"double"</span><span class="kw">=</span><span class="fl">0.0</span>,
   <span class="st">"numeric"</span><span class="kw">=</span><span class="fl">0</span>,
-  <span class="st">"Date"</span><span class="kw">=</span><span class="kw pkg">lubridate</span><span class="kw ns">::</span><span class="fu"><a href="http://lubridate.tidyverse.org/reference/ymd.html">dmy</a></span>(<span class="st">"01-01-1900"</span>)
+  <span class="st">"Date"</span><span class="kw">=</span><span class="kw pkg">lubridate</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/lubridate/man/ymd.html">dmy</a></span>(<span class="st">"01-01-1900"</span>)
 )
 <span class="no">na_replace_list</span>
 
@@ -233,7 +239,7 @@
   <span class="st">"integer"</span><span class="kw">=</span><span class="fl">0L</span>,
   <span class="st">"double"</span><span class="kw">=</span><span class="fl">0.0</span>,
   <span class="st">"numeric"</span><span class="kw">=</span><span class="fl">0</span>,
-  <span class="st">"Date"</span><span class="kw">=</span><span class="kw pkg">lubridate</span><span class="kw ns">::</span><span class="fu"><a href="http://lubridate.tidyverse.org/reference/ymd.html">dmy</a></span>(<span class="st">"01-01-1900"</span>)
+  <span class="st">"Date"</span><span class="kw">=</span><span class="kw pkg">lubridate</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/lubridate/man/ymd.html">dmy</a></span>(<span class="st">"01-01-1900"</span>)
 )
 <span class="no">testdata</span> <span class="kw">%&gt;%</span>
   <span class="fu">mutate_all</span>(<span class="no">replace_na_by_type</span>,<span class="no">na_replace_list</span>) <span class="kw">%&gt;%</span>
