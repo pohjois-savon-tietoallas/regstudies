@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Classify diagnosis codes to long format with exemptions — make_classify_table • regstudies</title>
+<title>Classify diagnosis codes to long format with exceptions — make_classify_table • regstudies</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,7 @@
 
 
 
-<meta property="og:title" content="Classify diagnosis codes to long format with exemptions — make_classify_table" />
+<meta property="og:title" content="Classify diagnosis codes to long format with exceptions — make_classify_table" />
 <meta property="og:description" content="Computes classification table which can be attached to original data using left_join()." />
 
 
@@ -123,7 +123,7 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Classify diagnosis codes to long format with exemptions</h1>
+    <h1>Classify diagnosis codes to long format with exceptions</h1>
     <small class="dont-index">Source: <a href='https://github.com/pohjois-savon-tietoallas/regstudies/blob/master/R/classify.R'><code>R/classify.R</code></a></small>
     <div class="hidden name"><code>make_classify_table.Rd</code></div>
     </div>
@@ -160,13 +160,7 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='co'># we calculate the table which can be used for classification.</span>
-<span class='co'># 'ostprekoh' is the register data containing 'lomno1' individual id number and data 'dg' contains the register data of disease diagnoses.</span>
-<span class='no'>ostprekoh</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>left_join</span>(<span class='no'>dg</span> <span class='kw'>%&gt;%</span> <span class='fu'>select</span>(<span class='no'>lomno1</span>,<span class='no'>KOODI1</span>,<span class='no'>tulopvm</span>,<span class='no'>lahtopvm</span>),<span class='kw'>by</span><span class='kw'>=</span><span class='st'>"lomno1"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>mutate</span>(<span class='kw'>Postituspvm</span><span class='kw'>=</span><span class='fu'>ymd</span>(<span class='no'>Postituspvm</span>)) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='filter_date.html'>filter_date</a></span>(<span class='kw'>indexdate</span><span class='kw'>=</span><span class='no'>Postituspvm</span>,<span class='kw'>range</span><span class='kw'>=</span><span class='fu'>years</span>(<span class='fl'>2</span>),<span class='no'>tulopvm</span>,<span class='no'>lahtopvm</span>) <span class='kw'>%&gt;%</span> <span class='co'># filtering the diagnosis codes which are in the interval for each individual!</span>
-  <span class='fu'>classify_long</span>(<span class='kw'>icdcodes</span><span class='kw'>=</span><span class='no'>KOODI1</span>,<span class='kw'>diag_tbl</span><span class='kw'>=</span><span class='no'>sel_classes</span>)
+<span class='no'>x</span><span class='kw'>&lt;-</span><span class='fl'>1</span>
 }</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
