@@ -62,6 +62,14 @@ if(TRUE){
       lubridate::year(disc_date) >= 1996 ~ "icd10"
     ))
   
+  # Determine if codes are ICD-8, ICD-9 or ICD-10
+  sample_regdata <- sample_regdata %>%
+    mutate(icd = case_when(
+      lubridate::year(disc_date) < 1987 ~ "icd8",
+      lubridate::year(disc_date) < 1996 & lubridate::year(disc_date)>=1987 ~ "icd9",
+      lubridate::year(disc_date) >= 1996 ~ "icd10"
+    ))
+  
   save(sample_regdata, file = "./data/sample_regdata.RData")
   save(sample_cohort, file = "./data/sample_cohort.RData")
 
