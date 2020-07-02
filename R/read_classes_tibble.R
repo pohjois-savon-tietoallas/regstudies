@@ -1,10 +1,9 @@
 #' Internal function for providing long classification definitions.
 #'
 #' Operates classification definitions from wide format to long format.
-#' @family help functions
+#' @family read functions
 #' @param sel_classes This variable contains the data in the wide format. See the classifications defined in /datas/classification_codes/
 #' @return returns classification definition in long format (tidy data) as that is what the package needs in operation.
-#'
 #' @importFrom dplyr mutate
 #' @importFrom dplyr left_join
 #' @importFrom dplyr right_join

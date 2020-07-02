@@ -2,29 +2,26 @@
 % Please edit documentation in R/read_classes_csv.R
 \name{read_classes_csv}
 \alias{read_classes_csv}
-\title{Read classes definitions from csv file}
+\title{Read class definitions from csv file}
 \usage{
 read_classes_csv(file)
 }
 \arguments{
-\item{file}{the filename or path to the filename as a character string.}
+\item{file}{filename or file path as a character string.}
 }
 \value{
 returns classification definintion in long format (tidy data) as that is what the package needs in operation.
 }
 \description{
-Reads classes definitions based on the file path and operates classification definitions from wide format to long format.
+Use this function for your own code classification. It reads class definition file based on the file path and operates classification definitions from wide format to long format. You can edit you own classifications in Spreadsheet Program (ex. LibreOffice, Excel) and save file to csv-file.
 }
 \examples{
-elixhauser_cl <- read_classes_csv(file = "data/classification_codes/elixhauser_classes_wide.csv")
+ \dontrun{
+my_classes <- read_classes_csv(file = "my_classes.csv")
+}
 }
 \seealso{
-Other help functions: 
-\code{\link{get_classification_name}()},
-\code{\link{get_na_vars}()},
-\code{\link{get_var_types}()},
-\code{\link{left_join_replace_na}()},
-\code{\link{make_regex}()},
+Other read functions: 
 \code{\link{read_classes_tibble}()}
 }
-\concept{help functions}
+\concept{read functions}

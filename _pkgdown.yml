@@ -12,8 +12,7 @@ reference:
   - sum_score
   - make_classify_table
 - title: "Date functions"
-  desc: >
-    Functions for handling datetime variables
+  desc: "Functions for handling datetime variables"
 - contents: 
   - filter_date
   - filter_date_interval
@@ -37,4 +36,6 @@ articles:
   navbar: ~
   contents:
   - introduction
-  - own-classifications
+  - using_own_classifications
+  - data_wrangling
+  - classification_tables

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Read classes definitions from csv file — read_classes_csv • regstudies</title>
+<title>Read class definitions from csv file — read_classes_csv • regstudies</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Read classes definitions from csv file — read_classes_csv" />
-<meta property="og:description" content="Reads classes definitions based on the file path and operates classification definitions from wide format to long format." />
+<meta property="og:title" content="Read class definitions from csv file — read_classes_csv" />
+<meta property="og:description" content="Use this function for your own code classification. It reads class definition file based on the file path and operates classification definitions from wide format to long format. You can edit you own classifications in Spreadsheet Program (ex. LibreOffice, Excel) and save file to csv-file." />
 
 
 
@@ -98,7 +98,13 @@
       <a href="../articles/introduction.html">Introduction</a>
     </li>
     <li>
-      <a href="../articles/own-classifications.html">Using own classifications</a>
+      <a href="../articles/using_own_classifications.html">Using own classifications</a>
+    </li>
+    <li>
+      <a href="../articles/data_wrangling.html">Data wrangling for register studies</a>
+    </li>
+    <li>
+      <a href="../articles/classification_tables.html">Classification tables</a>
     </li>
   </ul>
 </li>
@@ -123,13 +129,13 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Read classes definitions from csv file</h1>
+    <h1>Read class definitions from csv file</h1>
     <small class="dont-index">Source: <a href='https://github.com/pohjois-savon-tietoallas/regstudies/blob/master/R/read_classes_csv.R'><code>R/read_classes_csv.R</code></a></small>
     <div class="hidden name"><code>read_classes_csv.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Reads classes definitions based on the file path and operates classification definitions from wide format to long format.</p>
+    <p>Use this function for your own code classification. It reads class definition file based on the file path and operates classification definitions from wide format to long format. You can edit you own classifications in Spreadsheet Program (ex. LibreOffice, Excel) and save file to csv-file.</p>
     </div>
 
     <pre class="usage"><span class='fu'>read_classes_csv</span>(<span class='no'>file</span>)</pre>
@@ -139,7 +145,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>file</th>
-      <td><p>the filename or path to the filename as a character string.</p></td>
+      <td><p>filename or file path as a character string.</p></td>
     </tr>
     </table>
 
@@ -148,16 +154,13 @@
     <p>returns classification definintion in long format (tidy data) as that is what the package needs in operation.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other help functions: 
-<code><a href='get_classification_name.html'>get_classification_name</a>()</code>,
-<code><a href='get_na_vars.html'>get_na_vars</a>()</code>,
-<code><a href='get_var_types.html'>get_var_types</a>()</code>,
-<code><a href='left_join_replace_na.html'>left_join_replace_na</a>()</code>,
-<code><a href='make_regex.html'>make_regex</a>()</code>,
+    <div class='dont-index'><p>Other read functions: 
 <code><a href='read_classes_tibble.html'>read_classes_tibble</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>elixhauser_cl</span> <span class='kw'>&lt;-</span> <span class='fu'>read_classes_csv</span>(<span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>"data/classification_codes/elixhauser_classes_wide.csv"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in sel_classes %&gt;% dplyr::select(tidyselect::contains("label"),     tidyselect::contains("score")) %&gt;% dplyr::distinct(): could not find function "%&gt;%"</span></div></pre>
+    <pre class="examples"><div class='input'> <span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='no'>my_classes</span> <span class='kw'>&lt;-</span> <span class='fu'>read_classes_csv</span>(<span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>"my_classes.csv"</span>)
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
