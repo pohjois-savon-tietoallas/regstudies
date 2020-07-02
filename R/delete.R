@@ -57,3 +57,37 @@ classify_codes_wide <- function(.data, icdcodes, diag_tbl, wide=TRUE) {
                                      by=text) # ... arguments
   outdat
 }
+
+
+#-----------------
+{
+  #TODO: Halutaan datan olevan sellaista, että henkilöiden tapausten määrä noudattaa
+  #Poisson(0.8) -jakaumaa
+  #rpois(10000,0.8)
+  simdata<-tibble::tibble(personid=1201:1500,
+                          sim=c(rpois(500,0.8),rpois(500,3),rpois(500,7))
+  )
+  #hist(simdata$sim)
+  simdata<-simdata#rbind(simdata,simdata) %>% 
+  mutate(cumsim=cumsum(sim))
+  if(!any(simdata$cumsim==10000)) {
+    simdata[which.max(simdata$cumsim>10000),"cumsim"]<-10000
+  }
+  simdata<-simdata %>%
+    filter(cumsim<=10000)
+  tail(simdata)
+  res<-simdata %>%
+    mutate(personid=purrr::map2(.x=personid,.y=sim,.f=rep)) %>% 
+    select(personid) %>%
+    as.list()
+  res<-Reduce(c,res) %>%
+    purrr::flatten_int()
+  length(res)
+  res<-head(res,10000)
+  setdiff(1201:1500,res)
+  sample_regdata<-sample_regdata %>%
+    mutate(personid=res)
+  
+  # voiko vain tehdä personid:n s.e. eka henkilö on rpois(1,0.8) määrä?
+  
+}

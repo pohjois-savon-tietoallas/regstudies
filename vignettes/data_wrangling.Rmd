@@ -58,7 +58,7 @@ filtered_d <- d %>%
   regstudies::filter_date_range(indexdate=postingdate, 
                           range=years(2),
                           adm_date,
-                          disc_date) 
+                          disc_date)
 head(filtered_d)
 ```
 
@@ -83,3 +83,49 @@ elixh_d <- d %>%
   classify_elixhauser(CODE1)
 head(elixh_d)
 ```
+
+### Left join with filling missing values
+
+In register studies a situation often occurs where the `left_join` creates missing data to to data. This can happen for example when joining `sample_cohort` to `sample_regdata` as `left_join(sample_cohort,sample_regdata)` when there are individuals in cohort who do not hold any records in the register data set. Usually this is just a nuisance and we want to fill those values with 0 or false or what ever suits our use case.
+
+For this problem there is function `left_join_replace_na` for which user can give a list of default values what he or she wants to use.
+
+```{r}
+d<-left_join(sample_cohort,sample_regdata)
+names(sample_cohort)
+names(sample_regdata)
+summary(d)
+setdiff(1201:1500,d$personid) # ??? Ei siis ollut ketään, joilla 0 riviä!
+head(d)
+get_var_types(d)
+```
+
+
+```{r}
+na_replace_list <- list(
+ "logical"=FALSE,
+ "character"="",
+ "integer"=0L,
+ "double"=0.0,
+ "numeric"=0,
+ "Date"=lubridate::dmy("01-01-1900")
+)
+d_filled<-left_join_replace_na(sample_cohort,sample_regdata,na_replace_list)
+head(d_filled)
+View(d_filled)
+```
+
+```{r}
+
+```
+
+
+Internally the filling of missing values with default values is executed by another function `replace_na_by_type` which is also available for users.
+
+```{r}
+## Give list of default fill values overridding NA
+d_filled <- d %>%
+ mutate_all(replace_na_by_type,na_replace_list)
+summary(d_filled)
+```
+

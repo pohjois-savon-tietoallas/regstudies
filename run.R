@@ -23,6 +23,12 @@ if(TRUE){
     gender = sample(c(1,2), 300, replace = T),
     postingdate = rep(as.Date("2000-01-01"), 300)
   )
+  # Generate persons with 0 events at regdata
+  sample_cohort_extra <- tibble::tibble(
+    personid = seq(1101, 1200),
+    gender = sample(c(1,2), 100, replace = T),
+    postingdate = rep(as.Date("2000-01-01"), 100)
+  )
   
   ## Read ICD-codes so that we generate from all classes:
   regstudies::read_classes_tibble(elixhauser_classes) %>% 
@@ -44,7 +50,6 @@ if(TRUE){
       return(NULL)
     }
   }
-  
   ## Generate reg_data
   sample_regdata <- tibble::tibble(
     personid = sample(sample_cohort$personid, 10000, replace = TRUE),
@@ -62,13 +67,7 @@ if(TRUE){
       lubridate::year(disc_date) >= 1996 ~ "icd10"
     ))
   
-  # Determine if codes are ICD-8, ICD-9 or ICD-10
-  sample_regdata <- sample_regdata %>%
-    mutate(icd = case_when(
-      lubridate::year(disc_date) < 1987 ~ "icd8",
-      lubridate::year(disc_date) < 1996 & lubridate::year(disc_date)>=1987 ~ "icd9",
-      lubridate::year(disc_date) >= 1996 ~ "icd10"
-    ))
+  sample_cohort <- rbind(sample_cohort_extra,sample_cohort)
   
   save(sample_regdata, file = "./data/sample_regdata.RData")
   save(sample_cohort, file = "./data/sample_cohort.RData")
