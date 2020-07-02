@@ -22,66 +22,12 @@ library(lubridate)
 ```
 
 
-
-## Data preparation
-
-For demonstration purpose we are going to create random cohort and registry datasets
-
-```{r}
-## Generate random cohort id data
-cohort_data <- tibble::tibble(
-  personid = seq(1201, 1500),
-  gender = sample(c(1,2), 300, replace = T),
-  postingdate = rep(as.Date("2000-01-01"), 300)
-)
-
-# Read ICD-codes so that we generate from all classes:
-read_classes_tibble(regstudies:::charlson_classes) %>% 
-  filter(!is.na(regex)) %>% 
-  mutate(regex2=str_replace_all(regex,"^\\^","")) %>% 
-  group_by(icd,class_charlson) %>%
-  mutate(regex3=str_split(regex2,pattern="\\|\\^")) %>%
-  mutate(regex4=purrr::map_chr(regex3,magrittr::extract(1))) %>% 
-  pull(regex4) -> random_icd_codes
-
-sample_at_least_once <- function(x, size, replace = FALSE, prob = NULL) {
-  # size must be more than length(x)!
-  if (size >= length(x)) {
-    # take all elements at least once
-    sample1<-sample(x=x,size=length(x),replace=FALSE,prob=prob)
-    sample2<-sample(x=x,size=size-length(x),replace = replace,prob=prob)
-    return(c(sample1,sample2))
-  } else {
-    return(NULL)
-  }
-}
-#table(random_icd_codes)
-#sample_at_least_once(unique(random_icd_codes), 17, replace = TRUE) %>%
-#  table()
-
-reg_data <- tibble::tibble(
-  personid = sample(cohort_data$personid, 10000, replace = TRUE),
-  CODE1 = sample_at_least_once(random_icd_codes, 10000, replace = TRUE),
-  adm_date = sample(seq(as.Date("1990-01-01"), as.Date("2005-12-31"), by = 1), 10000, replace = T)
-  # disc_date = ,
-)
-reg_data$disc_date <- (reg_data$adm_date + sample(seq(0,180), 10000, replace = T))
-```
 We need to also create a new help variable `icd` which determines if code is ICD-9, ICD-10 or some other format by year:
 
 ```{r}
-d <- left_join(cohort_data,reg_data)
+d <- left_join(sample_cohort,sample_regdata)
 
-# Determine if codes are ICD-8, ICD-9 or ICD-10
-d <- d %>%
-  mutate(icd = case_when(
-    year(disc_date) < 1987 ~ "icd8",
-    year(disc_date) < 1996 & year(disc_date)>=1987 ~ "icd9",
-    year(disc_date) >= 1996 ~ "icd10"
-    ))
 ```
-
-
 
 # Data wrangling for register data sets
 
@@ -89,17 +35,17 @@ d <- d %>%
 
 The regstudies package also provides useful tools for modifying and filtering the register data sets. Typically in register studies the data consists of events, which are stored in data as time stamps. In our example data set the time stamps are date of hospital visits. Also, in register studies the data are commonly studied with respect to index date, which is a date of interest that can vary by individuals.
 
-Our example data is simulated data that represents a postal questionnaire survey study which has been extended to register data. There are two data sets, the `cohort_data` is holding the study group, and `reg_data` holds the hospital visits for the study group members.
+Our example data is simulated data that represents a postal questionnaire survey study which has been extended to register data. There are two data sets, the `sample_cohort` is holding the study group, and `sample_regdata` holds the hospital visits for the study group members.
 
-More precisely, the `cohort_data` lists the individual id study numbers as `id` for whom the register data has been collected. It also list the `postingdate` holding the date of submitting the postal questionnaire.
-The `reg_data` contains also variable `id` which is necessary to be able to link the data sets. The `reg_data` also contains variables holding the diagnosis codes at `CODE1` and times of hospital admission `adm_date` and hospital discharge `disc_date`.
+More precisely, the `sample_cohort` lists the individual id study numbers as `id` for whom the register data has been collected. It also list the `postingdate` holding the date of submitting the postal questionnaire.
+The `sample_regdata` contains also variable `id` which is necessary to be able to link the data sets. The `sample_regdata` also contains variables holding the diagnosis codes at `CODE1` and times of hospital admission `adm_date` and hospital discharge `disc_date`.
 
 ```{r}
-head(cohort_data)
+head(sample_cohort)
 ```
 
 ```{r}
-head(reg_data)
+head(sample_regdata)
 ```
 # Filtering
 
