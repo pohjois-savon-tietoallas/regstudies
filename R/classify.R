@@ -141,6 +141,7 @@ classify_codes <- function(.data, codes, diag_tbl) {
 #'   'regex' must hold a string with a regular expression defining classes.
 #'   'regex.rm' is optional, defines exceptions to 'regex' (these are not in the group they are named in)
 #'   'label' defines the names of the variables of classes (e.g. comorbidity indicators)
+#' @param verbose if verbose=TRUE then extra notifications about the function operations are printed. Default is FALSE.
 #'   
 #' @return Returns a tibble containing classification table which can be joined to initial data
 #' 
@@ -161,7 +162,7 @@ classify_codes <- function(.data, codes, diag_tbl) {
 #' @rdname make_classify_table
 #' @export
 #' 
-make_classify_table <- function(.data,icdcodes,diag_tbl,return_binary=TRUE) {
+make_classify_table <- function(.data,icdcodes,diag_tbl,return_binary=TRUE,verbose=FALSE) {
   # .data: tibble from which we want to study
   # icdcodes: name of the variable holding ICD-codes (you can use any type of string codes but change your classification definitions according to that)
   # diag_tbl: tibble which holds the classification details: needs to have variables 'regex' and 'label'
@@ -172,7 +173,7 @@ make_classify_table <- function(.data,icdcodes,diag_tbl,return_binary=TRUE) {
   icdcodes <- rlang::enquo(icdcodes)
   classification_name <- .data %>% get_classification_name()
   if (!dplyr::setequal(intersect(c("regex","label"),str_sub(names(diag_tbl),1,5)),c("regex","label"))) {
-    print("Names of the diag_tbl are wrong. Need to have 'regex' and 'label'.")
+    print("Error: Names of the diag_tbl are wrong. Need to have names starting with 'regex' and 'label'.")
     lt <- diag_tbl # TODO: Throw an error or return some sensible object!
   } else {
     #diag_tbl<-diag_tbl %>% select(regex,regex.rm,label) # regex.rm ei ole implementoitu! (viel?)
@@ -186,13 +187,17 @@ make_classify_table <- function(.data,icdcodes,diag_tbl,return_binary=TRUE) {
       dplyr::left_join(diag_tbl,by="regex") %>%
       dplyr::mutate(match.yes=stringr::str_detect(!! icdcodes,regex))
     if(is.element("regex.rm",names(diag_tbl))) {
-      print("Element 'regex.rm' in use. Taking exceptions in use.")
+      if(verbose) {
+        print("Element 'regex.rm' in use. Taking exceptions in use.")
+      }
       cr <- cr %>%
         dplyr::mutate(match.rm=stringr::str_detect(!! icdcodes,regex.rm),
                       match.rm=ifelse(is.na(match.rm),FALSE,match.rm)
         )
     } else {
-      print("Element 'regex.rm' NOT in use. Exceptions omitted.")
+      if(verbose) {
+        print("Element 'regex.rm' NOT in use. Exceptions omitted.")
+      }
       cr <- cr %>%
         dplyr::mutate(match.rm = FALSE,regex.rm=NA)
     }
