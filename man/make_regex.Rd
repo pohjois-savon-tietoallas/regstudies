@@ -43,6 +43,7 @@ Other help functions:
 \code{\link{get_classification_name}()},
 \code{\link{get_na_vars}()},
 \code{\link{get_var_types}()},
-\code{\link{left_join_replace_na}()}
+\code{\link{left_join_replace_na}()},
+\code{\link{replace_na_by_type}()}
 }
 \concept{help functions}
