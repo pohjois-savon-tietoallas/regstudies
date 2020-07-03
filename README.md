@@ -37,7 +37,7 @@ And the development version from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("jukop/regstudies")
+devtools::install_github("pohjois-savon-tietoallas/regstudies")
 ```
 
 ## Example
@@ -48,6 +48,28 @@ This is a basic example which shows you how to solve a common problem:
 library(regstudies)
 #> regstudies - register studies with R
 ## basic example code
+
+# ´regstudies´ makes it easy to classify codes such as ICD-codes to groups and also to sum scores based on the groupings.
+# Premade classifications and scores of Charlson and Elixhauser comorbidity indices are available in the package.
+sample_data <- left_join(sample_cohort,sample_regdata)
+sample_data %>% 
+  classify_charlson(icd_codes = CODE1) %>%
+  sum_score(score_charlson)
+
+# Users can define the code groups themselves using simple regular expression syntax.
+my_classes <- head(charlson_classes,5) %>%
+  mutate(score_myscore=1:5)
+
+# This classification definition has four different type of codes.
+head(charlson_classes)
+
+# Data has three different types of codes.
+head(sample_data)
+
+# Different groups types can are automatically handled simultaneously as long as the correct syntax is followed.
+sample_data %>% 
+  classify_codes(codes=CODE1,diag_tbl = read_classes(my_classes)) %>%
+  sum_score(score_myscore)
 ```
 
 ## Citation
