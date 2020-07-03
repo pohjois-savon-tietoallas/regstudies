@@ -69,14 +69,18 @@ if(TRUE){
   
   sample_cohort <- rbind(sample_cohort_extra,sample_cohort)
   
+  sample_cohort <- sample_cohort %>% arrange(personid)
+  sample_regdata <- sample_regdata %>% arrange(personid,adm_date)  
   save(sample_regdata, file = "./data/sample_regdata.RData")
   save(sample_cohort, file = "./data/sample_cohort.RData")
-
+#  setdiff(sample_regdata$personid,sample_cohort$personid)
+#  setdiff(sample_cohort$personid,sample_regdata$personid) #ok!
+  
+  rm(list = c("charlson_classes", "elixhauser_classes"))
 }
 
 ## Knit and Translate package ----------
 if(TRUE){
-  #rm(list = c("charlson_classes", "elixhauser_classes"))
   devtools::document()
   pkgdown::build_home()
   pkgdown::build_site()
