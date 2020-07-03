@@ -32,36 +32,48 @@ head(classified_d)
 
 ### Elixhauser classification and scores
 
-This calculates per row elixhauser classification. Check more info of classification from [classification tables](docs/articles/classification_tables.html)-section.
+This calculates per row Elixhauser classification. Check more info of classification from [classification tables](docs/articles/classification_tables.html)-section.
 
 ```{r}
-elixscore <- filtered_d %>% 
+elixh_d <- filtered_d %>% 
   classify_elixhauser(icd_codes = CODE1)
-head(elixscore)
+head(elixh_d)
+```
+To calculate the scores of Elixhauser comorbidity index, we can use `sum_score` function. As our classification table defines two alternative score definitions, namely `score_AHRQ` and `score_van_Walraven`, we can calculate both of them on one call as follows:
 
-# TODO: Scores
+```{r}
+elixh_score <- filtered_d %>% 
+  classify_elixhauser(icd_codes = CODE1) %>%
+  sum_score(score_AHRQ, score_van_Walraven)
+head(elixh_score)
 ```
 
+
 ### Charlson classification and scores
+
+We also provide Charlson comorbidity classification ready to use in `regstudies`. It can be easilly used with function `classify_charlson`. The use of `classify_charlson` is very identical to use of `classify_elixhauser`. Only difference is that in the classification the score-variable is called `score_charlson`.
 
 ```{r}
 ## Classifying Charlson comorbidity classes to long format
 
-d %>% 
-  classify_charlson(CODE1) -> charlson # ns. tidy standardi
-head(long)
+charlson_score <- filtered_d %>% 
+  classify_charlson(icd_codes = CODE1) %>%
+  sum_score(score_charlson)
+head(charlson_score)
 ```
 
 ### Long data to wide data
 
+The outputs of all classification functions (`classify_elixhauser`, `classify_charlson` and `classify_codes`) gives output as long data. If user need to have class indicators or scores of each events as wide, it can be accomplished using `pivot_wider` as follows.
+
 ```{r}
-long %>%
+charlson_d %>%
   mutate(class_charlson=paste0("cl_",class_charlson)) %>% # TODO: laita tämä ominaisuus classify-funktioon sisälle!
   mutate(score_charlson=as.integer(score_charlson>0)) %>% 
   tidyr::pivot_wider(names_from="class_charlson",
                      values_from="score_charlson",
                      values_fill=0) %>%
-  select(-all_of(c("cl_NA","label_charlson"))) -> wide
+  select(-all_of(c("cl_NA","label_charlson"))) -> wide # Some events do not belong to any class. That creates NA to data and pivot_wider handles NA classes to cl_NA column in this code.
 head(wide)
 ```
 
