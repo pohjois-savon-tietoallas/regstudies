@@ -37,7 +37,7 @@ And the development version from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("jukop/regstudies")
+devtools::install_github("pohjois-savon-tietoallas/regstudies")
 ```
 ## Example
 
