@@ -19,11 +19,11 @@ Sum scores for each individual. Allows arbitrary number of scores to be calculat
 }
 \examples{
 \dontrun{
-# Lets calculate two different Elixhauser scores for a data set 'filtereddata'
-elixhauser_classes <- classes_to_wide(vroom(file = "data/classification_codes/elixhauser_classes_wide.csv"))
-elixscore <- filtereddata \%>\%
-  classify_data_long(icdcodes=CODE1,diag_tbl=elixhauser_classes) \%>\%
+# Lets calculate two different Elixhauser scores for a data set 'filtered_d'
+elixh_score <- filtered_d \%>\%
+  classify_elixhauser(icdcodes=CODE1) \%>\%
   sum_score(score_AHRQ,score_van_Walraven)
+  head(elixh_score)
 }
 }
 \concept{classification functions}

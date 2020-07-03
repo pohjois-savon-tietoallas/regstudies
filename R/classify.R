@@ -22,7 +22,7 @@
 #' @export
 
 classify_elixhauser <- function(.data, icd_codes) {
-  diag_tbl <- regstudies::read_classes_tibble(regstudies:::elixhauser_classes) ## TODO: is this the best way or should data be ready in good format?
+  diag_tbl <- regstudies::read_classes(regstudies:::elixhauser_classes) ## TODO: is this the best way or should data be ready in good format?
   
   icdcodes_quo <- rlang::enquo(icd_codes)
   id_quo <- rlang::enquo(id)
@@ -67,7 +67,7 @@ classify_elixhauser <- function(.data, icd_codes) {
 #' @export
 
 classify_charlson <- function(.data, icd_codes) {
-  diag_tbl <- regstudies::read_classes_tibble(regstudies:::charlson_classes) ## TODO: is this the best way or should data be ready in good format?
+  diag_tbl <- regstudies::read_classes(regstudies:::charlson_classes) ## TODO: is this the best way or should data be ready in good format?
   
   icdcodes_quo <- rlang::enquo(icd_codes)
   id_quo <- rlang::enquo(id)

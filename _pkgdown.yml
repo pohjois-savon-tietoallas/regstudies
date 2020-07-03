@@ -28,8 +28,7 @@ reference:
   - get_var_types
   - left_join_replace_na
   - make_regex
-  - read_classes_csv
-  - read_classes_tibble
+  - read_classes
   - replace_na_by_type
 articles:
 - title: Articles

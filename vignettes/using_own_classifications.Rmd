@@ -67,6 +67,9 @@ head(charlson_score)
 The outputs of all classification functions (`classify_elixhauser`, `classify_charlson` and `classify_codes`) gives output as long data. If user need to have class indicators or scores of each events as wide, it can be accomplished using `pivot_wider` as follows.
 
 ```{r}
+charlson_d <- filtered_d %>% 
+  classify_charlson(icd_codes = CODE1)
+
 charlson_d %>%
   mutate(class_charlson=paste0("cl_",class_charlson)) %>% # TODO: laita tämä ominaisuus classify-funktioon sisälle!
   mutate(score_charlson=as.integer(score_charlson>0)) %>% 

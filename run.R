@@ -31,7 +31,7 @@ if(TRUE){
   )
   
   ## Read ICD-codes so that we generate from all classes:
-  regstudies::read_classes_tibble(elixhauser_classes) %>% 
+  regstudies::read_classes(elixhauser_classes) %>% 
     filter(!is.na(regex)) %>% 
     mutate(regex2=str_replace_all(regex,"^\\^","")) %>% 
     group_by(icd,class_elixhauser) %>%

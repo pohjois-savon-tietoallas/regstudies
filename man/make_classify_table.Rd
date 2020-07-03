@@ -4,7 +4,13 @@
 \alias{make_classify_table}
 \title{Classify diagnosis codes to long format with exceptions}
 \usage{
-make_classify_table(.data, icdcodes, diag_tbl, return_binary = TRUE)
+make_classify_table(
+  .data,
+  icdcodes,
+  diag_tbl,
+  return_binary = TRUE,
+  verbose = FALSE
+)
 }
 \arguments{
 \item{.data}{tibble of register data which we want to study}
@@ -15,6 +21,8 @@ make_classify_table(.data, icdcodes, diag_tbl, return_binary = TRUE)
 'regex' must hold a string with a regular expression defining classes.
 'regex.rm' is optional, defines exceptions to 'regex' (these are not in the group they are named in)
 'label' defines the names of the variables of classes (e.g. comorbidity indicators)}
+
+\item{verbose}{if verbose=TRUE then extra notifications about the function operations are printed. Default is FALSE.}
 }
 \value{
 Returns a tibble containing classification table which can be joined to initial data
