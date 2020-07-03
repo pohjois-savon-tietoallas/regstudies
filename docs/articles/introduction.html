@@ -120,12 +120,12 @@
 <p>Dataset <code>sample_regdata</code> is a dataset which has events for the selected population with ICD codes and date-variables:</p>
 <div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">sample_regdata</span>)</pre></body></html></div>
 <pre><code>##     personid       CODE1              adm_date            disc_date         
-##  Min.   :1201   Length:10000       Min.   :1990-01-01   Min.   :1990-01-15  
-##  1st Qu.:1276   Class :character   1st Qu.:1993-12-31   1st Qu.:1994-04-03  
-##  Median :1352   Mode  :character   Median :1998-02-05   Median :1998-05-01  
-##  Mean   :1352                      Mean   :1998-01-16   Mean   :1998-04-16  
-##  3rd Qu.:1427                      3rd Qu.:2002-01-24   3rd Qu.:2002-04-23  
-##  Max.   :1500                      Max.   :2005-12-30   Max.   :2006-06-06  
+##  Min.   :1102   Length:10000       Min.   :1990-01-01   Min.   :1990-01-11  
+##  1st Qu.:1195   Class :character   1st Qu.:1994-01-08   1st Qu.:1994-04-10  
+##  Median :1297   Mode  :character   Median :1998-02-03   Median :1998-05-02  
+##  Mean   :1297                      Mean   :1998-01-16   Mean   :1998-04-15  
+##  3rd Qu.:1397                      3rd Qu.:2002-02-13   3rd Qu.:2002-05-05  
+##  Max.   :1499                      Max.   :2005-12-30   Max.   :2006-06-22  
 ##      icd           
 ##  Length:10000      
 ##  Class :character  
@@ -146,13 +146,13 @@
 <pre><code>## # A tibble: 6 x 7
 ##   personid CODE1 adm_date   disc_date  icd   gender postingdate
 ##      &lt;int&gt; &lt;chr&gt; &lt;date&gt;     &lt;date&gt;     &lt;chr&gt;  &lt;dbl&gt; &lt;date&gt;     
-## 1     1474 2780  2002-05-05 2002-11-01 icd10      1 2000-01-01 
-## 2     1462 446   2005-11-21 2006-02-23 icd10      1 2000-01-01 
-## 3     1227 140   1996-08-14 1997-01-21 icd10      1 2000-01-01 
-## 4     1293 3319  1991-08-25 1991-11-02 icd9       1 2000-01-01 
-## 5     1397 4260  2002-09-01 2002-09-12 icd10      2 2000-01-01 
-## 6     1319 200   1993-05-19 1993-06-26 icd9       2 2000-01-01</code></pre>
-<p>Classification need help variable, which tells us which version of ICD-codes we are using:</p>
+## 1     1245 E102  2003-06-15 2003-06-25 icd10      2 2000-01-01 
+## 2     1282 5317  1992-06-20 1992-07-19 icd9       2 2000-01-01 
+## 3     1303 07022 1993-08-01 1993-09-05 icd9       1 2000-01-01 
+## 4     1196 C77   1993-01-26 1993-07-15 icd9       1 2000-01-01 
+## 5     1469 2800  2000-02-28 2000-06-07 icd10      2 2000-01-01 
+## 6     1458 140   2005-05-24 2005-10-27 icd10      1 2000-01-01</code></pre>
+<p>Classification of codes can handle multiple code types on one occasion, but user needs to tell us which code is which type. This functionality allows user to classify data what contains both ICD-codes and pharmaceutical codes at one data. For example when using multiple versions of ICD-codes, we create a new variable called <code>icd</code>:</p>
 <div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="co">## create a new help variable `icd` which determines if code is ICD-8, ICD-9 or ICD-10 by year</span>
 <span class="no">d</span> <span class="kw">&lt;-</span> <span class="no">d</span> <span class="kw">%&gt;%</span>
   <span class="fu">mutate</span>(<span class="kw">icd</span> <span class="kw">=</span> <span class="fu">case_when</span>(
@@ -184,43 +184,41 @@
   <span class="co"># filter(icd == "icd10") %&gt;% </span>
   <span class="fu"><a href="../reference/classify_elixhauser.html">classify_elixhauser</a></span>(<span class="kw">icd_codes</span> <span class="kw">=</span> <span class="no">CODE1</span>)</pre></body></html></div>
 <pre><code>## Joining, by = "label_elixhauser"</code></pre>
-<pre><code>## [1] "Element 'regex.rm' NOT in use. Exceptions omitted."</code></pre>
-<pre><code>## # A tibble: 10,514 x 11
+<pre><code>## # A tibble: 10,507 x 11
 ##    personid CODE1 adm_date   disc_date  icd   gender postingdate
 ##       &lt;int&gt; &lt;chr&gt; &lt;date&gt;     &lt;date&gt;     &lt;chr&gt;  &lt;dbl&gt; &lt;date&gt;     
-##  1     1474 2780  2002-05-05 2002-11-01 icd10      1 2000-01-01 
-##  2     1462 446   2005-11-21 2006-02-23 icd10      1 2000-01-01 
-##  3     1227 140   1996-08-14 1997-01-21 icd10      1 2000-01-01 
-##  4     1293 3319  1991-08-25 1991-11-02 icd9       1 2000-01-01 
-##  5     1397 4260  2002-09-01 2002-09-12 icd10      2 2000-01-01 
-##  6     1319 200   1993-05-19 1993-06-26 icd9       2 2000-01-01 
-##  7     1452 I11   1993-01-23 1993-03-09 icd9       2 2000-01-01 
-##  8     1208 D500  2004-04-27 2004-10-15 icd10      1 2000-01-01 
-##  9     1342 2938  1992-01-10 1992-04-26 icd9       1 2000-01-01 
-## 10     1459 C81   2003-09-17 2004-03-13 icd10      2 2000-01-01 
-## # ... with 10,504 more rows, and 4 more variables: class_elixhauser &lt;chr&gt;,
+##  1     1245 E102  2003-06-15 2003-06-25 icd10      2 2000-01-01 
+##  2     1282 5317  1992-06-20 1992-07-19 icd9       2 2000-01-01 
+##  3     1303 07022 1993-08-01 1993-09-05 icd9       1 2000-01-01 
+##  4     1196 C77   1993-01-26 1993-07-15 icd9       1 2000-01-01 
+##  5     1469 2800  2000-02-28 2000-06-07 icd10      2 2000-01-01 
+##  6     1458 140   2005-05-24 2005-10-27 icd10      1 2000-01-01 
+##  7     1109 40301 1994-06-17 1994-09-15 icd9       1 2000-01-01 
+##  8     1109 40301 1994-06-17 1994-09-15 icd9       1 2000-01-01 
+##  9     1173 I099  1990-05-04 1990-10-12 icd9       1 2000-01-01 
+## 10     1492 F11   1996-05-09 1996-10-01 icd10      2 2000-01-01 
+## # ... with 10,497 more rows, and 4 more variables: class_elixhauser &lt;chr&gt;,
 ## #   label_elixhauser &lt;chr&gt;, score_AHRQ &lt;dbl&gt;, score_van_Walraven &lt;dbl&gt;</code></pre>
 <p><em>When using function argument <code>verbose = TRUE</code>, message “Element ‘regex.rm’ NOT in use. Exceptions omitted.” is normal when …….. </em></p>
 <p>To calculate elixhauser scores for each individual you just need to add <code>sum_score</code> function. The premade classification table contains two alternative scores to be used <code>score_AHRQ</code> and <code>score_van_Walraven</code> both of which can be calculated at one function call.</p>
-<div class="sourceCode" id="cb17"><html><body><pre class="r"><span class="co"># Calculate scores</span>
+<div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="co"># Calculate scores</span>
 <span class="no">d</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/classify_elixhauser.html">classify_elixhauser</a></span>(<span class="kw">icd_codes</span> <span class="kw">=</span> <span class="no">CODE1</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/sum_score.html">sum_score</a></span>(<span class="no">score_AHRQ</span>, <span class="no">score_van_Walraven</span>)</pre></body></html></div>
 <pre><code>## Joining, by = "label_elixhauser"</code></pre>
-<pre><code>## [1] "Element 'regex.rm' NOT in use. Exceptions omitted."</code></pre>
 <pre><code>## # A tibble: 300 x 3
 ##    personid `sum(score_AHRQ)` `sum(score_van_Walraven)`
 ##       &lt;int&gt;             &lt;dbl&gt;                     &lt;dbl&gt;
-##  1     1201                37                        44
-##  2     1202                44                        45
-##  3     1203                20                        22
-##  4     1204                41                        45
-##  5     1205                40                        35
-##  6     1206                24                        22
-##  7     1207                29                        36
-##  8     1208                44                        42
-##  9     1209                10                        22
-## 10     1210                49                        45
+##  1     1102                18                        20
+##  2     1103                21                        21
+##  3     1106                 4                        10
+##  4     1107                46                        37
+##  5     1108                13                        12
+##  6     1109                14                        19
+##  7     1111                39                        33
+##  8     1112                53                        42
+##  9     1113                23                        21
+## 10     1114                17                        23
 ## # ... with 290 more rows</code></pre>
 <p>Function classifies all the rows which has classification code in <code>regstudies:::elixhauser_classes</code>. If the is no classification on certain ICD code, row will get NA values.</p>
 <p><em>Historgram of sums…..</em></p>
@@ -229,28 +227,27 @@
 <h2 class="hasAnchor">
 <a href="#charlson-comorbidity" class="anchor"></a>Charlson comorbidity</h2>
 <p>Classifying Charlson comorbidity classes give as output long formatted data as wel Elixhauser classification:</p>
-<div class="sourceCode" id="cb21"><html><body><pre class="r"><span class="co">## Classifying Charlson comorbidity classes to long format</span>
+<div class="sourceCode" id="cb19"><html><body><pre class="r"><span class="co">## Classifying Charlson comorbidity classes to long format</span>
 <span class="no">charlson</span> <span class="kw">&lt;-</span> <span class="no">d</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/classify_charlson.html">classify_charlson</a></span>(<span class="no">CODE1</span>)</pre></body></html></div>
 <pre><code>## Joining, by = "label_charlson"</code></pre>
-<pre><code>## [1] "Element 'regex.rm' NOT in use. Exceptions omitted."</code></pre>
-<div class="sourceCode" id="cb24"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">charlson</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb21"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">charlson</span>)</pre></body></html></div>
 <pre><code>## # A tibble: 6 x 10
 ##   personid CODE1 adm_date   disc_date  icd   gender postingdate class_charlson
 ##      &lt;int&gt; &lt;chr&gt; &lt;date&gt;     &lt;date&gt;     &lt;chr&gt;  &lt;dbl&gt; &lt;date&gt;      &lt;chr&gt;         
-## 1     1474 2780  2002-05-05 2002-11-01 icd10      1 2000-01-01  &lt;NA&gt;          
-## 2     1462 446   2005-11-21 2006-02-23 icd10      1 2000-01-01  &lt;NA&gt;          
-## 3     1227 140   1996-08-14 1997-01-21 icd10      1 2000-01-01  &lt;NA&gt;          
-## 4     1293 3319  1991-08-25 1991-11-02 icd9       1 2000-01-01  &lt;NA&gt;          
-## 5     1397 4260  2002-09-01 2002-09-12 icd10      2 2000-01-01  &lt;NA&gt;          
-## 6     1319 200   1993-05-19 1993-06-26 icd9       2 2000-01-01  canc          
+## 1     1245 E102  2003-06-15 2003-06-25 icd10      2 2000-01-01  diabwc        
+## 2     1282 5317  1992-06-20 1992-07-19 icd9       2 2000-01-01  pud           
+## 3     1303 07022 1993-08-01 1993-09-05 icd9       1 2000-01-01  mld           
+## 4     1196 C77   1993-01-26 1993-07-15 icd9       1 2000-01-01  &lt;NA&gt;          
+## 5     1469 2800  2000-02-28 2000-06-07 icd10      2 2000-01-01  &lt;NA&gt;          
+## 6     1458 140   2005-05-24 2005-10-27 icd10      1 2000-01-01  &lt;NA&gt;          
 ## # ... with 2 more variables: label_charlson &lt;chr&gt;, score_charlson &lt;dbl&gt;</code></pre>
 </div>
 <div id="long-data-to-wide-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#long-data-to-wide-data" class="anchor"></a>Long data to wide data</h2>
 <p>For example in modelling you might want to have dataset in wide format. To modify dataset to wide format, use <code>dplyr::pivot_wider()</code> verb:</p>
-<div class="sourceCode" id="cb26"><html><body><pre class="r"><span class="no">charlson</span> <span class="kw">%&gt;%</span>
+<div class="sourceCode" id="cb23"><html><body><pre class="r"><span class="no">charlson</span> <span class="kw">%&gt;%</span>
   <span class="fu">mutate</span>(<span class="kw">class_charlson</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="st">"cl_"</span>,<span class="no">class_charlson</span>)) <span class="kw">%&gt;%</span> <span class="co"># TODO: laita tämä ominaisuus classify-funktioon sisälle!</span>
   <span class="fu">mutate</span>(<span class="kw">score_charlson</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span>(<span class="no">score_charlson</span><span class="kw">&gt;</span><span class="fl">0</span>)) <span class="kw">%&gt;%</span>
   <span class="kw pkg">tidyr</span><span class="kw ns">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider</a></span>(<span class="kw">names_from</span><span class="kw">=</span><span class="st">"class_charlson"</span>,
@@ -259,23 +256,23 @@
   <span class="fu">select</span>(-<span class="fu">all_of</span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"cl_NA"</span>,<span class="st">"label_charlson"</span>))) <span class="kw">-&gt;</span> <span class="no">charlson_wide</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">charlson_wide</span>)</pre></body></html></div>
 <pre><code>## # A tibble: 6 x 19
-##   personid CODE1 adm_date   disc_date  icd   gender postingdate cl_canc cl_aids
-##      &lt;int&gt; &lt;chr&gt; &lt;date&gt;     &lt;date&gt;     &lt;chr&gt;  &lt;dbl&gt; &lt;date&gt;        &lt;int&gt;   &lt;int&gt;
-## 1     1474 2780  2002-05-05 2002-11-01 icd10      1 2000-01-01        0       0
-## 2     1462 446   2005-11-21 2006-02-23 icd10      1 2000-01-01        0       0
-## 3     1227 140   1996-08-14 1997-01-21 icd10      1 2000-01-01        0       0
-## 4     1293 3319  1991-08-25 1991-11-02 icd9       1 2000-01-01        0       0
-## 5     1397 4260  2002-09-01 2002-09-12 icd10      2 2000-01-01        0       0
-## 6     1319 200   1993-05-19 1993-06-26 icd9       2 2000-01-01        1       0
-## # ... with 10 more variables: cl_mld &lt;int&gt;, cl_pud &lt;int&gt;, cl_chf &lt;int&gt;,
-## #   cl_rend &lt;int&gt;, cl_diabwc &lt;int&gt;, cl_copd &lt;int&gt;, cl_pvd &lt;int&gt;,
-## #   cl_metacanc &lt;int&gt;, cl_hp &lt;int&gt;, cl_diab &lt;int&gt;</code></pre>
+##   personid CODE1 adm_date   disc_date  icd   gender postingdate cl_diabwc cl_pud
+##      &lt;int&gt; &lt;chr&gt; &lt;date&gt;     &lt;date&gt;     &lt;chr&gt;  &lt;dbl&gt; &lt;date&gt;          &lt;int&gt;  &lt;int&gt;
+## 1     1245 E102  2003-06-15 2003-06-25 icd10      2 2000-01-01          1      0
+## 2     1282 5317  1992-06-20 1992-07-19 icd9       2 2000-01-01          0      1
+## 3     1303 07022 1993-08-01 1993-09-05 icd9       1 2000-01-01          0      0
+## 4     1196 C77   1993-01-26 1993-07-15 icd9       1 2000-01-01          0      0
+## 5     1469 2800  2000-02-28 2000-06-07 icd10      2 2000-01-01          0      0
+## 6     1458 140   2005-05-24 2005-10-27 icd10      1 2000-01-01          0      0
+## # ... with 10 more variables: cl_mld &lt;int&gt;, cl_rend &lt;int&gt;, cl_copd &lt;int&gt;,
+## #   cl_chf &lt;int&gt;, cl_diab &lt;int&gt;, cl_canc &lt;int&gt;, cl_aids &lt;int&gt;,
+## #   cl_metacanc &lt;int&gt;, cl_hp &lt;int&gt;, cl_pvd &lt;int&gt;</code></pre>
 </div>
 <div id="extra-labeling-wide-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#extra-labeling-wide-data" class="anchor"></a>Extra: labeling wide data</h2>
 <p>You can also add labels to variables in wide format data with code below</p>
-<div class="sourceCode" id="cb28"><html><body><pre class="r"><span class="co">## calculating labels</span>
+<div class="sourceCode" id="cb25"><html><body><pre class="r"><span class="co">## calculating labels</span>
 <span class="kw pkg">regstudies</span><span class="kw ns">:::</span><span class="no">charlson_classes</span> <span class="kw">%&gt;%</span>
   <span class="fu">select</span>(<span class="no">class_charlson</span>,<span class="no">label_charlson</span>) <span class="kw">%&gt;%</span>
   <span class="fu">mutate</span>(<span class="kw">class_charlson</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="st">"cl_"</span>,<span class="no">class_charlson</span>)) <span class="kw">-&gt;</span> <span class="no">labels</span>

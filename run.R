@@ -17,21 +17,21 @@ if(TRUE){
   # regstudies:::elixhauser_classes
   # regstudies:::charlson_classes
   
-  ## Generate random cohort id data
-  sample_cohort <- tibble::tibble(
-    personid = seq(1201, 1500),
-    gender = sample(c(1,2), 300, replace = T),
-    postingdate = rep(as.Date("2000-01-01"), 300)
-  )
   # Generate persons with 0 events at regdata
   sample_cohort_extra <- tibble::tibble(
-    personid = seq(1101, 1200),
+    personid = sort(sample(1101:1500,100)),
     gender = sample(c(1,2), 100, replace = T),
     postingdate = rep(as.Date("2000-01-01"), 100)
   )
+  ## Generate random cohort id data
+  sample_cohort <- tibble::tibble(
+    personid = setdiff(seq(1101, 1500),sample_cohort_extra$personid),
+    gender = sample(c(1,2), 300, replace = T),
+    postingdate = rep(as.Date("2000-01-01"), 300)
+  )
   
   ## Read ICD-codes so that we generate from all classes:
-  regstudies::read_classes_tibble(elixhauser_classes) %>% 
+  regstudies::read_classes(elixhauser_classes) %>% 
     filter(!is.na(regex)) %>% 
     mutate(regex2=str_replace_all(regex,"^\\^","")) %>% 
     group_by(icd,class_elixhauser) %>%
@@ -76,7 +76,9 @@ if(TRUE){
 
 ## Knit and Translate package ----------
 if(TRUE){
+  #rm(list = c("charlson_classes", "elixhauser_classes"))
   devtools::document()
+  pkgdown::build_home()
   pkgdown::build_site()
 }
 

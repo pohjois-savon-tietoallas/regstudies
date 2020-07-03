@@ -107,7 +107,7 @@
 <div class="sourceCode" id="cb1"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"regstudies"</span>) <span class="co"># maybe some day!! </span></pre></div>
 <p>And the development version from <a href="https://github.com/">GitHub</a> with:</p>
 <div class="sourceCode" id="cb2"><pre class="r"><span class="co"># install.packages("devtools")</span>
-<span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span>(<span class="st">"jukop/regstudies"</span>)</pre></div>
+<span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span>(<span class="st">"pohjois-savon-tietoallas/regstudies"</span>)</pre></div>
 </div>
 <div id="example" class="section level2">
 <h2 class="hasAnchor">
@@ -115,7 +115,28 @@
 <p>This is a basic example which shows you how to solve a common problem:</p>
 <div class="sourceCode" id="cb3"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">regstudies</span>)
 <span class="co">#&gt; regstudies - register studies with R</span>
-<span class="co">## basic example code</span></pre></div>
+<span class="co">## basic example code</span>
+
+<span class="co"># ´regstudies´ makes it easy to classify codes such as ICD-codes to groups and also to sum scores based on the groupings.</span>
+<span class="no">sample_data</span> <span class="kw">&lt;-</span> <span class="fu">left_join</span>(<span class="no">sample_cohort</span>,<span class="no">sample_regdata</span>)
+<span class="no">sample_data</span> <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="reference/classify_charlson.html">classify_charlson</a></span>(<span class="kw">icd_codes</span> <span class="kw">=</span> <span class="no">CODE1</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="reference/sum_score.html">sum_score</a></span>(<span class="no">score_charlson</span>)
+
+<span class="co"># Users can define the code groups themselves using simple regular expression syntax.</span>
+<span class="no">my_classes</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">charlson_classes</span>,<span class="fl">5</span>) <span class="kw">%&gt;%</span>
+  <span class="fu">mutate</span>(<span class="kw">score_myscore</span><span class="kw">=</span><span class="fl">1</span>:<span class="fl">5</span>)
+
+<span class="co"># This classification definition has four different type of codes.</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">charlson_classes</span>)
+
+<span class="co"># Data has three different types of codes.</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">sample_data</span>)
+
+<span class="co"># Different groups types can are automatically handled simultaneously.</span>
+<span class="no">sample_data</span> <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="reference/classify_codes.html">classify_codes</a></span>(<span class="kw">codes</span><span class="kw">=</span><span class="no">CODE1</span>,<span class="kw">diag_tbl</span> <span class="kw">=</span> <span class="fu"><a href="reference/read_classes.html">read_classes</a></span>(<span class="no">my_classes</span>)) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="reference/sum_score.html">sum_score</a></span>(<span class="no">score_myscore</span>)</pre></div>
 </div>
 <div id="citation" class="section level2">
 <h2 class="hasAnchor">

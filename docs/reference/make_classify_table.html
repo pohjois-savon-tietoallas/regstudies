@@ -138,7 +138,13 @@
     <p>Computes classification table which can be attached to original data using left_join().</p>
     </div>
 
-    <pre class="usage"><span class='fu'>make_classify_table</span>(<span class='no'>.data</span>, <span class='no'>icdcodes</span>, <span class='no'>diag_tbl</span>, <span class='kw'>return_binary</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>make_classify_table</span>(
+  <span class='no'>.data</span>,
+  <span class='no'>icdcodes</span>,
+  <span class='no'>diag_tbl</span>,
+  <span class='kw'>return_binary</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -157,6 +163,10 @@
 'regex' must hold a string with a regular expression defining classes.
 'regex.rm' is optional, defines exceptions to 'regex' (these are not in the group they are named in)
 'label' defines the names of the variables of classes (e.g. comorbidity indicators)</p></td>
+    </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p>if verbose=TRUE then extra notifications about the function operations are printed. Default is FALSE.</p></td>
     </tr>
     </table>
 

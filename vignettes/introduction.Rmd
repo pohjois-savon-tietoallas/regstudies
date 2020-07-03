@@ -54,7 +54,7 @@ d <- sample_regdata %>%
 head(d)
 ```
 
-Classification need help variable, which tells us which version of ICD-codes we are using:
+Classification of codes can handle multiple code types on one occasion, but user needs to tell us which code is which type. This functionality allows user to classify data what contains both ICD-codes and pharmaceutical codes at one data. For example when using multiple versions of ICD-codes, we create a new variable called `icd`:
 
 ```{r}
 ## create a new help variable `icd` which determines if code is ICD-8, ICD-9 or ICD-10 by year
