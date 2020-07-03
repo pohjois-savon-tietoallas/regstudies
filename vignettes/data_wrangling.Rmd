@@ -112,7 +112,7 @@ na_replace_list <- list(
 )
 d_filled<-left_join_replace_na(sample_cohort,sample_regdata,na_replace_list)
 head(d_filled)
-View(d_filled)
+#View(d_filled)
 ```
 
 ```{r}

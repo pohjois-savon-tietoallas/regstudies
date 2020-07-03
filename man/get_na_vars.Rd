@@ -20,6 +20,7 @@ Other help functions:
 \code{\link{get_classification_name}()},
 \code{\link{get_var_types}()},
 \code{\link{left_join_replace_na}()},
-\code{\link{make_regex}()}
+\code{\link{make_regex}()},
+\code{\link{replace_na_by_type}()}
 }
 \concept{help functions}

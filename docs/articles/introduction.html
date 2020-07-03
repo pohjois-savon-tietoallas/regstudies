@@ -85,7 +85,7 @@
 
       
 
-      </header><div class="row">
+      </header><script src="introduction_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Introduction</h1>
@@ -111,21 +111,28 @@
 <p>The <code>sample_regdata</code> contains also variable <code>id</code> which is necessary to be able to link the data sets. The <code>sample_regdata</code> also contains variables holding the diagnosis codes at <code>CODE1</code> and times of hospital admission <code>adm_date</code> and hospital discharge <code>disc_date</code>.</p>
 <div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">sample_cohort</span>)</pre></body></html></div>
 <pre><code>##     personid        gender      postingdate        
-##  Min.   :1201   Min.   :1.00   Min.   :2000-01-01  
-##  1st Qu.:1276   1st Qu.:1.00   1st Qu.:2000-01-01  
-##  Median :1350   Median :2.00   Median :2000-01-01  
-##  Mean   :1350   Mean   :1.55   Mean   :2000-01-01  
-##  3rd Qu.:1425   3rd Qu.:2.00   3rd Qu.:2000-01-01  
+##  Min.   :1101   Min.   :1.00   Min.   :2000-01-01  
+##  1st Qu.:1201   1st Qu.:1.00   1st Qu.:2000-01-01  
+##  Median :1300   Median :2.00   Median :2000-01-01  
+##  Mean   :1300   Mean   :1.52   Mean   :2000-01-01  
+##  3rd Qu.:1400   3rd Qu.:2.00   3rd Qu.:2000-01-01  
 ##  Max.   :1500   Max.   :2.00   Max.   :2000-01-01</code></pre>
 <p>Dataset <code>sample_regdata</code> is a dataset which has events for the selected population with ICD codes and date-variables:</p>
 <div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">sample_regdata</span>)</pre></body></html></div>
 <pre><code>##     personid       CODE1              adm_date            disc_date         
-##  Min.   :1201   Length:10000       Min.   :1990-01-01   Min.   :1990-01-24  
-##  1st Qu.:1276   Class :character   1st Qu.:1993-12-08   1st Qu.:1994-03-07  
-##  Median :1352   Mode  :character   Median :1997-12-15   Median :1998-03-03  
-##  Mean   :1351                      Mean   :1997-12-14   Mean   :1998-03-15  
-##  3rd Qu.:1425                      3rd Qu.:2001-11-22   3rd Qu.:2002-02-19  
-##  Max.   :1500                      Max.   :2005-12-31   Max.   :2006-06-20</code></pre>
+##  Min.   :1201   Length:10000       Min.   :1990-01-01   Min.   :1990-01-15  
+##  1st Qu.:1276   Class :character   1st Qu.:1993-12-31   1st Qu.:1994-04-03  
+##  Median :1352   Mode  :character   Median :1998-02-05   Median :1998-05-01  
+##  Mean   :1352                      Mean   :1998-01-16   Mean   :1998-04-16  
+##  3rd Qu.:1427                      3rd Qu.:2002-01-24   3rd Qu.:2002-04-23  
+##  Max.   :1500                      Max.   :2005-12-30   Max.   :2006-06-06  
+##      icd           
+##  Length:10000      
+##  Class :character  
+##  Mode  :character  
+##                    
+##                    
+## </code></pre>
 </div>
 <div id="preparation-for-classifications" class="section level2">
 <h2 class="hasAnchor">
@@ -136,15 +143,15 @@
   <span class="fu">left_join</span>(<span class="no">sample_cohort</span>)</pre></body></html></div>
 <pre><code>## Joining, by = "personid"</code></pre>
 <div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">d</span>)</pre></body></html></div>
-<pre><code>## # A tibble: 6 x 6
-##   personid CODE1 adm_date   disc_date  gender postingdate
-##      &lt;int&gt; &lt;chr&gt; &lt;date&gt;     &lt;date&gt;      &lt;dbl&gt; &lt;date&gt;     
-## 1     1246 C00   1994-04-22 1994-08-05      2 2000-01-01 
-## 2     1317 115   1991-08-02 1991-08-28      2 2000-01-01 
-## 3     1324 40301 2004-02-12 2004-02-27      2 2000-01-01 
-## 4     1236 G45   2000-06-05 2000-11-26      2 2000-01-01 
-## 5     1492 I099  1997-03-03 1997-04-09      1 2000-01-01 
-## 6     1426 140   1992-04-08 1992-04-29      1 2000-01-01</code></pre>
+<pre><code>## # A tibble: 6 x 7
+##   personid CODE1 adm_date   disc_date  icd   gender postingdate
+##      &lt;int&gt; &lt;chr&gt; &lt;date&gt;     &lt;date&gt;     &lt;chr&gt;  &lt;dbl&gt; &lt;date&gt;     
+## 1     1474 2780  2002-05-05 2002-11-01 icd10      1 2000-01-01 
+## 2     1462 446   2005-11-21 2006-02-23 icd10      1 2000-01-01 
+## 3     1227 140   1996-08-14 1997-01-21 icd10      1 2000-01-01 
+## 4     1293 3319  1991-08-25 1991-11-02 icd9       1 2000-01-01 
+## 5     1397 4260  2002-09-01 2002-09-12 icd10      2 2000-01-01 
+## 6     1319 200   1993-05-19 1993-06-26 icd9       2 2000-01-01</code></pre>
 <p>Classification need help variable, which tells us which version of ICD-codes we are using:</p>
 <div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="co">## create a new help variable `icd` which determines if code is ICD-8, ICD-9 or ICD-10 by year</span>
 <span class="no">d</span> <span class="kw">&lt;-</span> <span class="no">d</span> <span class="kw">%&gt;%</span>
@@ -160,38 +167,38 @@
 <p>With function <code><a href="../reference/classify_elixhauser.html">classify_elixhauser()</a></code> and <code><a href="../reference/sum_score.html">sum_score()</a></code> you can use Elixhauser classification and calculate scores. Check more info of classifications from <a href="docs/articles/classification_tables.html">classification tables</a>-section.</p>
 <div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="kw pkg">regstudies</span><span class="kw ns">:::</span><span class="no">elixhauser_classes</span></pre></body></html></div>
 <pre><code>## # A tibble: 31 x 6
-##    class_elixhauser label_elixhauser  icd9    icd10  score_AHRQ score_van_Walra…
+##    class_elixhauser label_elixhauser  icd9    icd10  score_AHRQ score_van_Walra~
 ##    &lt;chr&gt;            &lt;chr&gt;             &lt;chr&gt;   &lt;chr&gt;       &lt;dbl&gt;            &lt;dbl&gt;
-##  1 chf              Congestive Heart… ^39891… ^I099…          9                7
-##  2 carit            Cardiac arrhytmi… ^4260|… ^I441…          0                5
-##  3 valv             Valvular disease  ^0932|… ^A520…          0               -1
-##  4 pcd              Pulmonary circul… ^4150|… ^I26|…          6                4
-##  5 pvd              Peripheral vascu… ^0930|… ^I70|…          3                2
-##  6 hypunc           Hypertension, un… ^401    ^I10           -1                0
-##  7 hypc             Hypertension, co… ^402|^… ^I11|…         -1                0
-##  8 para             Paralysis         ^3341|… ^G041…          5                7
-##  9 ond              Other neurologic… ^3319|… ^G10|…          5                6
-## 10 cpd              Chronic pulmonar… ^4168|… ^I278…          3                3
-## # … with 21 more rows</code></pre>
+##  1 chf              Congestive Heart~ ^39891~ ^I099~          9                7
+##  2 carit            Cardiac arrhytmi~ ^4260|~ ^I441~          0                5
+##  3 valv             Valvular disease  ^0932|~ ^A520~          0               -1
+##  4 pcd              Pulmonary circul~ ^4150|~ ^I26|~          6                4
+##  5 pvd              Peripheral vascu~ ^0930|~ ^I70|~          3                2
+##  6 hypunc           Hypertension, un~ ^401    ^I10           -1                0
+##  7 hypc             Hypertension, co~ ^402|^~ ^I11|~         -1                0
+##  8 para             Paralysis         ^3341|~ ^G041~          5                7
+##  9 ond              Other neurologic~ ^3319|~ ^G10|~          5                6
+## 10 cpd              Chronic pulmonar~ ^4168|~ ^I278~          3                3
+## # ... with 21 more rows</code></pre>
 <div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="no">d</span> <span class="kw">%&gt;%</span>
   <span class="co"># filter(icd == "icd10") %&gt;% </span>
   <span class="fu"><a href="../reference/classify_elixhauser.html">classify_elixhauser</a></span>(<span class="kw">icd_codes</span> <span class="kw">=</span> <span class="no">CODE1</span>)</pre></body></html></div>
 <pre><code>## Joining, by = "label_elixhauser"</code></pre>
 <pre><code>## [1] "Element 'regex.rm' NOT in use. Exceptions omitted."</code></pre>
-<pre><code>## # A tibble: 10,497 x 11
-##    personid CODE1 adm_date   disc_date  gender postingdate icd  
-##       &lt;int&gt; &lt;chr&gt; &lt;date&gt;     &lt;date&gt;      &lt;dbl&gt; &lt;date&gt;      &lt;chr&gt;
-##  1     1246 C00   1994-04-22 1994-08-05      2 2000-01-01  icd9 
-##  2     1317 115   1991-08-02 1991-08-28      2 2000-01-01  icd9 
-##  3     1324 40301 2004-02-12 2004-02-27      2 2000-01-01  icd10
-##  4     1236 G45   2000-06-05 2000-11-26      2 2000-01-01  icd10
-##  5     1492 I099  1997-03-03 1997-04-09      1 2000-01-01  icd10
-##  6     1426 140   1992-04-08 1992-04-29      1 2000-01-01  icd9 
-##  7     1204 I21   1991-11-29 1992-04-27      1 2000-01-01  icd9 
-##  8     1420 36234 2000-11-19 2000-11-27      2 2000-01-01  icd10
-##  9     1359 C77   2000-12-05 2000-12-05      1 2000-01-01  icd10
-## 10     1472 137   1999-10-01 1999-10-13      2 2000-01-01  icd10
-## # … with 10,487 more rows, and 4 more variables: class_elixhauser &lt;chr&gt;,
+<pre><code>## # A tibble: 10,514 x 11
+##    personid CODE1 adm_date   disc_date  icd   gender postingdate
+##       &lt;int&gt; &lt;chr&gt; &lt;date&gt;     &lt;date&gt;     &lt;chr&gt;  &lt;dbl&gt; &lt;date&gt;     
+##  1     1474 2780  2002-05-05 2002-11-01 icd10      1 2000-01-01 
+##  2     1462 446   2005-11-21 2006-02-23 icd10      1 2000-01-01 
+##  3     1227 140   1996-08-14 1997-01-21 icd10      1 2000-01-01 
+##  4     1293 3319  1991-08-25 1991-11-02 icd9       1 2000-01-01 
+##  5     1397 4260  2002-09-01 2002-09-12 icd10      2 2000-01-01 
+##  6     1319 200   1993-05-19 1993-06-26 icd9       2 2000-01-01 
+##  7     1452 I11   1993-01-23 1993-03-09 icd9       2 2000-01-01 
+##  8     1208 D500  2004-04-27 2004-10-15 icd10      1 2000-01-01 
+##  9     1342 2938  1992-01-10 1992-04-26 icd9       1 2000-01-01 
+## 10     1459 C81   2003-09-17 2004-03-13 icd10      2 2000-01-01 
+## # ... with 10,504 more rows, and 4 more variables: class_elixhauser &lt;chr&gt;,
 ## #   label_elixhauser &lt;chr&gt;, score_AHRQ &lt;dbl&gt;, score_van_Walraven &lt;dbl&gt;</code></pre>
 <p><em>When using function argument <code>verbose = TRUE</code>, message “Element ‘regex.rm’ NOT in use. Exceptions omitted.” is normal when …….. </em></p>
 <p>To calculate elixhauser scores for each individual you just need to add <code>sum_score</code> function. The premade classification table contains two alternative scores to be used <code>score_AHRQ</code> and <code>score_van_Walraven</code> both of which can be calculated at one function call.</p>
@@ -204,17 +211,17 @@
 <pre><code>## # A tibble: 300 x 3
 ##    personid `sum(score_AHRQ)` `sum(score_van_Walraven)`
 ##       &lt;int&gt;             &lt;dbl&gt;                     &lt;dbl&gt;
-##  1     1201                21                        32
-##  2     1202                38                        49
-##  3     1203                55                        54
-##  4     1204                25                        31
-##  5     1205                46                        50
-##  6     1206                47                        48
-##  7     1207                 7                        13
-##  8     1208                22                        31
-##  9     1209                42                        41
-## 10     1210                40                        41
-## # … with 290 more rows</code></pre>
+##  1     1201                37                        44
+##  2     1202                44                        45
+##  3     1203                20                        22
+##  4     1204                41                        45
+##  5     1205                40                        35
+##  6     1206                24                        22
+##  7     1207                29                        36
+##  8     1208                44                        42
+##  9     1209                10                        22
+## 10     1210                49                        45
+## # ... with 290 more rows</code></pre>
 <p>Function classifies all the rows which has classification code in <code>regstudies:::elixhauser_classes</code>. If the is no classification on certain ICD code, row will get NA values.</p>
 <p><em>Historgram of sums…..</em></p>
 </div>
@@ -229,15 +236,15 @@
 <pre><code>## [1] "Element 'regex.rm' NOT in use. Exceptions omitted."</code></pre>
 <div class="sourceCode" id="cb24"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">charlson</span>)</pre></body></html></div>
 <pre><code>## # A tibble: 6 x 10
-##   personid CODE1 adm_date   disc_date  gender postingdate icd   class_charlson
-##      &lt;int&gt; &lt;chr&gt; &lt;date&gt;     &lt;date&gt;      &lt;dbl&gt; &lt;date&gt;      &lt;chr&gt; &lt;chr&gt;         
-## 1     1246 C00   1994-04-22 1994-08-05      2 2000-01-01  icd9  &lt;NA&gt;          
-## 2     1317 115   1991-08-02 1991-08-28      2 2000-01-01  icd9  &lt;NA&gt;          
-## 3     1324 40301 2004-02-12 2004-02-27      2 2000-01-01  icd10 &lt;NA&gt;          
-## 4     1236 G45   2000-06-05 2000-11-26      2 2000-01-01  icd10 cevd          
-## 5     1492 I099  1997-03-03 1997-04-09      1 2000-01-01  icd10 chf           
-## 6     1426 140   1992-04-08 1992-04-29      1 2000-01-01  icd9  canc          
-## # … with 2 more variables: label_charlson &lt;chr&gt;, score_charlson &lt;dbl&gt;</code></pre>
+##   personid CODE1 adm_date   disc_date  icd   gender postingdate class_charlson
+##      &lt;int&gt; &lt;chr&gt; &lt;date&gt;     &lt;date&gt;     &lt;chr&gt;  &lt;dbl&gt; &lt;date&gt;      &lt;chr&gt;         
+## 1     1474 2780  2002-05-05 2002-11-01 icd10      1 2000-01-01  &lt;NA&gt;          
+## 2     1462 446   2005-11-21 2006-02-23 icd10      1 2000-01-01  &lt;NA&gt;          
+## 3     1227 140   1996-08-14 1997-01-21 icd10      1 2000-01-01  &lt;NA&gt;          
+## 4     1293 3319  1991-08-25 1991-11-02 icd9       1 2000-01-01  &lt;NA&gt;          
+## 5     1397 4260  2002-09-01 2002-09-12 icd10      2 2000-01-01  &lt;NA&gt;          
+## 6     1319 200   1993-05-19 1993-06-26 icd9       2 2000-01-01  canc          
+## # ... with 2 more variables: label_charlson &lt;chr&gt;, score_charlson &lt;dbl&gt;</code></pre>
 </div>
 <div id="long-data-to-wide-data" class="section level2">
 <h2 class="hasAnchor">
@@ -251,19 +258,18 @@
                      <span class="kw">values_fill</span><span class="kw">=</span><span class="fl">0</span>) <span class="kw">%&gt;%</span>
   <span class="fu">select</span>(-<span class="fu">all_of</span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"cl_NA"</span>,<span class="st">"label_charlson"</span>))) <span class="kw">-&gt;</span> <span class="no">charlson_wide</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">charlson_wide</span>)</pre></body></html></div>
-<pre><code>## # A tibble: 6 x 24
-##   personid CODE1 adm_date   disc_date  gender postingdate icd   cl_cevd cl_chf
-##      &lt;int&gt; &lt;chr&gt; &lt;date&gt;     &lt;date&gt;      &lt;dbl&gt; &lt;date&gt;      &lt;chr&gt;   &lt;int&gt;  &lt;int&gt;
-## 1     1246 C00   1994-04-22 1994-08-05      2 2000-01-01  icd9        0      0
-## 2     1317 115   1991-08-02 1991-08-28      2 2000-01-01  icd9        0      0
-## 3     1324 40301 2004-02-12 2004-02-27      2 2000-01-01  icd10       0      0
-## 4     1236 G45   2000-06-05 2000-11-26      2 2000-01-01  icd10       1      0
-## 5     1492 I099  1997-03-03 1997-04-09      1 2000-01-01  icd10       0      1
-## 6     1426 140   1992-04-08 1992-04-29      1 2000-01-01  icd9        0      0
-## # … with 15 more variables: cl_canc &lt;int&gt;, cl_metacanc &lt;int&gt;, cl_copd &lt;int&gt;,
-## #   cl_dementia &lt;int&gt;, cl_pud &lt;int&gt;, cl_aids &lt;int&gt;, cl_diab &lt;int&gt;, cl_hp &lt;int&gt;,
-## #   cl_pvd &lt;int&gt;, cl_ami &lt;int&gt;, cl_msld &lt;int&gt;, cl_mld &lt;int&gt;, cl_diabwc &lt;int&gt;,
-## #   cl_rheumd &lt;int&gt;, cl_rend &lt;int&gt;</code></pre>
+<pre><code>## # A tibble: 6 x 19
+##   personid CODE1 adm_date   disc_date  icd   gender postingdate cl_canc cl_aids
+##      &lt;int&gt; &lt;chr&gt; &lt;date&gt;     &lt;date&gt;     &lt;chr&gt;  &lt;dbl&gt; &lt;date&gt;        &lt;int&gt;   &lt;int&gt;
+## 1     1474 2780  2002-05-05 2002-11-01 icd10      1 2000-01-01        0       0
+## 2     1462 446   2005-11-21 2006-02-23 icd10      1 2000-01-01        0       0
+## 3     1227 140   1996-08-14 1997-01-21 icd10      1 2000-01-01        0       0
+## 4     1293 3319  1991-08-25 1991-11-02 icd9       1 2000-01-01        0       0
+## 5     1397 4260  2002-09-01 2002-09-12 icd10      2 2000-01-01        0       0
+## 6     1319 200   1993-05-19 1993-06-26 icd9       2 2000-01-01        1       0
+## # ... with 10 more variables: cl_mld &lt;int&gt;, cl_pud &lt;int&gt;, cl_chf &lt;int&gt;,
+## #   cl_rend &lt;int&gt;, cl_diabwc &lt;int&gt;, cl_copd &lt;int&gt;, cl_pvd &lt;int&gt;,
+## #   cl_metacanc &lt;int&gt;, cl_hp &lt;int&gt;, cl_diab &lt;int&gt;</code></pre>
 </div>
 <div id="extra-labeling-wide-data" class="section level2">
 <h2 class="hasAnchor">

@@ -18,6 +18,7 @@
 #' @examples
 #' \dontrun{
 #' TODO:
+#' x <- 1
 #' }
 #' @rdname filter_date_range
 #' @export
