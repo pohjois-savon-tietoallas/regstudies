@@ -7,8 +7,9 @@ reference:
   desc: "Functions for classifying codes and calculating scores"
 - contents:
   - classify_codes
-  - classify_elixhauser
   - classify_charlson
+  - classify_elixhauser
+  - read_classes
   - sum_score
 #  - make_classify_table
 - title: "Date functions"
@@ -19,18 +20,15 @@ reference:
   - filter_date_first
   - filter_date_last
   - filter_date_nearest
-- title: "Helpers"
-  desc: "Functions to help other functions"
+- title: "Helpers and others"
+  desc: "Functions that are helpful when conducting data analysis"
 - contents:
-#  - get_age
 #  - get_classification_name
-#  - get_na_vars
   - get_var_types
   - get_na_vars
   - left_join_replace_na
 #  - make_regex
-  - read_classes
-#  - replace_na_by_type
+  - replace_na_by_type
 articles:
 - title: Articles
   navbar: ~

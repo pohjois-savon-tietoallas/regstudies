@@ -11,10 +11,16 @@ get_var_types(.data)
 }
 \value{
 returns a tibble with two character columns: variable and class.
-variable tells the variable name and class tells the type of that variable.
+variable tells the variable name and class tells the class of that variable.
 }
 \description{
-This function operates as an tidyverse style version of class() function
+This function operates as an tidyverse style version of \code{class()} function.
+}
+\examples{
+\dontrun{
+get_var_types(sample_cohort)
+}
+
 }
 \seealso{
 Other help functions: 

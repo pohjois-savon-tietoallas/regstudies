@@ -45,7 +45,6 @@ This is a basic example which shows you how to solve a common problem:
 
 ```{r example}
 library(regstudies)
-## basic example code
 
 # ´regstudies´ makes it easy to classify codes such as ICD-codes to groups and also to sum scores based on the groupings.
 sample_data <- left_join(sample_cohort,sample_regdata)

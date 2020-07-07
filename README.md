@@ -46,30 +46,31 @@ This is a basic example which shows you how to solve a common problem:
 
 ``` r
 library(regstudies)
-#> regstudies - register studies with R
-## basic example code
 
 # ´regstudies´ makes it easy to classify codes such as ICD-codes to groups and also to sum scores based on the groupings.
-# Premade classifications and scores of Charlson and Elixhauser comorbidity indices are available in the package.
 sample_data <- left_join(sample_cohort,sample_regdata)
 sample_data %>% 
   classify_charlson(icd_codes = CODE1) %>%
   sum_score(score_charlson)
 
 # Users can define the code groups themselves using simple regular expression syntax.
-my_classes <- head(charlson_classes,5) %>%
-  mutate(score_myscore=1:5)
+my_classes <- 
+  tribble(~class_myclass,         ~label_myclass,                                 ~icd10,                 ~icd9, ~score,
+                  "aids",          "AIDS or HIV",                  "^B20|^B21|^B22|^B24",      "^042|^043|^044",      7,
+              "dementia",             "Dementia", "^F00|^F01|^F02|^F03|^F051|^G30|^G311",    "^290|^2941|^3312",      3,
+                   "pud", "Peptic ulcer disease",                  "^K25|^K26|^K27|^K28", "^531|^532|^533|^534",      1
+          )
 
-# This classification definition has four different type of codes.
-head(charlson_classes)
+# This classification definition has two different type of codes.
+head(my_classes)
 
 # Data has three different types of codes.
 head(sample_data)
 
-# Different groups types can are automatically handled simultaneously as long as the correct syntax is followed.
+# Different groups types can are automatically handled simultaneously.
 sample_data %>% 
   classify_codes(codes=CODE1,diag_tbl = read_classes(my_classes)) %>%
-  sum_score(score_myscore)
+  sum_score(score)
 ```
 
 ## Citation

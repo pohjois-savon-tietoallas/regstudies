@@ -7,13 +7,17 @@
 read_classes(class_def)
 }
 \arguments{
-\item{classdef}{This variable contains the data in the wide format. See the classifications defined in /datas/classification_codes/}
+\item{class_def}{This variable contains the data in the wide format. See the classifications defined in /datas/classification_codes/}
 }
 \value{
 returns a tibble of classification definition in long format (tidy data) as that is what the package needs in operation.
 }
 \description{
 Operates classification definitions from wide format to long format.
+}
+\details{
+The read_classes essentially just transforms a wide class definition file to long data, what can be used in classifying.
+This allows user to manage class definitions in wide data format, which is easier for the human eyes.
 }
 \examples{
  \dontrun{

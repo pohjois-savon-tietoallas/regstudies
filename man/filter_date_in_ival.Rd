@@ -4,14 +4,20 @@
 \alias{filter_date_in_ival}
 \title{Filtering of datetime data within a time range.}
 \usage{
-filter_date_in_ival(.data, ..., index_date, range = years(2))
+filter_date_in_ival(
+  .data,
+  date_var,
+  index_date,
+  time_before = years(2),
+  time_after = days(0)
+)
 }
 \arguments{
-\item{...}{datetime variables which need to be within the range. May be any number (>1) of variables.  If one variable is within interval, then that row is included in the data (Applies OR operator).}
-
 \item{index_date}{index date (which date variable is to be compared with register data)}
 
 \item{range}{the distance from index date (lubridate format, e.g years(1), weeks(10), days(20) etc.)}
+
+\item{...}{datetime variables which need to be within the range. May be any number (>1) of variables.  If one variable is within interval, then that row is included in the data (Applies OR operator).}
 }
 \value{
 returns a tibble object with filtered rows

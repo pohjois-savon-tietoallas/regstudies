@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="Get variable types — get_var_types" />
-<meta property="og:description" content="This function operates as an tidyverse style version of class() function" />
+<meta property="og:description" content="This function operates as an tidyverse style version of class() function." />
 
 
 
@@ -135,7 +135,7 @@
     </div>
 
     <div class="ref-description">
-    <p>This function operates as an tidyverse style version of class() function</p>
+    <p>This function operates as an tidyverse style version of <code><a href='https://rdrr.io/r/base/class.html'>class()</a></code> function.</p>
     </div>
 
     <pre class="usage"><span class='fu'>get_var_types</span>(<span class='no'>.data</span>)</pre>
@@ -152,7 +152,7 @@
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>returns a tibble with two character columns: variable and class.
-variable tells the variable name and class tells the type of that variable.</p>
+variable tells the variable name and class tells the class of that variable.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other help functions: 
@@ -162,6 +162,10 @@ variable tells the variable name and class tells the type of that variable.</p>
 <code><a href='make_regex.html'>make_regex</a>()</code>,
 <code><a href='replace_na_by_type.html'>replace_na_by_type</a>()</code></p></div>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='fu'>get_var_types</span>(<span class='no'>sample_cohort</span>)
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
