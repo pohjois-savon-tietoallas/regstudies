@@ -8,9 +8,9 @@
 #' 
 #' @importFrom lubridate as.duration
 #' 
-#' @rdname get_age
-#' @export
+# @rdname get_age
+# @export
 #' 
-get_age <- function(eventdate,birthdate,accuracy="years") {
+calc_age <- function(eventdate,birthdate,accuracy="years") {
   as.numeric(lubridate::as.duration(eventdate-birthdate),accuracy)
 }
