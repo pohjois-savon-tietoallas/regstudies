@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="left_join with fill option — left_join_replace_na" />
-<meta property="og:description" content="Allows user to do left_join and fill missing NA values with 0 or other optional value" />
+<meta property="og:description" content="Allows user to do left_join and fill missing NA values with 0 or other optional value depending on the type of variable." />
 
 
 
@@ -130,12 +130,12 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>left_join with fill option</h1>
-    <small class="dont-index">Source: <a href='https://github.com/pohjois-savon-tietoallas/regstudies/blob/master/R/left_join_replace_na.R'><code>R/left_join_replace_na.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/pohjois-savon-tietoallas/regstudies/blob/master/R/na_operations.R'><code>R/na_operations.R</code></a></small>
     <div class="hidden name"><code>left_join_replace_na.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Allows user to do left_join and fill missing NA values with 0 or other optional value</p>
+    <p>Allows user to do left_join and fill missing NA values with 0 or other optional value depending on the type of variable.</p>
     </div>
 
     <pre class="usage"><span class='fu'>left_join_replace_na</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>na_replace_list</span>, <span class='no'>...</span>)</pre>
@@ -175,7 +175,7 @@
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 
 <span class='co'>## Give list of NA values</span>
-<span class='no'>na_replace_list</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
+<span class='no'>replace_list</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
   <span class='st'>"logical"</span><span class='kw'>=</span><span class='fl'>FALSE</span>,
   <span class='st'>"character"</span><span class='kw'>=</span><span class='st'>""</span>,
   <span class='st'>"integer"</span><span class='kw'>=</span><span class='fl'>0L</span>,
@@ -183,8 +183,10 @@
   <span class='st'>"numeric"</span><span class='kw'>=</span><span class='fl'>0</span>,
   <span class='st'>"Date"</span><span class='kw'>=</span><span class='kw pkg'>lubridate</span><span class='kw ns'>::</span><span class='fu'><a href='http://lubridate.tidyverse.org/reference/ymd.html'>dmy</a></span>(<span class='st'>"01-01-1900"</span>)
 )
-<span class='no'>testdata</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>mutate_all</span>(<span class='no'>replace_na_by_type</span>,<span class='no'>na_replace_list</span>)
+<span class='no'>d_na</span> <span class='kw'>&lt;-</span> <span class='fu'>left_join_replace_na</span>(<span class='no'>sample_cohort</span>,<span class='no'>sample_regdata</span>)
+<span class='no'>d_filled</span> <span class='kw'>&lt;-</span> <span class='fu'>left_join_replace_na</span>(<span class='no'>sample_cohort</span>,<span class='no'>sample_regdata</span>,<span class='no'>replace_list</span>)
+
+<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"d_na"</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span>(<span class='no'>d_na</span>)),<span class='st'>"d_filled"</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span>(<span class='no'>d_filled</span>)))
 }</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
