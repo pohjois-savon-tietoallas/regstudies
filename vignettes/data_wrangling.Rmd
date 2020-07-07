@@ -55,10 +55,11 @@ Filter dataset with either `adm_date` or `disc_date` within two years around `po
 
 ```{r}
 filtered_d <- d %>% 
-  regstudies::filter_date_range(indexdate=postingdate, 
-                          range=years(2),
-                          adm_date,
-                          disc_date)
+  regstudies::filter_date_in_ival(date_var=adm_date,
+                                  index_date=postingdate, 
+                                  time_before=years(2),
+                                  time_after=days(0)
+  )
 head(filtered_d)
 ```
 
@@ -69,10 +70,10 @@ Filter data set with occurrences of hospital visits. If person has been in hospi
 
 ```{r}
 filtered_d <- d %>% 
-  filter_date_interval(indexdate = postingdate,
-                       time_before=years(2),
-                       admission_date=adm_date,
-                       discharge_date=disc_date)
+  filter_ival_olap_ival(ival_var=lubridate::interval(adm_date,disc_date),
+                        index_date = postingdate,
+                        time_before=years(2),
+                        time_after=days(0))
 head(filtered_d)
 ```
 

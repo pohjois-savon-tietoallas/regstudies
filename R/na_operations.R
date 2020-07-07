@@ -93,8 +93,8 @@ setsubset <- function(a,b) {
 #'   mutate_all(replace_na_by_type,na_replace_list)
 #' }
 #' 
-# @rdname replace_na_by_type
-# @export
+#' @rdname replace_na_by_type
+#' @export
 # 
 replace_na_by_type <- function(x,na_replace_list) {
   # NOTE: Unless we expose this function to users, we need to do testing here!

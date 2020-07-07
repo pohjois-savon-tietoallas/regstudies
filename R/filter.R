@@ -87,20 +87,16 @@ filter_ival_olap_ival <- function(.data,
 #' @rdname filter_date_in_ival
 #' @export
 #' 
-filter_date_in_ival <- function(.data,...,index_date,range=years(2)) {
+filter_date_in_ival <- function(.data,date_var,index_date,time_before=years(2),time_after=days(0)) {
   
-  datevars  <- dplyr::enquos(...)
+  date_var  <- dplyr::enquo(date_var)
   index_date <- dplyr::enquo(index_date)
-  ndatevars <- length(datevars)
+  time_before <- dplyr::enquo(time_before)
+  time_after <- dplyr::enquo(time_after)
   
-  fwithin <- function(var,ival) {
-    expr((!! var) %within% ival)
-  }
-  vars_within_ival <- purrr::map(datevars, fwithin, ival=ival)
-  
-  .data %>% # join the datas
-    dplyr::mutate(ival= ((!!index_date)-range) %--% ((!!index_date)+range)) %>% # 2. create an interval out of 'index_date'
-    dplyr::filter(!!!vars_within_ival) %>%# this works with arbitrary number of date variables entered
+  .data %>%
+    dplyr::mutate(ival= ((!!index_date)-!!time_before) %--% ((!!index_date)+!!time_after)) %>% # create an interval out of 'index_date'
+    dplyr::filter(!! date_var %within% ival) %>%
     dplyr::select(-ival)
 }
 

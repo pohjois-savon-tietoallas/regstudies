@@ -8,7 +8,7 @@
 #' @importFrom stringr str_subset
 #' @importFrom stringr str_replace
 #' 
-#' @export
+# @export
 get_classification_name <- function(.data) {
   .data %>%
     names() %>%
