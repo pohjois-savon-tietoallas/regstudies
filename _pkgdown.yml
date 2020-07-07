@@ -4,32 +4,33 @@ template:
     bootswatch: simplex
 reference:
 - title: "Classification"
-  desc: "Functions for classify codes"
+  desc: "Functions for classifying codes and calculating scores"
 - contents:
   - classify_codes
   - classify_elixhauser
   - classify_charlson
   - sum_score
-  - make_classify_table
+#  - make_classify_table
 - title: "Date functions"
-  desc: "Functions for handling datetime variables"
+  desc: "Functions for filtering using datetime variables"
 - contents: 
-  - filter_date_range
-  - filter_date_interval
-  - get_nearest
-  - get_first
-  - get_last
-  - get_age
+  - filter_date_in_ival
+  - filter_ival_olap_ival
+  - filter_date_first
+  - filter_date_last
+  - filter_date_nearest
 - title: "Helpers"
   desc: "Functions to help other functions"
 - contents:
-  - get_classification_name
-  - get_na_vars
+#  - get_age
+#  - get_classification_name
+#  - get_na_vars
   - get_var_types
+  - get_na_vars
   - left_join_replace_na
-  - make_regex
+#  - make_regex
   - read_classes
-  - replace_na_by_type
+#  - replace_na_by_type
 articles:
 - title: Articles
   navbar: ~

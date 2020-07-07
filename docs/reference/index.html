@@ -143,7 +143,7 @@
       <tr>
         <th colspan="2">
           <h2 id="section-classification" class="hasAnchor"><a href="#section-classification" class="anchor"></a>Classification</h2>
-          <p class="section-desc"><p>Functions for classify codes</p></p>
+          <p class="section-desc"><p>Functions for classifying codes and calculating scores</p></p>
         </th>
       </tr>
       
@@ -177,18 +177,12 @@ Computes classification table and attaches it to original data. Data stays in lo
           <p><code><a href="sum_score.html">sum_score()</a></code> </p>
         </td>
         <td><p>Sum scores for each individual. Allows arbitrary number of scores to be calculated using single function call.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="make_classify_table.html">make_classify_table()</a></code> </p>
-        </td>
-        <td><p>Classify diagnosis codes to long format with exceptions</p></td>
       </tr>
     </tbody><tbody>
       <tr>
         <th colspan="2">
           <h2 id="section-date-functions" class="hasAnchor"><a href="#section-date-functions" class="anchor"></a>Date functions</h2>
-          <p class="section-desc"><p>Functions for handling datetime variables</p></p>
+          <p class="section-desc"><p>Functions for filtering using datetime variables</p></p>
         </th>
       </tr>
       
@@ -199,40 +193,34 @@ Computes classification table and attaches it to original data. Data stays in lo
       <tr>
         
         <td>
-          <p><code><a href="filter_date_range.html">filter_date_range()</a></code> </p>
+          <p><code><a href="filter_date_in_ival.html">filter_date_in_ival()</a></code> </p>
         </td>
         <td><p>Filtering of datetime data within a time range.</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="filter_date_interval.html">filter_date_interval()</a></code> </p>
+          <p><code><a href="filter_ival_olap_ival.html">filter_ival_olap_ival()</a></code> </p>
         </td>
         <td><p>Filtering of date interval data within study interval.
 Can be used for filtering e.g. for hospital visits, which are date intervals (time periods).</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="get_nearest.html">get_nearest()</a></code> </p>
-        </td>
-        <td><p>Get nearest value based on datetime variable</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="get_first.html">get_first()</a></code> </p>
+          <p><code><a href="filter_date_first.html">filter_date_first()</a></code> </p>
         </td>
         <td><p>Get first value based on datetime variable</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="get_last.html">get_last()</a></code> </p>
+          <p><code><a href="filter_date_last.html">filter_date_last()</a></code> </p>
         </td>
         <td><p>Get last value based on datetime variable</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="get_age.html">get_age()</a></code> </p>
+          <p><code><a href="filter_date_nearest.html">filter_date_nearest()</a></code> </p>
         </td>
-        <td><p>Function for calculating age at eventdate</p></td>
+        <td><p>Get nearest value based on datetime variable</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -249,15 +237,9 @@ Can be used for filtering e.g. for hospital visits, which are date intervals (ti
       <tr>
         
         <td>
-          <p><code><a href="get_classification_name.html">get_classification_name()</a></code> </p>
+          <p><code><a href="get_age.html">get_age()</a></code> </p>
         </td>
-        <td><p>Internal function for getting classification name out of classification tibbles</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="get_na_vars.html">get_na_vars()</a></code> </p>
-        </td>
-        <td><p>Function for extracting names of variables which have any NA values</p></td>
+        <td><p>Function for calculating age at eventdate</p></td>
       </tr><tr>
         
         <td>
@@ -267,27 +249,21 @@ Can be used for filtering e.g. for hospital visits, which are date intervals (ti
       </tr><tr>
         
         <td>
+          <p><code><a href="get_na_vars.html">get_na_vars()</a></code> </p>
+        </td>
+        <td><p>Function for extracting names of variables which have any NA values</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="left_join_replace_na.html">left_join_replace_na()</a></code> </p>
         </td>
         <td><p>left_join with fill option</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="make_regex.html">make_regex()</a></code> </p>
-        </td>
-        <td><p>Make regural expression classifications from LIKE% classifications</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="read_classes.html">read_classes()</a></code> </p>
         </td>
         <td><p>Internal function for providing long classification definitions.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="replace_na_by_type.html">replace_na_by_type()</a></code> </p>
-        </td>
-        <td><p>Replace NA values as default values based no the type of the variable</p></td>
       </tr>
     </tbody>
     </table>

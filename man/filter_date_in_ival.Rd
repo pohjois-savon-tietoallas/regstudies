@@ -29,8 +29,6 @@ x <- 1
 \code{\link{filter_ival_olap_ival}} for date filtering by different intervals before and after the occurence
 
 Other filter functions: 
-\code{\link{filter_date_interval}()},
-\code{\link{filter_date_range}()},
 \code{\link{filter_ival_olap_ival}()}
 }
 \concept{filter functions}

@@ -46,8 +46,6 @@ head(filtered_d)
 \code{\link{filter_date_in_ival}} for date filtering by fixed interval
 
 Other filter functions: 
-\code{\link{filter_date_in_ival}()},
-\code{\link{filter_date_interval}()},
-\code{\link{filter_date_range}()}
+\code{\link{filter_date_in_ival}()}
 }
 \concept{filter functions}
