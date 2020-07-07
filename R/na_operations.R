@@ -137,6 +137,6 @@ get_na_vars <- function(.data) {
   .data %>%
     dplyr::ungroup() %>%
     dplyr::summarise_all(function(x) any(is.na(x))) %>% 
-    pivot_longer(tidyselect::everything(),names_to="variable",values_to="contains_na")
+    tidyr::pivot_longer(tidyselect::everything(),names_to="variable",values_to="contains_na")
 }
 

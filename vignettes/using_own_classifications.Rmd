@@ -17,7 +17,41 @@ knitr::opts_chunk$set(echo = TRUE, eval=FALSE)
 
 ### Code classification by own csv table
 
+The package has been built in mind of allowing user to use their own classifications for ICD codes (or any string codes). The classifications can utilise multiple different types of codes. For example, below we use ICD-10 and ICD-9 codes on a single classification definition. The classification definition need to hold following variable names: `class_X` and `label_X`, where X is the name of class defintion and also at least one other column what defines the regular expression for the class. The regular expression describes all the codes that belong to the same class. For example in our example data set, the first group is called "aids" and regular expression for `icd10` column is `"^B20|^B21|^B22|^B24"`. This means that all the codes starting with either B20, B21, B22 or B24, which are labeled as `"icd10"` by another variable `icd` (TODO: codetype) in the data, belong to this class. The symbol "^" states that the codes must begin with these characters. The symbol "|" is OR operator in regular expression syntax. For more information about regular expression, please read [Regular Expression Cheat Sheet](https://rstudio.com/wp-content/uploads/2016/09/RegExCheatsheet.pdf).
 
+```{r example}
+library(regstudies)
+
+# ´regstudies´ makes it easy to classify codes such as ICD-codes to groups and also to sum scores based on the groupings.
+sample_data <- left_join(sample_cohort,sample_regdata)
+sample_data %>% 
+  classify_charlson(icd_codes = CODE1) %>%
+  sum_score(score_charlson)
+
+# Users can define the code groups themselves using simple regular expression syntax.
+my_classes <- 
+  tribble(~class_myclass,         ~label_myclass,                                 ~icd10,                 ~icd9, ~score,
+                  "aids",          "AIDS or HIV",                  "^B20|^B21|^B22|^B24",      "^042|^043|^044",      7,
+              "dementia",             "Dementia", "^F00|^F01|^F02|^F03|^F051|^G30|^G311",    "^290|^2941|^3312",      3,
+                   "pud", "Peptic ulcer disease",                  "^K25|^K26|^K27|^K28", "^531|^532|^533|^534",      1
+          )
+
+# This classification definition has two different type of codes.
+head(my_classes)
+
+# Data has three different types of codes.
+head(sample_data)
+
+# Different groups types can are automatically handled simultaneously.
+sample_data %>% 
+  classify_codes(codes=CODE1,diag_tbl = read_classes(my_classes)) %>%
+  sum_score(score)
+```
+
+
+### Elixhauser classification and scores
+
+This calculates per row Elixhauser classification. Check more info of classification from [classification tables](docs/articles/classification_tables.html)-section.
 
 ```{r}
 # Classify by Elixhauser:
@@ -29,10 +63,7 @@ classified_d <- filtered_d %>%
 head(classified_d)
 ```
 
-
-### Elixhauser classification and scores
-
-This calculates per row Elixhauser classification. Check more info of classification from [classification tables](docs/articles/classification_tables.html)-section.
+Another way (a shortcut) for Elixhauser classifications:
 
 ```{r}
 elixh_d <- filtered_d %>% 
