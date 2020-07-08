@@ -36,7 +36,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">regstudies</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2</span>
       </span>
     </div>
 
@@ -144,14 +144,33 @@
 <h2 class="hasAnchor">
 <a href="#citation" class="anchor"></a>Citation</h2>
 <p>To cite package ‘regstudies’ in publications use:</p>
-<p>Juho Kopra, Jani Miettinen and Reijo Sund (2020). regstudies: Tools for analyzing register data. R package version 0.5.1.</p>
+<p>Juho Kopra, Jani Miettinen and Reijo Sund (2020). regstudies: Tools for analyzing register data. R package version 0.5.2.</p>
 <p>A BibTeX entry for LaTeX users is</p>
 <pre><code>  @Manual{,
     title = {regstudies: Tools for analyzing register data},
     author = {Juho Kopra and Jani Miettinen and Reijo Sund},
     year = {2020},
-    note = {R package version 0.5.1},
+    note = {R package version 0.5.2},
   }</code></pre>
+</div>
+<div id="references" class="section level2">
+<h2 class="hasAnchor">
+<a href="#references" class="anchor"></a>References</h2>
+<p>The current version (0.5.2) contains classification tables for Elixhauser and Charlson comorbidity indices. The Elixhauser and Charlson classifications for ICD-9-CM and ICD-10 versions were originally implemented as regular expressions in <a href="https://ellessenne.github.io/comorbidity/"><code>comorbidity</code></a> by Gasparini (2018). They have been extended based on Pylvänäinen et al. (2019) for Social Security Institution (SII) entitlement and medication reimbursement codes. The key references for the Elixhauser and Charlson comorbidity indices are Charlson et al. (1987), Elixhauser et al. (1998) and Quan et al. (2015). The scores utilised in the same tables are based on van Walraven et al. (2009) and Quan et al. (2015). All the source code in <code>regstudies</code> are written by original authors.</p>
+<ul>
+<li>Charlson, Pompei, Ales &amp; MacKenzie (1987) <em>A new method of classifying prognostic comorbidity in longitudinal studies: development and validation</em>. Journal of Chronic Diseases. 40(5), 373-83. DOI: <a href="https://doi.org/10.1016/0021-9681(87)90171-8">10.1016/0021-9681(87)90171-8</a>
+</li>
+<li>Elixhauser, Steiner, Harris and Coffey (1998). <em>Comorbidity measures for use with administrative data</em>. Medical Care, 36(1), 8-27. DOI: <a href="https://doi.org/10.1097/00005650-199801000-00004">10.1097/00005650-199801000-00004</a>
+</li>
+<li>Gasparini (2018) <em>comorbidity: An R package for computing comorbidity scores</em> Journal of Open Source Software, 3(23), 648. DOI: <a href="https://doi.org/10.21105/joss.00648">10.21105/joss.00648</a>
+</li>
+<li>Pylväläinen, Talala, Murtola, Taari, Raitanen, Tammela, &amp; Auvinen (2019). <em>Charlson Comorbidity Index Based On Hospital Episode Statistics Performs Adequately In Predicting Mortality, But Its Discriminative Ability Diminishes Over Time</em>. Clinical epidemiology, 11, 923. DOI: <a href="https://dx.doi.org/10.2147%2FCLEP.S218697">10.2147/CLEP.S218697</a>
+</li>
+<li>Quan, Sundararajan, Halfon, Fong, Burnand, Luthi, Saunders, Beck, Feasby &amp; Ghali (2015) <em>Coding algorithms for defining comorbidities in ICD-9-CM and ICD-10 administrative data</em>. Medical Care, 43(11): pp. 1130-39. DOI: <a href="https://doi.org/10.1097/01.mlr.0000182534.19832.83">10.1097/01.mlr.0000182534.19832.83</a>
+</li>
+<li>van Walraven, Austin, Jennings, Quan &amp; Forster (2009). <em>A modification of the Elixhauser comorbidity measures into a point system for hospital death using administrative data</em>. Medical Care, 47(6), 626-33. DOI: <a href="https://doi.org/10.1097/mlr.0b013e31819432e5">10.1097/mlr.0b013e31819432e5</a>
+</li>
+</ul>
 <p>For developers:</p>
 <ul>
 <li><a href="http://r-pkgs.had.co.nz/release.html">release notes</a></li>

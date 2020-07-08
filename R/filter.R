@@ -17,6 +17,7 @@
 #' @importFrom dplyr select
 #' @importFrom lubridate interval
 #' @importFrom lubridate int_overlaps
+#' @importFrom tidyr %>%
 #' 
 #' @examples
 #' \dontrun{
@@ -79,6 +80,7 @@ filter_ival_olap_ival <- function(.data,
 #' @importFrom purrr map
 #' @importFrom lubridate %--%
 #' @importFrom lubridate %within%
+#' @importFrom tidyr %>%
 #' 
 #' @examples
 #' \dontrun{
@@ -112,6 +114,7 @@ filter_date_in_ival <- function(.data,date_var,index_date,time_before=years(2),t
 #' 
 #' @importFrom dplyr enquo
 #' @importFrom dplyr slice
+#' @importFrom tidyr %>%
 #' 
 #' @examples
 #' \dontrun{
@@ -140,6 +143,7 @@ filter_date_first<-function(.data,date_var) {
 #' 
 #' @importFrom dplyr enquo
 #' @importFrom dplyr slice
+#' @importFrom tidyr %>%
 #' 
 #' @examples
 #' \dontrun{
@@ -173,6 +177,7 @@ filter_date_last<-function(.data,date_var) {
 #' @importFrom dplyr enquo
 #' @importFrom dplyr slice
 #' @importFrom dplyr filter
+#' @importFrom tidyr %>%
 #'
 #' @examples
 #' \dontrun{

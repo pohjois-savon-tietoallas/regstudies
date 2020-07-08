@@ -71,6 +71,28 @@ if(TRUE){
   
   sample_cohort <- sample_cohort %>% arrange(personid)
   sample_regdata <- sample_regdata %>% arrange(personid,adm_date)  
+  
+  #labels:
+  setup_labels <- function(.data,labels) {
+    nimet<-names(.data)
+    for (i in 1:length(nimet)) {
+      attr(.data[[i]], "label") <- labels[i]
+    }
+    .data
+  }
+  labelit<-c("Number of individual","Gender","Date of postal questionnaire")
+  sample_cohort %>%
+    setup_labels(labelit) -> sample_cohort
+
+  names(sample_regdata)
+  labelit_reg<-c("Number of individual","Diagnosis codes","Hospital admission date","Hospital discharge date","Type of diagnosis code")
+  sample_regdata %>%
+    setup_labels(labelit_reg) -> sample_regdata
+  
+  #View(sample_cohort)
+  #View(sample_regdata)
+  
+  
   save(sample_regdata, file = "./data/sample_regdata.RData")
   save(sample_cohort, file = "./data/sample_cohort.RData")
 #  setdiff(sample_regdata$personid,sample_cohort$personid)

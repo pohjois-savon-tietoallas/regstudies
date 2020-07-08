@@ -21,7 +21,6 @@ The package has been built in mind of allowing user to use their own classificat
 
 ```{r example}
 library(regstudies)
-
 # ´regstudies´ makes it easy to classify codes such as ICD-codes to groups and also to sum scores based on the groupings.
 sample_data <- left_join(sample_cohort,sample_regdata)
 sample_data %>% 
@@ -55,7 +54,7 @@ This calculates per row Elixhauser classification. Check more info of classifica
 
 ```{r}
 # Classify by Elixhauser:
-my_classes <- read_classes_csv(file = "../data/elixhauser_classes.csv")
+my_classes <- read_classes(file = "../data/elixhauser_classes.csv")
 
 classified_d <- filtered_d %>%
   classify_codes(codes = CODE1,

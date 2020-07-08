@@ -3,6 +3,7 @@
 #'
 #' @param .data tibble of register data which we want to study
 #' @param icd_codes name of the variable holding ICD-codes
+#' 
 #' @return data frame
 #' 
 #' @importFrom dplyr distinct
@@ -11,7 +12,7 @@
 #' @importFrom rlang as_label
 #' @importFrom rlang enquo
 #' @importFrom dplyr select
-#' 
+#' @importFrom tidyr %>%
 #' 
 #' @examples
 #' \dontrun{
@@ -48,6 +49,7 @@ classify_elixhauser <- function(.data, icd_codes) {
 #'
 #' @param .data tibble of register data which we want to study
 #' @param icd_codes name of the variable holding ICD-codes
+#' 
 #' @return data frame
 #' 
 #' @importFrom dplyr distinct
@@ -56,7 +58,7 @@ classify_elixhauser <- function(.data, icd_codes) {
 #' @importFrom rlang as_label
 #' @importFrom rlang enquo
 #' @importFrom dplyr select
-#' 
+#' @importFrom tidyr %>%
 #' 
 #' @examples
 #' \dontrun{
@@ -99,6 +101,7 @@ classify_charlson <- function(.data, icd_codes) {
 #'   'regex' must hold a string with a regular expression defining classes.
 #'   'regex.rm' is optional, defines exceptions to 'regex' (these are not in the group they are named in)
 #'   'label' defines the names of the variables of classes (e.g. comorbidity indicators)
+#'   
 #' @return
 #' 
 #' @importFrom dplyr distinct
@@ -107,7 +110,7 @@ classify_charlson <- function(.data, icd_codes) {
 #' @importFrom rlang as_label
 #' @importFrom rlang enquo
 #' @importFrom dplyr select
-#' 
+#' @importFrom tidyr %>%
 #' 
 #' @examples
 #' \dontrun{
@@ -154,6 +157,7 @@ classify_codes <- function(.data, codes, diag_tbl) {
 #' @importFrom tidyr crossing
 #' @importFrom tidyselect contains
 #' @importFrom dplyr select 
+#' @importFrom tidyr %>%
 #' 
 #' @examples
 #' \dontrun{

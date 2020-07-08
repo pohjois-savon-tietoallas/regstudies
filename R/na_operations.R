@@ -15,6 +15,7 @@
 #' @importFrom dplyr mutate_all
 #' @importFrom dplyr pull
 #' @importFrom dplyr left_join
+#' @importFrom tidyr %>%
 #' 
 #' @examples
 #' \dontrun{
@@ -123,6 +124,7 @@ replace_na_by_type <- function(x,na_replace_list) {
 #' @importFrom dplyr ungroup
 #' @importFrom tidyr pivot_longer
 #' @importFrom tidyselect everything
+#' @importFrom tidyr %>%
 #'
 #' @examples
 #' \dontrun{
