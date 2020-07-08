@@ -79,11 +79,24 @@ head(filtered_d)
 
 ### Complex filtering
 
+Lets say that we want to find first occasions of disease codes such that we want to obtain first event for eahc individual in each class. We will use Elixhauser classes in this example.
+
 ```{r}
 elixh_d <- d %>% 
   classify_elixhauser(CODE1)
 head(elixh_d)
 ```
+
+```{r}
+library(regstudies)
+first_events_d <- elixh_d %>%
+  filter(!is.na(class_elixhauser)) %>%
+  group_by(personid,class_elixhauser) %>%
+  mutate(min_date=min(adm_date,disc_date)) %>%
+  filter_date_first(min_date)
+head(first_events_d)
+```
+
 
 ### Left join with filling missing values
 

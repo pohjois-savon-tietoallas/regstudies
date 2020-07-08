@@ -1,13 +1,13 @@
 #' Filtering of date interval data within study interval.
 #' Can be used for filtering e.g. for hospital visits, which are date intervals (time periods).
+#' The function finds rows for which `ival_var` overlaps with interval created based on `index_date`, `time_before` and `time_after`.
 #' 
 #' @family filter functions
 #' @seealso \code{\link{filter_date_in_ival}} for date filtering by fixed interval
-#' @param index_date index date (which date variable is to be compared with register data)
+#' @param ival_var the interval to be filtered
+#' @param index_date date or other lubridate variable as reference point around which to search
 #' @param time_before the time before the index date what defines the start of filtering interval (lubridate format, e.g years(1), weeks(10), days(20) etc.)
-#' @param time_after the time before the index date (default is 0 days) what defines the start of filtering interval (lubridate format, e.g years(1), weeks(10), days(20) etc.)
-#' @param admission_date date of admission as lubridate format
-#' @param discharge_date date of discharge as lubridate format
+#' @param time_after the time after the index date (default is 0 days) what defines the start of filtering interval (lubridate format, e.g years(1), weeks(10), days(20) etc.)
 #' 
 #' @return returns a tibble object with filtered rows
 #' 
@@ -60,23 +60,24 @@ filter_ival_olap_ival <- function(.data,
 #}
 
 
-#' Filtering of datetime data within a time range.
+#' Filtering of datetime data within a time interval.
+#' The function finds rows for which `date_var` is within interval created based on `index_date`, `time_before` and `time_after`.
 #' 
 #' @family filter functions
 #' @seealso \code{\link{filter_ival_olap_ival}} for date filtering by different intervals before and after the occurence
-#' @param index_date index date (which date variable is to be compared with register data)
-#' @param range the distance from index date (lubridate format, e.g years(1), weeks(10), days(20) etc.)
-#' @param ... datetime variables which need to be within the range. May be any number (>1) of variables.  If one variable is within interval, then that row is included in the data (Applies OR operator).
+#' @param date_var 
+#' @param index_date date or other lubridate variable as reference point around which to search
+#' @param time_before the time before the index date what defines the start of filtering interval (lubridate format, e.g years(1), weeks(10), days(20) etc.)
+#' @param time_after the time after the index date (default is 0 days) what defines the start of filtering interval (lubridate format, e.g years(1), weeks(10), days(20) etc.)
 #'
 #' @return returns a tibble object with filtered rows
 #' 
 #' @importFrom rlang enquo
-#' @importFrom rlang enquos
 #' @importFrom dplyr mutate
 #' @importFrom dplyr filter
 #' @importFrom dplyr select
 #' @importFrom purrr map
-#' @importFrom lubridate interval
+#' @importFrom lubridate %--%
 #' @importFrom lubridate %within%
 #' 
 #' @examples
@@ -106,6 +107,7 @@ filter_date_in_ival <- function(.data,date_var,index_date,time_before=years(2),t
 #' @family date functions
 #' @param .data data which contains datetime or other comparable variable
 #' @param date_var datetime or other comparable variable
+#' 
 #' @return The row which is the first (by which.min) in the .date
 #' 
 #' @importFrom dplyr enquo
@@ -164,7 +166,7 @@ filter_date_last<-function(.data,date_var) {
 #' @family date functions
 #' @param .date data which contains datetime or other comparable variable
 #' @param var datetime or other comparable variable
-#' @param index_date datetime or other comparable variable as reference point around which to search
+#' @param index_date date or other lubridate variable as reference point around which to search
 #' @param only_previous optional parameter (default=FALSE): should we search only previously observed data prior index_date?
 #' @return The row which is the nearest .date
 #' 
