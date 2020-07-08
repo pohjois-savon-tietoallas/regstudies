@@ -1,8 +1,12 @@
 #' Internal function for providing long classification definitions.
 #'
 #' Operates classification definitions from wide format to long format.
+#' 
+#' The read_classes essentially just transforms a wide class definition file to long data, what can be used in classifying.
+#' This allows user to manage class definitions in wide data format, which is easier for the human eyes.
+#' 
 #' @family read functions
-#' @param classdef This variable contains the data in the wide format. See the classifications defined in /datas/classification_codes/
+#' @param class_def This variable contains the data in the wide format. See the classifications defined in /datas/classification_codes/
 #' @return returns a tibble of classification definition in long format (tidy data) as that is what the package needs in operation.
 #' 
 #' @importFrom dplyr mutate

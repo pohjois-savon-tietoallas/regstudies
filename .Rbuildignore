@@ -8,5 +8,5 @@ run.R
 R/delete.R
 vignette_plan.txt
 example_data_DELETE.R
-data/charlson_classes.csv
-data/elixhauser_classes.csv
+/data/charlson_classes.csv
+/data/elixhauser_classes.csv

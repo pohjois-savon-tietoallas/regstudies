@@ -55,10 +55,11 @@ Filter dataset with either `adm_date` or `disc_date` within two years around `po
 
 ```{r}
 filtered_d <- d %>% 
-  regstudies::filter_date_range(indexdate=postingdate, 
-                          range=years(2),
-                          adm_date,
-                          disc_date)
+  regstudies::filter_date_in_ival(date_var=adm_date,
+                                  index_date=postingdate, 
+                                  time_before=years(2),
+                                  time_after=days(0)
+  )
 head(filtered_d)
 ```
 
@@ -69,20 +70,34 @@ Filter data set with occurrences of hospital visits. If person has been in hospi
 
 ```{r}
 filtered_d <- d %>% 
-  filter_date_interval(indexdate = postingdate,
-                       time_before=years(2),
-                       admission_date=adm_date,
-                       discharge_date=disc_date)
+  filter_ival_olap_ival(ival_var=lubridate::interval(adm_date,disc_date),
+                        index_date = postingdate,
+                        time_before=years(2),
+                        time_after=days(0))
 head(filtered_d)
 ```
 
 ### Complex filtering
+
+Lets say that we want to find first occasions of disease codes such that we want to obtain first event for each individual in each class. We will use Elixhauser classes in this example.
 
 ```{r}
 elixh_d <- d %>% 
   classify_elixhauser(CODE1)
 head(elixh_d)
 ```
+
+```{r}
+library(regstudies)
+first_events_d <- elixh_d %>%
+  filter(!is.na(class_elixhauser)) %>%
+  group_by(personid,class_elixhauser) %>%
+  mutate(min_date=min(adm_date,disc_date)) %>%
+  filter_date_first(min_date)
+first_events_d
+```
+
+
 
 ### Left join with filling missing values
 
