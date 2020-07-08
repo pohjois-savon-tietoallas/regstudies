@@ -1,8 +1,8 @@
 Type: Package
 Package: regstudies
 Title: Tools for analyzing register data 
-Version: 0.5.1
-Date: 2020-06-29
+Version: 0.5.2
+Date: 2020-07-08
 Authors@R:
     c(person(given="Juho",
             family="Kopra",

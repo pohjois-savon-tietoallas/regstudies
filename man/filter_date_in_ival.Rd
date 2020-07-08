@@ -2,7 +2,8 @@
 % Please edit documentation in R/filter.R
 \name{filter_date_in_ival}
 \alias{filter_date_in_ival}
-\title{Filtering of datetime data within a time range.}
+\title{Filtering of datetime data within a time interval.
+The function finds rows for which \code{date_var} is within interval created based on \code{index_date}, \code{time_before} and \code{time_after}.}
 \usage{
 filter_date_in_ival(
   .data,
@@ -13,17 +14,20 @@ filter_date_in_ival(
 )
 }
 \arguments{
-\item{index_date}{index date (which date variable is to be compared with register data)}
+\item{date_var}{}
 
-\item{range}{the distance from index date (lubridate format, e.g years(1), weeks(10), days(20) etc.)}
+\item{index_date}{date or other lubridate variable as reference point around which to search}
 
-\item{...}{datetime variables which need to be within the range. May be any number (>1) of variables.  If one variable is within interval, then that row is included in the data (Applies OR operator).}
+\item{time_before}{the time before the index date what defines the start of filtering interval (lubridate format, e.g years(1), weeks(10), days(20) etc.)}
+
+\item{time_after}{the time after the index date (default is 0 days) what defines the start of filtering interval (lubridate format, e.g years(1), weeks(10), days(20) etc.)}
 }
 \value{
 returns a tibble object with filtered rows
 }
 \description{
-Filtering of datetime data within a time range.
+Filtering of datetime data within a time interval.
+The function finds rows for which \code{date_var} is within interval created based on \code{index_date}, \code{time_before} and \code{time_after}.
 }
 \examples{
 \dontrun{

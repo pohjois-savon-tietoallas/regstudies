@@ -3,7 +3,8 @@
 \name{filter_ival_olap_ival}
 \alias{filter_ival_olap_ival}
 \title{Filtering of date interval data within study interval.
-Can be used for filtering e.g. for hospital visits, which are date intervals (time periods).}
+Can be used for filtering e.g. for hospital visits, which are date intervals (time periods).
+The function finds rows for which \code{ival_var} overlaps with interval created based on \code{index_date}, \code{time_before} and \code{time_after}.}
 \usage{
 filter_ival_olap_ival(
   .data,
@@ -14,15 +15,13 @@ filter_ival_olap_ival(
 )
 }
 \arguments{
-\item{index_date}{index date (which date variable is to be compared with register data)}
+\item{ival_var}{the interval to be filtered}
+
+\item{index_date}{date or other lubridate variable as reference point around which to search}
 
 \item{time_before}{the time before the index date what defines the start of filtering interval (lubridate format, e.g years(1), weeks(10), days(20) etc.)}
 
-\item{time_after}{the time before the index date (default is 0 days) what defines the start of filtering interval (lubridate format, e.g years(1), weeks(10), days(20) etc.)}
-
-\item{admission_date}{date of admission as lubridate format}
-
-\item{discharge_date}{date of discharge as lubridate format}
+\item{time_after}{the time after the index date (default is 0 days) what defines the start of filtering interval (lubridate format, e.g years(1), weeks(10), days(20) etc.)}
 }
 \value{
 returns a tibble object with filtered rows
@@ -30,6 +29,7 @@ returns a tibble object with filtered rows
 \description{
 Filtering of date interval data within study interval.
 Can be used for filtering e.g. for hospital visits, which are date intervals (time periods).
+The function finds rows for which \code{ival_var} overlaps with interval created based on \code{index_date}, \code{time_before} and \code{time_after}.
 }
 \examples{
 \dontrun{

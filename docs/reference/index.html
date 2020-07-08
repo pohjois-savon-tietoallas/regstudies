@@ -201,14 +201,16 @@ Computes classification table and attaches it to original data. Data stays in lo
         <td>
           <p><code><a href="filter_date_in_ival.html">filter_date_in_ival()</a></code> </p>
         </td>
-        <td><p>Filtering of datetime data within a time range.</p></td>
+        <td><p>Filtering of datetime data within a time interval.
+The function finds rows for which <code>date_var</code> is within interval created based on <code>index_date</code>, <code>time_before</code> and <code>time_after</code>.</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="filter_ival_olap_ival.html">filter_ival_olap_ival()</a></code> </p>
         </td>
         <td><p>Filtering of date interval data within study interval.
-Can be used for filtering e.g. for hospital visits, which are date intervals (time periods).</p></td>
+Can be used for filtering e.g. for hospital visits, which are date intervals (time periods).
+The function finds rows for which <code>ival_var</code> overlaps with interval created based on <code>index_date</code>, <code>time_before</code> and <code>time_after</code>.</p></td>
       </tr><tr>
         
         <td>

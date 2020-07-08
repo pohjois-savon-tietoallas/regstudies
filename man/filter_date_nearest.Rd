@@ -7,7 +7,7 @@
 filter_date_nearest(.data, date_var, index_date, only_previous = FALSE)
 }
 \arguments{
-\item{index_date}{datetime or other comparable variable as reference point around which to search}
+\item{index_date}{date or other lubridate variable as reference point around which to search}
 
 \item{only_previous}{optional parameter (default=FALSE): should we search only previously observed data prior index_date?}
 
