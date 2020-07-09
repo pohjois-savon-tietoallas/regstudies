@@ -1,3 +1,7 @@
+## Package update script
+# ATTENTION: knit Rmd files in root folder manually and then run this file.
+
+
 library(dplyr)
 library(stringr)
 library(tibble)
@@ -102,6 +106,14 @@ if(TRUE){
 }
 
 ## Knit and Translate package ----------
+## this adds output:github_document on pages, so run manually
+# if(TRUE){
+#   rmd_files <- list.files(path = ".", pattern = ".Rmd")
+#   for (rmd in rmd_files) {
+#     knitr::knit(rmd)
+#   }
+# }
+
 if(TRUE){
   devtools::document()
   pkgdown::build_home()

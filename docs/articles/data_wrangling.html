@@ -122,22 +122,22 @@
 <pre><code>## # A tibble: 6 x 3
 ##   personid gender postingdate
 ##      &lt;int&gt;  &lt;dbl&gt; &lt;date&gt;     
-## 1     1101      1 2000-01-01 
-## 2     1102      2 2000-01-01 
-## 3     1103      2 2000-01-01 
-## 4     1104      2 2000-01-01 
-## 5     1105      1 2000-01-01 
-## 6     1106      1 2000-01-01</code></pre>
+## 1     1101      2 2000-01-01 
+## 2     1102      1 2000-01-01 
+## 3     1103      1 2000-01-01 
+## 4     1104      1 2000-01-01 
+## 5     1105      2 2000-01-01 
+## 6     1106      2 2000-01-01</code></pre>
 <div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">sample_regdata</span>)</pre></body></html></div>
 <pre><code>## # A tibble: 6 x 5
 ##   personid CODE1 adm_date   disc_date  icd  
 ##      &lt;int&gt; &lt;chr&gt; &lt;date&gt;     &lt;date&gt;     &lt;chr&gt;
-## 1     1101 2962  1990-04-21 1990-04-26 icd9 
-## 2     1101 4260  1990-06-13 1990-08-13 icd9 
-## 3     1101 260   1990-06-26 1990-09-18 icd9 
-## 4     1101 K257  1991-02-20 1991-07-07 icd9 
-## 5     1101 401   1991-04-20 1991-10-09 icd9 
-## 6     1101 E222  1991-10-19 1992-03-14 icd9</code></pre>
+## 1     1101 196   1990-03-28 1990-05-20 icd9 
+## 2     1101 I26   1990-04-25 1990-10-01 icd9 
+## 3     1101 E222  1990-06-28 1990-08-07 icd9 
+## 4     1101 39891 1990-09-19 1991-03-05 icd9 
+## 5     1101 G10   1990-11-24 1991-01-04 icd9 
+## 6     1101 I278  1991-11-01 1992-01-16 icd9</code></pre>
 </div>
 </div>
 <div id="filtering" class="section level1">
@@ -157,12 +157,12 @@
 <pre><code>## # A tibble: 6 x 7
 ##   personid gender postingdate CODE1 adm_date   disc_date  icd  
 ##      &lt;int&gt;  &lt;dbl&gt; &lt;date&gt;      &lt;chr&gt; &lt;date&gt;     &lt;date&gt;     &lt;chr&gt;
-## 1     1101      1 2000-01-01  I10   1998-05-15 1998-05-20 icd10
-## 2     1101      1 2000-01-01  I099  1999-06-13 1999-10-19 icd10
-## 3     1101      1 2000-01-01  2409  1999-06-21 1999-09-15 icd10
-## 4     1101      1 2000-01-01  2938  1999-07-17 1999-08-31 icd10
-## 5     1101      1 2000-01-01  F11   1999-11-12 2000-04-10 icd10
-## 6     1102      2 2000-01-01  F20   1999-02-27 1999-08-08 icd10</code></pre>
+## 1     1101      2 2000-01-01  2409  1999-04-30 1999-08-25 icd10
+## 2     1101      2 2000-01-01  K257  1999-12-01 2000-04-27 icd10
+## 3     1103      1 2000-01-01  2801  1998-11-23 1999-01-19 icd10
+## 4     1103      1 2000-01-01  4168  1999-11-16 1999-12-05 icd10
+## 5     1104      1 2000-01-01  2780  1998-10-25 1998-11-03 icd10
+## 6     1104      1 2000-01-01  2780  1998-12-26 1999-05-09 icd10</code></pre>
 </div>
 <div id="filtering-by-date-intervals" class="section level2">
 <h2 class="hasAnchor">
@@ -177,12 +177,12 @@
 <pre><code>## # A tibble: 6 x 7
 ##   personid gender postingdate CODE1 adm_date   disc_date  icd  
 ##      &lt;int&gt;  &lt;dbl&gt; &lt;date&gt;      &lt;chr&gt; &lt;date&gt;     &lt;date&gt;     &lt;chr&gt;
-## 1     1101      1 2000-01-01  I26   1997-11-11 1998-05-06 icd10
-## 2     1101      1 2000-01-01  E00   1997-11-23 1998-01-22 icd10
-## 3     1101      1 2000-01-01  I10   1998-05-15 1998-05-20 icd10
-## 4     1101      1 2000-01-01  I099  1999-06-13 1999-10-19 icd10
-## 5     1101      1 2000-01-01  2409  1999-06-21 1999-09-15 icd10
-## 6     1101      1 2000-01-01  2938  1999-07-17 1999-08-31 icd10</code></pre>
+## 1     1101      2 2000-01-01  2409  1999-04-30 1999-08-25 icd10
+## 2     1101      2 2000-01-01  K257  1999-12-01 2000-04-27 icd10
+## 3     1103      1 2000-01-01  2409  1997-10-02 1998-02-25 icd10
+## 4     1103      1 2000-01-01  2652  1997-12-13 1998-06-03 icd10
+## 5     1103      1 2000-01-01  2801  1998-11-23 1999-01-19 icd10
+## 6     1103      1 2000-01-01  4168  1999-11-16 1999-12-05 icd10</code></pre>
 <div id="complex-filtering" class="section level3">
 <h3 class="hasAnchor">
 <a href="#complex-filtering" class="anchor"></a>Complex filtering</h3>
@@ -194,12 +194,12 @@
 <pre><code>## # A tibble: 6 x 11
 ##   personid gender postingdate CODE1 adm_date   disc_date  icd   class_elixhauser
 ##      &lt;int&gt;  &lt;dbl&gt; &lt;date&gt;      &lt;chr&gt; &lt;date&gt;     &lt;date&gt;     &lt;chr&gt; &lt;chr&gt;           
-## 1     1101      1 2000-01-01  2962  1990-04-21 1990-04-26 icd9  depre           
-## 2     1101      1 2000-01-01  4260  1990-06-13 1990-08-13 icd9  carit           
-## 3     1101      1 2000-01-01  260   1990-06-26 1990-09-18 icd9  wloss           
-## 4     1101      1 2000-01-01  K257  1991-02-20 1991-07-07 icd9  &lt;NA&gt;            
-## 5     1101      1 2000-01-01  401   1991-04-20 1991-10-09 icd9  hypunc          
-## 6     1101      1 2000-01-01  E222  1991-10-19 1992-03-14 icd9  &lt;NA&gt;            
+## 1     1101      2 2000-01-01  196   1990-03-28 1990-05-20 icd9  metacanc        
+## 2     1101      2 2000-01-01  I26   1990-04-25 1990-10-01 icd9  &lt;NA&gt;            
+## 3     1101      2 2000-01-01  E222  1990-06-28 1990-08-07 icd9  &lt;NA&gt;            
+## 4     1101      2 2000-01-01  39891 1990-09-19 1991-03-05 icd9  chf             
+## 5     1101      2 2000-01-01  G10   1990-11-24 1991-01-04 icd9  &lt;NA&gt;            
+## 6     1101      2 2000-01-01  I278  1991-11-01 1992-01-16 icd9  &lt;NA&gt;            
 ## # … with 3 more variables: label_elixhauser &lt;chr&gt;, score_AHRQ &lt;dbl&gt;,
 ## #   score_van_Walraven &lt;dbl&gt;</code></pre>
 <div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">regstudies</span>)
@@ -209,21 +209,21 @@
   <span class="fu">mutate</span>(<span class="kw">min_date</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span>(<span class="no">adm_date</span>,<span class="no">disc_date</span>)) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/filter_date_first.html">filter_date_first</a></span>(<span class="no">min_date</span>)
 <span class="no">first_events_d</span></pre></body></html></div>
-<pre><code>## # A tibble: 4,033 x 12
-## # Groups:   personid, class_elixhauser [4,033]
+<pre><code>## # A tibble: 4,110 x 12
+## # Groups:   personid, class_elixhauser [4,110]
 ##    personid gender postingdate CODE1 adm_date   disc_date  icd  
 ##       &lt;int&gt;  &lt;dbl&gt; &lt;date&gt;      &lt;chr&gt; &lt;date&gt;     &lt;date&gt;     &lt;chr&gt;
-##  1     1101      1 2000-01-01  4260  1990-06-13 1990-08-13 icd9 
-##  2     1101      1 2000-01-01  I099  1999-06-13 1999-10-19 icd10
-##  3     1101      1 2000-01-01  4168  1993-01-16 1993-07-06 icd9 
-##  4     1101      1 2000-01-01  D508  2003-07-28 2003-09-29 icd10
-##  5     1101      1 2000-01-01  2962  1990-04-21 1990-04-26 icd9 
-##  6     1101      1 2000-01-01  2504  1993-08-11 1993-08-13 icd9 
-##  7     1101      1 2000-01-01  F11   1999-11-12 2000-04-10 icd10
-##  8     1101      1 2000-01-01  I11   2000-09-14 2000-11-23 icd10
-##  9     1101      1 2000-01-01  E00   1997-11-23 1998-01-22 icd10
-## 10     1101      1 2000-01-01  401   1991-04-20 1991-10-09 icd9 
-## # … with 4,023 more rows, and 5 more variables: class_elixhauser &lt;chr&gt;,
+##  1     1101      2 2000-01-01  39891 1990-09-19 1991-03-05 icd9 
+##  2     1101      2 2000-01-01  2409  1991-12-19 1992-05-27 icd9 
+##  3     1101      2 2000-01-01  C81   1995-10-04 1996-01-16 icd10
+##  4     1101      2 2000-01-01  196   1990-03-28 1990-05-20 icd9 
+##  5     1101      2 2000-01-01  3341  1993-07-21 1993-11-13 icd9 
+##  6     1101      2 2000-01-01  3341  1993-07-21 1993-11-13 icd9 
+##  7     1101      2 2000-01-01  4150  1992-03-23 1992-08-13 icd9 
+##  8     1101      2 2000-01-01  K257  1999-12-01 2000-04-27 icd10
+##  9     1101      2 2000-01-01  0930  1994-12-18 1995-05-26 icd9 
+## 10     1101      2 2000-01-01  140   1994-06-02 1994-08-17 icd9 
+## # … with 4,100 more rows, and 5 more variables: class_elixhauser &lt;chr&gt;,
 ## #   label_elixhauser &lt;chr&gt;, score_AHRQ &lt;dbl&gt;, score_van_Walraven &lt;dbl&gt;,
 ## #   min_date &lt;date&gt;</code></pre>
 </div>
@@ -238,19 +238,19 @@
 <div class="sourceCode" id="cb20"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">d</span>)</pre></body></html></div>
 <pre><code>##     personid        gender       postingdate            CODE1          
 ##  Min.   :1101   Min.   :1.000   Min.   :2000-01-01   Length:10100      
-##  1st Qu.:1195   1st Qu.:1.000   1st Qu.:2000-01-01   Class :character  
-##  Median :1300   Median :1.000   Median :2000-01-01   Mode  :character  
-##  Mean   :1298   Mean   :1.498   Mean   :2000-01-01                     
-##  3rd Qu.:1396   3rd Qu.:2.000   3rd Qu.:2000-01-01                     
+##  1st Qu.:1212   1st Qu.:1.000   1st Qu.:2000-01-01   Class :character  
+##  Median :1305   Median :2.000   Median :2000-01-01   Mode  :character  
+##  Mean   :1305   Mean   :1.539   Mean   :2000-01-01                     
+##  3rd Qu.:1400   3rd Qu.:2.000   3rd Qu.:2000-01-01                     
 ##  Max.   :1500   Max.   :2.000   Max.   :2000-01-01                     
 ##                                                                        
 ##     adm_date            disc_date              icd           
-##  Min.   :1990-01-01   Min.   :1990-01-17   Length:10100      
-##  1st Qu.:1993-12-21   1st Qu.:1994-03-13   Class :character  
-##  Median :1997-11-10   Median :1998-02-14   Mode  :character  
-##  Mean   :1997-11-27   Mean   :1998-02-25                     
-##  3rd Qu.:2001-11-09   3rd Qu.:2002-01-28                     
-##  Max.   :2005-12-31   Max.   :2006-06-16                     
+##  Min.   :1990-01-01   Min.   :1990-01-18   Length:10100      
+##  1st Qu.:1993-12-18   1st Qu.:1994-03-21   Class :character  
+##  Median :1998-01-12   Median :1998-04-30   Mode  :character  
+##  Mean   :1998-01-04   Mean   :1998-04-04                     
+##  3rd Qu.:2001-12-27   3rd Qu.:2002-03-25                     
+##  Max.   :2005-12-30   Max.   :2006-06-24                     
 ##  NA's   :100          NA's   :100</code></pre>
 <p>This time the missing values are filled based on the defaults entered to <code>na_replace_list</code>.</p>
 <div class="sourceCode" id="cb22"><html><body><pre class="r"><span class="no">na_replace_list</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(
@@ -266,18 +266,18 @@
 <div class="sourceCode" id="cb24"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">d_filled</span>)</pre></body></html></div>
 <pre><code>##     personid        gender       postingdate       CODE1          
 ##  Min.   :1101   Min.   :1.000   Min.   :10957   Length:10100      
-##  1st Qu.:1195   1st Qu.:1.000   1st Qu.:10957   Class :character  
-##  Median :1300   Median :1.000   Median :10957   Mode  :character  
-##  Mean   :1298   Mean   :1.498   Mean   :10957                     
-##  3rd Qu.:1396   3rd Qu.:2.000   3rd Qu.:10957                     
+##  1st Qu.:1212   1st Qu.:1.000   1st Qu.:10957   Class :character  
+##  Median :1305   Median :2.000   Median :10957   Mode  :character  
+##  Mean   :1305   Mean   :1.539   Mean   :10957                     
+##  3rd Qu.:1400   3rd Qu.:2.000   3rd Qu.:10957                     
 ##  Max.   :1500   Max.   :2.000   Max.   :10957                     
 ##     adm_date        disc_date          icd           
 ##  Min.   :-25567   Min.   :-25567   Length:10100      
-##  1st Qu.:  8710   1st Qu.:  8796   Class :character  
-##  Median : 10146   Median : 10238   Mode  :character  
-##  Mean   :  9838   Mean   :  9927                     
-##  3rd Qu.: 11620   3rd Qu.: 11699                     
-##  Max.   : 13148   Max.   : 13315</code></pre>
+##  1st Qu.:  8709   1st Qu.:  8802   Class :character  
+##  Median : 10212   Median : 10310   Mode  :character  
+##  Mean   :  9876   Mean   :  9965                     
+##  3rd Qu.: 11667   3rd Qu.: 11754                     
+##  Max.   : 13147   Max.   : 13323</code></pre>
 <p>Internally the filling of missing values with default values is executed by another function <code>replace_na_by_type</code> which is also available for users.</p>
 <div class="sourceCode" id="cb26"><html><body><pre class="r"><span class="co">## Give list of default fill values overridding NA</span>
 <span class="no">d_filled</span> <span class="kw">&lt;-</span> <span class="no">d</span> <span class="kw">%&gt;%</span>
@@ -285,18 +285,18 @@
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">d_filled</span>)</pre></body></html></div>
 <pre><code>##     personid        gender       postingdate       CODE1          
 ##  Min.   :1101   Min.   :1.000   Min.   :10957   Length:10100      
-##  1st Qu.:1195   1st Qu.:1.000   1st Qu.:10957   Class :character  
-##  Median :1300   Median :1.000   Median :10957   Mode  :character  
-##  Mean   :1298   Mean   :1.498   Mean   :10957                     
-##  3rd Qu.:1396   3rd Qu.:2.000   3rd Qu.:10957                     
+##  1st Qu.:1212   1st Qu.:1.000   1st Qu.:10957   Class :character  
+##  Median :1305   Median :2.000   Median :10957   Mode  :character  
+##  Mean   :1305   Mean   :1.539   Mean   :10957                     
+##  3rd Qu.:1400   3rd Qu.:2.000   3rd Qu.:10957                     
 ##  Max.   :1500   Max.   :2.000   Max.   :10957                     
 ##     adm_date        disc_date          icd           
 ##  Min.   :-25567   Min.   :-25567   Length:10100      
-##  1st Qu.:  8710   1st Qu.:  8796   Class :character  
-##  Median : 10146   Median : 10238   Mode  :character  
-##  Mean   :  9838   Mean   :  9927                     
-##  3rd Qu.: 11620   3rd Qu.: 11699                     
-##  Max.   : 13148   Max.   : 13315</code></pre>
+##  1st Qu.:  8709   1st Qu.:  8802   Class :character  
+##  Median : 10212   Median : 10310   Mode  :character  
+##  Mean   :  9876   Mean   :  9965                     
+##  3rd Qu.: 11667   3rd Qu.: 11754                     
+##  Max.   : 13147   Max.   : 13323</code></pre>
 </div>
 </div>
 </div>
