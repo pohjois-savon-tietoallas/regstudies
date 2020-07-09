@@ -26,7 +26,7 @@ Description: The data utilised in register studies, often called as register-bas
   The functions are designed with ICD-codes in mind but can be used with any kind of string formatted codes and are thus not
   necessarily limited to healthcare data. Users are allowed to make their own definitions of code classifiers, so the package
   suits needs of different countries having their own code definitions of disease codes for example.
-License: GPLv3
+License: GPLv3 LICENCE
 URL: https://github.com/pohjois-savon-tietoallas/regstudies
 BugReports:https://github.com/pohjois-savon-tietoallas/regstudies/issues
 Depends: 
