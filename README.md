@@ -75,23 +75,24 @@ sample_data %>%
 
 ## Citation
 
-To cite package ‘regstudies’ in publications use:
+    #> 
+    #> To cite package 'regstudies' in publications use:
+    #> 
+    #>   Juho Kopra, Jani Miettinen and Reijo Sund (2020). regstudies: Tools
+    #>   for analyzing register data. R package version 0.5.1.
+    #>   https://github.com/pohjois-savon-tietoallas/regstudies
+    #> 
+    #> A BibTeX entry for LaTeX users is
+    #> 
+    #>   @Manual{,
+    #>     title = {regstudies: Tools for analyzing register data},
+    #>     author = {Juho Kopra and Jani Miettinen and Reijo Sund},
+    #>     year = {2020},
+    #>     note = {R package version 0.5.1},
+    #>     url = {https://github.com/pohjois-savon-tietoallas/regstudies},
+    #>   }
 
-Juho Kopra, Jani Miettinen and Reijo Sund (2020). regstudies: Tools for
-analyzing register data. R package version 0.5.1.
-
-A BibTeX entry for LaTeX users is
-
-``` 
-  @Manual{,
-    title = {regstudies: Tools for analyzing register data},
-    author = {Juho Kopra and Jani Miettinen and Reijo Sund},
-    year = {2020},
-    note = {R package version 0.5.1},
-  }
-```
-
-## Developers, check [contributing guide](contributing.html)
+## Developers, check [contributing guide](CONTRIBUTING.html)
 
 ## References
 
