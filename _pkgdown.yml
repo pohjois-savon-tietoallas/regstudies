@@ -37,3 +37,7 @@ articles:
   - using_own_classifications
   - data_wrangling
   - classification_tables
+- title: NEWS
+  navbar: ~
+  contents:
+    - NEWS
