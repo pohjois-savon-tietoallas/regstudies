@@ -49,8 +49,7 @@
 #'
 #' @export
 #'
-
-make_indicators = function(cohort_data, reg_data, 
+make_indicators <- function(cohort_data, reg_data, 
                            adm_date = NULL, disc_date = NULL, index_date = NULL, time_before = 0, time_after = 0,
                            idnum, codes, diag_tbl, add_zero_class = TRUE){
   
